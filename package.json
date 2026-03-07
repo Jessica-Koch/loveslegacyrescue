@@ -1,0 +1,12 @@
+{
+  "name": "loveslegacyrescue",
+  "version": "1.0.0",
+  "scripts": {
+    "dev:client": "pnpm --filter client dev",
+    "dev:server": "pnpm --filter server dev",
+    "dev": "pnpm --filter client dev & pnpm --filter server dev"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["@prisma/engines", "esbuild", "prisma"]
+  }
+}

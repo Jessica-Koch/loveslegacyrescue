@@ -1,0 +1,28 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Dog {
+  id            String   @id @default(cuid())
+  shelterluvId  String   @unique
+  name          String
+  breed         String?
+  age           String?
+  sex           String?
+  color         String?
+  description   String?
+  photoUrl      String?
+  status        String?
+  inFoster      Boolean  @default(false)
+
+  // Custom attributes
+  featured      Boolean  @default(false)
+  internalNotes String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
