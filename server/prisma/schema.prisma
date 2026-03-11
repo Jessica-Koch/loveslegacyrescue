@@ -15,12 +15,14 @@ model Dog {
   sex           String?
   color         String?
   description   String?
-  photoUrl      String?
+  photoUrls     String[]
   status        String?
   inFoster      Boolean  @default(false)
 
   // Custom attributes
-  featured      Boolean  @default(false)
+  featured      Boolean   @default(false)
+  featuredAt    DateTime?
+  slackChannelId String?
   internalNotes String?
 
   createdAt     DateTime @default(now())
