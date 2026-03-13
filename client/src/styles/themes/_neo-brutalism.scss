@@ -72,3 +72,32 @@
   --duration-slow: 300ms;
   --ease: ease-out;
 }
+
+// ── Component overrides ───────────────────────────────────────
+// Explicitly lock in the brutal aesthetic so it can never be
+// softened by a base-style change.
+
+[data-theme='neo-brutalism'] {
+  // Hard square corners on all buttons — non-negotiable
+  .btn {
+    border-radius: 0;
+  }
+
+  // Square badges
+  .badge {
+    border-radius: 0;
+  }
+
+  // Card hover: straight translateY lift only, no rotate
+  .card--interactive {
+    &:hover {
+      transform: translateY(-4px);
+    }
+  }
+
+  // Input focus: amber fill (the existing --input-focus-bg token)
+  // plus a deeper shadow to signal keyboard users clearly
+  .text-input__input:focus {
+    box-shadow: var(--shadow-md);
+  }
+}

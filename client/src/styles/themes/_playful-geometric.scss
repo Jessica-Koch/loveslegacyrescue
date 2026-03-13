@@ -88,3 +88,43 @@
   --duration-slow: 450ms;
   --ease: cubic-bezier(0.34, 1.56, 0.64, 1); // overshoot: moves past target, springs back
 }
+
+// ── Component overrides ───────────────────────────────────────
+// Token values express the palette and spacing, but full theme
+// personality requires component-level rules that go beyond what
+// a single token can cover.
+
+[data-theme='playful-geometric'] {
+  // Pill-shaped buttons — the "Candy Button" signature.
+  // --radius alone (16px) isn't enough; primaries/secondaries
+  // need full pill, while ghost stays at --radius for subtlety.
+  .btn--primary,
+  .btn--secondary,
+  .btn--outline {
+    border-radius: var(--radius-pill);
+  }
+
+  // Pill badges — always fully rounded in this system
+  .badge {
+    border-radius: var(--radius-pill);
+  }
+
+  // Card hover: rotate + scale instead of straight translateY.
+  // Creates the "sticker picked up off the table" feel.
+  .card--interactive {
+    &:hover {
+      transform: rotate(-1.5deg) scale(1.02) translateY(-2px);
+    }
+
+    &:active {
+      transform: rotate(0deg) scale(1) translateY(0);
+    }
+  }
+
+  // Input focus: hard violet shadow instead of the default neutral.
+  // Signals focus with color, not just border change.
+  .text-input__input:focus {
+    border-color: var(--color-accent);
+    box-shadow: 4px 4px 0px 0px var(--color-accent);
+  }
+}
