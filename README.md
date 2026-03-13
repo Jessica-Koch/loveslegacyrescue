@@ -2,6 +2,10 @@
 
 Website and admin tooling for Love's Legacy Rescue. Dogs are synced from [Shelterluv](https://www.shelterluv.com/) into a local PostgreSQL database and served via a Fastify API.
 
+## Storybook
+
+Component library: **https://jessica-koch.github.io/loveslegacyrescue/**
+
 ## Stack
 
 - **Client** — Vite + React + TypeScript
