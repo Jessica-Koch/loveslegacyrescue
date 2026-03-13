@@ -33,7 +33,8 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build Storybook
-        run: pnpm --filter client build-storybook
+        run: pnpm build-storybook
+        working-directory: client
 
       - uses: actions/upload-pages-artifact@v3
         with:
