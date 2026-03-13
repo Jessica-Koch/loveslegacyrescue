@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from 'react';
+import type { Dog } from './types';
+import Header from './components/Header';
+import DogsPage from './components/DogsPage';
+import AdminPage from './components/AdminPage';
+import './App.scss';
 
-function App() {
-  const [count, setCount] = useState(0)
+const API = 'http://localhost:3001';
+
+export default function App() {
+  const [view, setView] = useState<'dogs' | 'admin'>('dogs');
+  const [dogs, setDogs] = useState<Dog[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  async function fetchDogs() {
+    const res = await fetch(`${API}/dogs`);
+    const data = await res.json();
+    setDogs(data);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchDogs();
+  }, []);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
+      <Header view={view} onViewChange={setView} />
+      {view === 'dogs' ? (
+        <DogsPage dogs={dogs} loading={loading} />
+      ) : (
+        <AdminPage dogs={dogs} onUpdated={fetchDogs} />
+      )}
+      <footer className="footer">
+        <p>Love's Legacy Rescue &copy; {new Date().getFullYear()}</p>
         <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
+          <a href="https://www.loveslegacyrescue.com" target="_blank" rel="noreferrer">
+            loveslegacyrescue.com
+          </a>
         </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      </footer>
     </>
-  )
+  );
 }
-
-export default App

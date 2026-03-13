@@ -1,0 +1,121 @@
+.carousel {
+  position: relative;
+  border: var(--border);
+  box-shadow: var(--shadow-md);
+  background: var(--color-fg);
+  overflow: visible;
+
+  // ── Viewport (clips the track) ────────────────────────────────
+  &__viewport {
+    overflow: hidden;
+    position: relative;
+  }
+
+  // ── Track (holds all slides side-by-side) ─────────────────────
+  &__track {
+    display: flex;
+    transition: transform var(--duration-slow) var(--ease);
+  }
+
+  // ── Individual slide ──────────────────────────────────────────
+  &__slide {
+    min-width: 100%;
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: var(--color-muted);
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 10px 14px;
+    background: var(--color-secondary);
+    border-top: var(--border);
+    font-family: var(--font-family);
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-body);
+    letter-spacing: 0.04em;
+    color: var(--color-fg);
+  }
+
+  // ── Prev / Next buttons ───────────────────────────────────────
+  &__btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-surface);
+    border: var(--border);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: var(--font-weight-heading);
+    transition:
+      transform var(--duration-fast) var(--ease),
+      box-shadow var(--duration-fast) var(--ease),
+      background var(--duration-fast) var(--ease);
+
+    &:hover {
+      background: var(--color-secondary);
+      box-shadow: var(--shadow-md);
+    }
+
+    &:active {
+      transform: translateY(calc(-50% + 3px)) translateX(3px);
+      box-shadow: none;
+    }
+
+    &--prev {
+      left: -20px;
+    }
+
+    &--next {
+      right: -20px;
+    }
+  }
+
+  // ── Dot indicators ────────────────────────────────────────────
+  &__dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 0 0;
+  }
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    background: var(--color-surface);
+    border: var(--border-width) solid var(--color-border);
+    box-shadow: var(--shadow-xs);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease),
+      transform var(--duration-fast) var(--ease);
+
+    &--active {
+      background: var(--color-accent);
+      transform: scale(1.25);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel__track {
+    transition: none;
+  }
+}

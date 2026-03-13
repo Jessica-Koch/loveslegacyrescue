@@ -1,0 +1,50 @@
+// ─────────────────────────────────────────────────────────────
+// Shared SCSS mixins — structural interaction patterns.
+// All values are resolved from CSS custom properties so they
+// adapt automatically to whichever theme is active.
+// ─────────────────────────────────────────────────────────────
+
+// Card lift on hover — translate up + deepen shadow.
+@mixin interactive-card {
+  transition:
+    transform var(--duration-base) var(--ease),
+    box-shadow var(--duration-base) var(--ease);
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md-hover);
+  }
+}
+
+// Button press on :active — translate to cover the offset shadow.
+@mixin interactive-btn {
+  transition:
+    transform var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease),
+    background-color var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease);
+
+  &:not(:disabled):active {
+    transform: translate(var(--btn-press-offset), var(--btn-press-offset));
+    box-shadow: none;
+  }
+}
+
+// Bordered surface — the base neo-brutalist card/container shell.
+@mixin bordered-surface($shadow: md) {
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+  @if $shadow == sm { box-shadow: var(--shadow-sm); }
+  @else if $shadow == md { box-shadow: var(--shadow-md); }
+  @else if $shadow == lg { box-shadow: var(--shadow-lg); }
+}
+
+// Uppercase label — the meta/badge type treatment.
+@mixin label-type {
+  font-family: var(--font-family);
+  font-size: 0.7rem;
+  font-weight: var(--font-weight-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}

@@ -1,0 +1,90 @@
+// ─────────────────────────────────────────────────────────────
+// Theme: Playful Geometric
+//
+// Memphis Group energy cleaned up for modern digital screens.
+// "Stable Grid, Wild Decoration" — content lives in calm, readable
+// areas; the world around it pops with shape and colour.
+//
+//   – Warm cream canvas (paper feel, not clinical white)
+//   – Vivid violet primary + hot pink/amber/emerald confetti accents
+//   – Hard offset shadows (slate, not black) — sticker/cut-out feel
+//   – Generous radii (pill buttons, rounded-xl cards)
+//   – Chunky 2px borders for definition without aggression
+//   – Outfit (geometric, friendly) for headings and UI
+//   – Bouncy cubic-bezier easing for every interaction
+// ─────────────────────────────────────────────────────────────
+
+[data-theme='playful-geometric'] {
+  // ── Palette ─────────────────────────────────────────────────
+  --color-bg: #fffdf5;           // warm cream — paper feel, not clinical white
+  --color-fg: #1e293b;           // slate 800 — softer than pure black
+  --color-surface: #ffffff;      // card & panel backgrounds
+
+  --color-accent: #8b5cf6;       // vivid violet — primary CTA + focus
+  --color-accent-hover: #7c3aed; // violet 600 — pressed/hovered state
+  --color-accent-fg: #ffffff;    // white reads cleanly on violet
+
+  --color-secondary: #f472b6;    // hot pink — playful pop for sections/badges
+  --color-secondary-hover: #ec4899; // pink 500
+  --color-secondary-fg: #1e293b; // slate on pink — 5.9:1 contrast (AA)
+
+  --color-muted: #f1f5f9;        // slate 100 — subtle no-photo placeholder bg
+  --color-muted-fg: #64748b;     // slate 500
+
+  --color-brand: #fbbf24;        // amber — tertiary/brand gold, optimism
+  --color-border: #1e293b;       // dark slate border — chunky and defined
+  --color-text-muted: #64748b;   // slate 500 — secondary text
+
+  // ── Shadows — hard offset, zero blur, slate (not black) ─────
+  // "The Pop Shadow": gives elements a sticker or cut-out paper feel.
+  // Slate instead of pure black keeps it warm and friendly.
+  --shadow-xs: 2px 2px 0px 0px #1e293b;
+  --shadow-sm: 4px 4px 0px 0px #1e293b;
+  --shadow-md: 6px 6px 0px 0px #1e293b;
+  --shadow-lg: 8px 8px 0px 0px #1e293b;
+  --shadow-xl: 12px 12px 0px 0px #1e293b;
+  --shadow-xs-hover: 4px 4px 0px 0px #1e293b;
+  --shadow-sm-hover: 6px 6px 0px 0px #1e293b;
+  --shadow-md-hover: 8px 8px 0px 0px #1e293b;
+  --shadow-lg-hover: 12px 12px 0px 0px #1e293b;
+
+  // ── Borders ──────────────────────────────────────────────────
+  --border-width: 2px;           // chunky but not aggressive
+  --border: var(--border-width) solid var(--color-border);
+
+  // ── Radius ───────────────────────────────────────────────────
+  --radius: 16px;                // rounded-xl — cards and panels
+  --radius-pill: 9999px;         // pill badges and buttons
+
+  // ── Typography ───────────────────────────────────────────────
+  // Outfit: geometric sans with rounded letter corners — friendly, bold.
+  // Used for all UI text; the design system uses Plus Jakarta Sans for
+  // body copy, but a single-token system works best with one family.
+  --font-family: 'Outfit', system-ui, sans-serif;
+  --font-weight-body: 500;       // Medium — slightly bolder than typical for readability
+  --font-weight-heading: 800;    // ExtraBold — the geometric personality shows at heavy weights
+
+  // ── Layout ───────────────────────────────────────────────────
+  --gutter: 4vw;
+  --max-width: 1280px;
+  --header-height: 68px;
+
+  // ── Header ───────────────────────────────────────────────────
+  --header-bg: #fffdf5;          // match canvas — clean and solid
+  --header-backdrop: none;
+
+  // ── Component-specific ───────────────────────────────────────
+  --btn-press-offset: 4px;       // matches --shadow-sm offset — press translates to cover shadow
+  --heading-border: var(--border-width) solid var(--color-accent); // violet underline accent
+  --input-focus-bg: #ffffff;     // stay white; hard violet shadow handles the focus signal
+  --hero-pattern: radial-gradient(circle, #1e293b 1px, transparent 1px); // dot grid texture
+  --hero-pattern-size: 24px 24px;
+
+  // ── Animation ────────────────────────────────────────────────
+  // The overshoot/bounce cubic-bezier is the soul of this system.
+  // Elements don't just move — they pop, spring, and snap into place.
+  --duration-fast: 150ms;
+  --duration-base: 300ms;
+  --duration-slow: 450ms;
+  --ease: cubic-bezier(0.34, 1.56, 0.64, 1); // overshoot: moves past target, springs back
+}

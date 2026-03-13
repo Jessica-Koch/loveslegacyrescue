@@ -1,0 +1,38 @@
+.card {
+  background: var(--color-surface);
+  border: var(--border);
+  border-radius: var(--radius);
+
+  // ── Shadows ──────────────────────────────────────────────────
+  &--shadow-sm { box-shadow: var(--shadow-sm); }
+  &--shadow-md { box-shadow: var(--shadow-md); }
+  &--shadow-lg { box-shadow: var(--shadow-lg); }
+
+  // ── Padding ──────────────────────────────────────────────────
+  &--pad-none  { padding: 0; }
+  &--pad-sm    { padding: 16px; }
+  &--pad-md    { padding: 24px; }
+  &--pad-lg    { padding: 40px; }
+
+  // ── Interactive lift ─────────────────────────────────────────
+  &--interactive {
+    cursor: pointer;
+    transition:
+      transform var(--duration-base) var(--ease),
+      box-shadow var(--duration-base) var(--ease);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  // ── Accent header band ────────────────────────────────────────
+  &--accent {
+    border-top: 6px solid var(--color-accent);
+  }
+}

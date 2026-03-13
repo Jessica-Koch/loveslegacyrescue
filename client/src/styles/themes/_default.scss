@@ -1,0 +1,71 @@
+// ─────────────────────────────────────────────────────────────
+// Theme: Default (dark)
+//
+// The original dark palette from the initial build.
+// Preserved as a named theme so it can be restored via
+// data-theme="default" without code changes.
+// ─────────────────────────────────────────────────────────────
+
+[data-theme='default'] {
+  // ── Palette ─────────────────────────────────────────────────
+  --color-bg: #000000;
+  --color-fg: #ffffff;
+  --color-surface: #1a1a1a;
+  --color-accent: #c8a96e;
+  --color-accent-hover: #b8996e;
+  --color-accent-fg: #000000;
+  --color-secondary: #1a1a1a;
+  --color-secondary-hover: #222222;
+  --color-secondary-fg: #ffffff;
+  --color-muted: #888888;
+  --color-muted-fg: #ffffff;
+  --color-brand: #c8a96e;
+  --color-border: #333333;
+  --color-text-muted: #888888;
+
+  // ── Shadows — soft, diffused ─────────────────────────────────
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.6);
+  --shadow-xl: 0 12px 40px rgba(0, 0, 0, 0.7);
+  --shadow-xs-hover: 0 2px 4px rgba(0, 0, 0, 0.4);
+  --shadow-sm-hover: 0 3px 10px rgba(0, 0, 0, 0.5);
+  --shadow-md-hover: 0 6px 20px rgba(0, 0, 0, 0.6);
+  --shadow-lg-hover: 0 12px 40px rgba(0, 0, 0, 0.7);
+
+  // ── Borders ──────────────────────────────────────────────────
+  --border-width: 1px;
+  --border: var(--border-width) solid var(--color-border);
+
+  // ── Radius ───────────────────────────────────────────────────
+  --radius: 4px;
+  --radius-pill: 9999px;
+
+  // ── Typography ───────────────────────────────────────────────
+  --font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-weight-body: 400;
+  --font-weight-heading: 700;
+
+  // ── Layout ───────────────────────────────────────────────────
+  --gutter: 4vw;
+  --max-width: 1280px;
+  --header-height: 64px;
+
+  // ── Header ───────────────────────────────────────────────────
+  --header-bg: rgba(0, 0, 0, 0.92);
+  --header-backdrop: blur(8px);
+
+  // ── Component-specific ───────────────────────────────────────
+  --btn-press-offset: 0px;
+  --heading-border: none;
+  --input-focus-bg: transparent;
+  --hero-pattern: none;
+  --hero-pattern-size: auto;
+
+  // ── Animation ────────────────────────────────────────────────
+  --duration-fast: 150ms;
+  --duration-base: 250ms;
+  --duration-slow: 400ms;
+  --ease: ease-in-out;
+}

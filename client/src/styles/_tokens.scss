@@ -1,0 +1,69 @@
+// ─────────────────────────────────────────────────────────────
+// Design tokens — CSS custom property declarations.
+// These are neutral fallback values. Themes override them via
+// [data-theme="..."] selectors in styles/themes/*.
+// ─────────────────────────────────────────────────────────────
+
+:root {
+  // Core palette
+  --color-bg: #f8f8f8;
+  --color-fg: #000000;
+  --color-surface: #ffffff;
+  --color-accent: #000000;
+  --color-accent-hover: #333333;
+  --color-accent-fg: #ffffff;
+  --color-secondary: #eeeeee;
+  --color-secondary-hover: #dddddd;
+  --color-secondary-fg: #000000;
+  --color-muted: #cccccc;
+  --color-muted-fg: #000000;
+  --color-brand: #c8a96e;
+  --color-border: #000000;
+  --color-text-muted: #555555;
+
+  // Shadows
+  --shadow-xs: 2px 2px 0px 0px #000000;
+  --shadow-sm: 4px 4px 0px 0px #000000;
+  --shadow-md: 6px 6px 0px 0px #000000;
+  --shadow-lg: 10px 10px 0px 0px #000000;
+  --shadow-xl: 14px 14px 0px 0px #000000;
+  --shadow-xs-hover: 4px 4px 0px 0px #000000;
+  --shadow-sm-hover: 6px 6px 0px 0px #000000;
+  --shadow-md-hover: 10px 10px 0px 0px #000000;
+  --shadow-lg-hover: 14px 14px 0px 0px #000000;
+
+  // Borders
+  --border-width: 2px;
+  --border: var(--border-width) solid var(--color-border);
+
+  // Radius
+  --radius: 0px;
+  --radius-pill: 9999px;
+
+  // Typography
+  --font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --font-weight-body: 700;
+  --font-weight-heading: 900;
+
+  // Layout
+  --gutter: 4vw;
+  --max-width: 1280px;
+  --header-height: 64px;
+
+  // Header
+  --header-bg: #f8f8f8;
+  --header-backdrop: none;
+
+  // Component-specific
+  --btn-press-offset: 6px;
+  --heading-border: var(--border-width) solid var(--color-accent);
+  --input-focus-bg: #ffffcc;
+  --hero-pattern: none;
+  --hero-pattern-size: auto;
+
+  // Animation
+  --duration-fast: 100ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --ease: ease-out;
+}

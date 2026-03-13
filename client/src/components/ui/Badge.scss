@@ -1,0 +1,59 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-body);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: var(--border-width) solid var(--color-border);
+
+  // ── Sizes ────────────────────────────────────────────────────
+  &--sm {
+    font-size: 0.62rem;
+    padding: 3px 8px;
+    box-shadow: var(--shadow-xs);
+  }
+
+  &--md {
+    font-size: 0.72rem;
+    padding: 5px 12px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  // ── Variants ─────────────────────────────────────────────────
+  &--accent {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  &--secondary {
+    background: var(--color-secondary);
+    color: var(--color-secondary-fg);
+  }
+
+  &--muted {
+    background: var(--color-muted);
+    color: var(--color-muted-fg);
+  }
+
+  &--brand {
+    background: var(--color-brand);
+    color: #000000;
+  }
+
+  &--outline {
+    background: var(--color-surface);
+    color: var(--color-fg);
+  }
+
+  // ── Sticker rotation ─────────────────────────────────────────
+  &--rotate-ccw {
+    transform: rotate(-1.5deg);
+    transform-origin: left center;
+  }
+
+  &--rotate-cw {
+    transform: rotate(1.5deg);
+    transform-origin: right center;
+  }
+}
