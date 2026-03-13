@@ -8,6 +8,7 @@ const preview: Preview = {
       themes: {
         'Neo-Brutalism': 'neo-brutalism',
         'Default (Dark)': 'default',
+        'Playful Geometric': 'playful-geometric',
       },
       defaultTheme: 'Neo-Brutalism',
       attributeName: 'data-theme',
