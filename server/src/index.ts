@@ -8,7 +8,10 @@ const fastify = Fastify({ logger: true });
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
-fastify.register(cors, { origin: 'http://localhost:5173' });
+fastify.register(cors, {
+  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  methods: ['GET', 'POST', 'PATCH', 'PUT', 'DELETE'],
+});
 
 // Get all adoptable dogs
 fastify.get('/dogs', async () => {

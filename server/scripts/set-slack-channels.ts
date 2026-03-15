@@ -33,17 +33,36 @@ const SLACK_CHANNELS: Record<string, string> = {
 };
 
 async function main() {
+  const [shelterluvId, slackChannelId] = process.argv.slice(2);
+
+  // CLI mode: pnpm run set-slack "80" "C12345678"
+  if (shelterluvId && slackChannelId) {
+    const dog = await prisma.dog.findUnique({
+      where: { shelterluvId },
+      select: { id: true, name: true },
+    });
+    if (!dog) {
+      console.error(`⚠️  No dog found with Shelterluv ID "${shelterluvId}"`);
+      process.exit(1);
+    }
+    await prisma.dog.update({ where: { id: dog.id }, data: { slackChannelId } });
+    console.log(`✓ ${dog.name} → ${slackChannelId}`);
+    await prisma.$disconnect();
+    return;
+  }
+
+  // Bulk mode: use the SLACK_CHANNELS map above
   const dogs = await prisma.dog.findMany({ select: { id: true, name: true } });
   const byName = Object.fromEntries(dogs.map((d) => [d.name, d.id]));
 
-  for (const [name, slackChannelId] of Object.entries(SLACK_CHANNELS)) {
+  for (const [name, channelId] of Object.entries(SLACK_CHANNELS)) {
     const id = byName[name];
     if (!id) {
       console.warn(`⚠️  Dog not found: "${name}" — skipping`);
       continue;
     }
-    await prisma.dog.update({ where: { id }, data: { slackChannelId } });
-    console.log(`✓ ${name} → ${slackChannelId}`);
+    await prisma.dog.update({ where: { id }, data: { slackChannelId: channelId } });
+    console.log(`✓ ${name} → ${channelId}`);
   }
 
   console.log('\nDone.');

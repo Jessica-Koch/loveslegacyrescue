@@ -75,7 +75,7 @@
   &--ghost {
     background: transparent;
     color: var(--color-fg);
-    border-color: transparent;
+    border-color: var(--color-border);
     box-shadow: none;
 
     &:hover:not(:disabled) {
