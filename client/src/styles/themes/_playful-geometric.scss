@@ -1,116 +1,137 @@
 // ─────────────────────────────────────────────────────────────
-// Theme: Playful Geometric
+// Theme: Playful Geometric — "Pure Imagination"
 //
-// Memphis Group energy cleaned up for modern digital screens.
-// "Stable Grid, Wild Decoration" — content lives in calm, readable
-// areas; the world around it pops with shape and colour.
+// Inspired by Creative South's retro-groovy aesthetic:
+// a warm cream canvas, deep near-black borders and type,
+// and a rainbow ribbon of hot pink, yellow, and purple
+// that punches through the page like a 70s fever dream.
 //
-//   – Warm cream canvas (paper feel, not clinical white)
-//   – Vivid violet primary + hot pink/amber/emerald confetti accents
-//   – Hard offset shadows (slate, not black) — sticker/cut-out feel
-//   – Generous radii (pill buttons, rounded-xl cards)
-//   – Chunky 2px borders for definition without aggression
-//   – Outfit (geometric, friendly) for headings and UI
-//   – Bouncy cubic-bezier easing for every interaction
+// "Stable Grid, Wild Decoration" — but now it's cosmic.
+//
+//   – Warm cream canvas (#EDE8DC) — aged paper, not clinical white
+//   – Deep warm near-black (#1C1712) — borders, shadows, headings
+//   – Hot pink (#F0609E) — primary CTA, the rainbow's loudest note
+//   – Warm yellow (#F5CE22) — hover fills, badges, optimism
+//   – Purple (#8B6AC4) — tertiary accent from the ribbon's tail
+//   – Thick 2px borders + hard offset shadows — cut-out sticker feel
+//   – Pill buttons — the signature groovy shape
+//
+// Fonts:
+//   Lilita One    — display (hero); bold, rounded groovy letterforms
+//   Space Grotesk — headings; chunky geometric, already loaded
+//   DM Sans       — body; clean, modern, highly readable
 // ─────────────────────────────────────────────────────────────
 
 [data-theme='playful-geometric'] {
   // ── Palette ─────────────────────────────────────────────────
-  --color-bg: #fffdf5;           // warm cream — paper feel, not clinical white
-  --color-fg: #1e293b;           // slate 800 — softer than pure black
-  --color-surface: #ffffff;      // card & panel backgrounds
+  --color-bg: #ede8dc;           // warm cream — aged paper feel
+  --color-fg: #1c1712;           // deep warm near-black — headings, body, borders
+  --color-surface: #fdfaf4;      // slightly lighter cream for cards
 
-  --color-accent: #8b5cf6;       // vivid violet — primary CTA + focus
-  --color-accent-hover: #7c3aed; // violet 600 — pressed/hovered state
-  --color-accent-fg: #ffffff;    // white reads cleanly on violet
+  --color-accent: #f0609e;       // hot pink — primary CTA, the loudest rainbow note
+  --color-accent-hover: #d94e8a; // deeper pink
+  --color-accent-fg: #ffffff;    // white on pink
 
-  --color-secondary: #f472b6;    // hot pink — playful pop for sections/badges
-  --color-secondary-hover: #ec4899; // pink 500
-  --color-secondary-fg: #1e293b; // slate on pink — 5.9:1 contrast (AA)
+  --color-secondary: #f5ce22;    // warm yellow — hover fills, badges
+  --color-secondary-hover: #e5be12;
+  --color-secondary-fg: #1c1712; // dark text on yellow — high contrast
 
-  --color-muted: #f1f5f9;        // slate 100 — subtle no-photo placeholder bg
-  --color-muted-fg: #64748b;     // slate 500
+  --color-muted: #e0d9cb;        // muted cream — placeholder bgs
+  --color-muted-fg: #1c1712;
 
-  --color-brand: #fbbf24;        // amber — tertiary/brand gold, optimism
-  --color-border: #1e293b;       // dark slate border — chunky and defined
-  --color-text-muted: #64748b;   // slate 500 — secondary text
+  --color-brand: #8b6ac4;        // purple — ribbon tail, tertiary accent
+  --color-border: #1c1712;       // dark — thick and defined
+  --color-text-muted: #6b5b4e;   // warm brown-gray — secondary text
 
-  // ── Shadows — hard offset, zero blur, slate (not black) ─────
-  // "The Pop Shadow": gives elements a sticker or cut-out paper feel.
-  // Slate instead of pure black keeps it warm and friendly.
-  --shadow-xs: 2px 2px 0px 0px #1e293b;
-  --shadow-sm: 4px 4px 0px 0px #1e293b;
-  --shadow-md: 6px 6px 0px 0px #1e293b;
-  --shadow-lg: 8px 8px 0px 0px #1e293b;
-  --shadow-xl: 12px 12px 0px 0px #1e293b;
-  --shadow-xs-hover: 4px 4px 0px 0px #1e293b;
-  --shadow-sm-hover: 6px 6px 0px 0px #1e293b;
-  --shadow-md-hover: 8px 8px 0px 0px #1e293b;
-  --shadow-lg-hover: 12px 12px 0px 0px #1e293b;
+  // ── Shadows — hard offset, zero blur, warm near-black ────────
+  --shadow-xs: 2px 2px 0px 0px #1c1712;
+  --shadow-sm: 4px 4px 0px 0px #1c1712;
+  --shadow-md: 6px 6px 0px 0px #1c1712;
+  --shadow-lg: 8px 8px 0px 0px #1c1712;
+  --shadow-xl: 12px 12px 0px 0px #1c1712;
+  --shadow-xs-hover: 4px 4px 0px 0px #1c1712;
+  --shadow-sm-hover: 6px 6px 0px 0px #1c1712;
+  --shadow-md-hover: 8px 8px 0px 0px #1c1712;
+  --shadow-lg-hover: 12px 12px 0px 0px #1c1712;
 
   // ── Borders ──────────────────────────────────────────────────
-  --border-width: 2px;           // chunky but not aggressive
+  --border-width: 2px;
   --border: var(--border-width) solid var(--color-border);
 
   // ── Radius ───────────────────────────────────────────────────
-  --radius: 16px;                // rounded-xl — cards and panels
-  --radius-pill: 9999px;         // pill badges and buttons
+  --radius: 16px;
+  --radius-pill: 9999px;
 
   // ── Typography ───────────────────────────────────────────────
-  // Outfit: geometric sans with rounded letter corners — friendly, bold.
-  // Used for all UI text; the design system uses Plus Jakarta Sans for
-  // body copy, but a single-token system works best with one family.
-  --font-family: 'Outfit', system-ui, sans-serif;
-  --font-weight-body: 500;       // Medium — slightly bolder than typical for readability
-  --font-weight-heading: 800;    // ExtraBold — the geometric personality shows at heavy weights
+  --font-family: 'DM Sans', system-ui, sans-serif;
+  --font-family-heading: 'Space Grotesk', system-ui, sans-serif;
+  --font-family-display: 'Lilita One', system-ui, sans-serif;
+  --font-weight-body: 400;
+  --font-weight-heading: 700;
 
   // ── Layout ───────────────────────────────────────────────────
   --gutter: 4vw;
   --max-width: 1280px;
   --header-height: 68px;
 
-  // ── Header ───────────────────────────────────────────────────
-  --header-bg: #fffdf5;          // match canvas — clean and solid
+  // ── Header — dark cosmic bar ──────────────────────────────────
+  --header-bg: #1c1712;          // dark like Creative South nav
   --header-backdrop: none;
 
   // ── Component-specific ───────────────────────────────────────
-  --btn-press-offset: 4px;       // matches --shadow-sm offset — press translates to cover shadow
-  --heading-border: var(--border-width) solid var(--color-accent); // violet underline accent
-  --input-focus-bg: #ffffff;     // stay white; hard violet shadow handles the focus signal
-  --hero-pattern: radial-gradient(circle, #1e293b 1px, transparent 1px); // dot grid texture
+  --btn-press-offset: 4px;
+  --heading-border: var(--border-width) solid var(--color-accent); // pink underline
+  --input-focus-bg: #ffffff;
+  --hero-pattern: radial-gradient(circle, #1c1712 1px, transparent 1px);
   --hero-pattern-size: 24px 24px;
 
   // ── Animation ────────────────────────────────────────────────
-  // The overshoot/bounce cubic-bezier is the soul of this system.
-  // Elements don't just move — they pop, spring, and snap into place.
   --duration-fast: 150ms;
   --duration-base: 300ms;
   --duration-slow: 450ms;
-  --ease: cubic-bezier(0.34, 1.56, 0.64, 1); // overshoot: moves past target, springs back
+  --ease: cubic-bezier(0.34, 1.56, 0.64, 1); // overshoot bounce
 }
 
 // ── Component overrides ───────────────────────────────────────
-// Token values express the palette and spacing, but full theme
-// personality requires component-level rules that go beyond what
-// a single token can cover.
 
 [data-theme='playful-geometric'] {
-  // Pill-shaped buttons — the "Candy Button" signature.
-  // --radius alone (16px) isn't enough; primaries/secondaries
-  // need full pill, while ghost stays at --radius for subtlety.
+  // Pill buttons — the groovy signature shape
   .btn--primary,
   .btn--secondary,
   .btn--outline {
     border-radius: var(--radius-pill);
   }
 
-  // Pill badges — always fully rounded in this system
+  // Primary button hover: lift + extend shadow
+  .btn--primary:not(:disabled):hover {
+    transform: translate(-2px, -2px);
+    box-shadow: var(--shadow-sm-hover);
+  }
+
+  // Secondary button: transparent → yellow fill on hover
+  .btn--secondary {
+    background: transparent;
+    color: var(--color-fg);
+
+    &:hover:not(:disabled) {
+      background: var(--color-secondary);
+      color: var(--color-secondary-fg);
+    }
+  }
+
+  // Outline hover: same yellow fill
+  .btn--outline:hover:not(:disabled) {
+    background: var(--color-secondary);
+    color: var(--color-secondary-fg);
+    border-color: var(--color-border);
+  }
+
+  // Pill badges
   .badge {
     border-radius: var(--radius-pill);
   }
 
-  // Card hover: rotate + scale instead of straight translateY.
-  // Creates the "sticker picked up off the table" feel.
+  // Card hover: sticker-picked-up wiggle
   .card--interactive {
     &:hover {
       transform: rotate(-1.5deg) scale(1.02) translateY(-2px);
@@ -121,8 +142,39 @@
     }
   }
 
-  // Input focus: hard violet shadow instead of the default neutral.
-  // Signals focus with color, not just border change.
+  // Nav links on dark header need white text
+  .navbar {
+    color: #ffffff;
+
+    &__link {
+      color: #ffffff;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.12);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: none;
+        color: #ffffff;
+      }
+
+      &--active {
+        background: var(--color-accent);
+        border-color: var(--color-accent);
+        color: #ffffff;
+      }
+    }
+
+    &__hamburger {
+      background: transparent;
+      border-color: rgba(255, 255, 255, 0.4);
+      box-shadow: none;
+
+      span {
+        background: #ffffff;
+      }
+    }
+  }
+
+  // Input focus: hard pink shadow
   .text-input__input:focus {
     border-color: var(--color-accent);
     box-shadow: 4px 4px 0px 0px var(--color-accent);

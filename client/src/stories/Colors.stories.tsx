@@ -39,8 +39,8 @@ function Swatch({ name, cssVar, label }: { name: string; cssVar: string; label: 
           width: '100%',
           height: 80,
           background: `var(${cssVar})`,
-          border: '3px solid #000',
-          boxShadow: '4px 4px 0 0 #000',
+          border: 'var(--border-width, 2px) solid var(--color-border)',
+          boxShadow: 'var(--shadow-sm)',
         }}
       />
       <div>

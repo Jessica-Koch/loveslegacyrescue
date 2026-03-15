@@ -6,7 +6,8 @@ const meta = {
     layout: 'fullscreen',
     docs: {
       description: {
-        component: 'Full type scale using Space Grotesk. Switch themes to see how weights and family adapt.',
+        component:
+          'Full type scale. Switch themes to see how the font families and weights adapt.',
       },
     },
   },
@@ -15,40 +16,63 @@ const meta = {
 export default meta;
 type Story = StoryObj;
 
-const s = (overrides: React.CSSProperties): React.CSSProperties => ({
+// Base style — body font by default
+const body = (overrides: React.CSSProperties): React.CSSProperties => ({
   fontFamily: 'var(--font-family)',
   color: 'var(--color-fg)',
   margin: 0,
   ...overrides,
 });
 
+// Heading font
+const heading = (overrides: React.CSSProperties): React.CSSProperties => ({
+  fontFamily: 'var(--font-family-heading)',
+  color: 'var(--color-fg)',
+  margin: 0,
+  ...overrides,
+});
+
+// Display font
+const display = (overrides: React.CSSProperties): React.CSSProperties => ({
+  fontFamily: 'var(--font-family-display)',
+  color: 'var(--color-fg)',
+  margin: 0,
+  ...overrides,
+});
+
 const divider = (
-  <hr style={{ border: 'none', borderTop: '3px solid var(--color-border)', margin: '32px 0' }} />
+  <hr style={{ border: 'none', borderTop: '2px solid var(--color-border)', margin: '32px 0', opacity: 0.3 }} />
+);
+
+const label = (text: string) => (
+  <p style={body({ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: 16 })}>
+    {text}
+  </p>
 );
 
 function TypeSpecimen() {
   return (
     <div style={{ padding: '40px', background: 'var(--color-bg)', minHeight: '100vh', maxWidth: 900 }}>
 
-      <h1 style={s({ fontWeight: 900, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', letterSpacing: '-0.03em', lineHeight: 1.05, marginBottom: 8 })}>
+      <h1 style={display({ fontWeight: 'var(--font-weight-heading)' as any, fontSize: 'clamp(2.5rem, 6vw, 4.5rem)', lineHeight: 1.05, marginBottom: 8 })}>
         Type Scale
       </h1>
-      <p style={s({ fontWeight: 700, fontSize: '1rem', color: 'var(--color-text-muted)', marginBottom: 48 })}>
-        Space Grotesk — weights 900 (headings) · 700 (body) · 400 (reading)
+      <p style={body({ fontWeight: 400, fontSize: '1rem', color: 'var(--color-text-muted)', marginBottom: 48 })}>
+        Display · Heading · Body — switch themes to see each family.
       </p>
 
       {divider}
 
       {/* Display */}
-      <p style={s({ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: 8 })}>Display</p>
-      <p style={s({ fontWeight: 900, fontSize: 'clamp(3rem, 8vw, 5.5rem)', letterSpacing: '-0.04em', lineHeight: 0.95 })}>
+      {label('Display — hero & large feature text')}
+      <p style={display({ fontWeight: 'var(--font-weight-heading)' as any, fontSize: 'clamp(3rem, 8vw, 5.5rem)', lineHeight: 1 })}>
         Give a dog a home.
       </p>
 
       {divider}
 
       {/* Headings */}
-      <p style={s({ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: 24 })}>Headings</p>
+      {label('Headings — section titles & card names')}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
         {[
           { level: 'H1', size: 'clamp(2.25rem, 5vw, 3.5rem)' },
@@ -57,8 +81,10 @@ function TypeSpecimen() {
           { level: 'H4', size: '1.25rem' },
         ].map(({ level, size }) => (
           <div key={level} style={{ display: 'flex', alignItems: 'baseline', gap: 16 }}>
-            <span style={s({ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-muted)', width: 28, flexShrink: 0 })}>{level}</span>
-            <p style={s({ fontWeight: 900, fontSize: size, letterSpacing: '-0.02em', lineHeight: 1.1 })}>
+            <span style={body({ fontSize: '0.65rem', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-muted)', width: 28, flexShrink: 0 })}>
+              {level}
+            </span>
+            <p style={heading({ fontWeight: 'var(--font-weight-heading)' as any, fontSize: size, lineHeight: 1.1 })}>
               Love's Legacy Rescue
             </p>
           </div>
@@ -68,37 +94,38 @@ function TypeSpecimen() {
       {divider}
 
       {/* Body */}
-      <p style={s({ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: 24 })}>Body</p>
+      {label('Body — descriptions & reading text')}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-        <p style={s({ fontWeight: 700, fontSize: '1.15rem', lineHeight: 1.65, maxWidth: 600 })}>
+        <p style={body({ fontWeight: 700, fontSize: '1.15rem', lineHeight: 1.65, maxWidth: 600 })}>
           Body Large — We rescue huskies, shepherds, and dogs in need across Southern California. Every dog deserves a second chance at a loving home.
         </p>
-        <p style={s({ fontWeight: 700, fontSize: '1rem', lineHeight: 1.65, maxWidth: 600 })}>
+        <p style={body({ fontWeight: 'var(--font-weight-body)' as any, fontSize: '1rem', lineHeight: 1.65, maxWidth: 600 })}>
           Body — We rescue huskies, shepherds, and dogs in need across Southern California. Every dog deserves a second chance at a loving home.
         </p>
-        <p style={s({ fontWeight: 400, fontSize: '1rem', lineHeight: 1.75, maxWidth: 600, color: 'var(--color-text-muted)' })}>
-          Body Regular — We rescue huskies, shepherds, and dogs in need across Southern California. Every dog deserves a second chance at a loving home.
+        <p style={body({ fontWeight: 400, fontSize: '1rem', lineHeight: 1.75, maxWidth: 600, color: 'var(--color-text-muted)' })}>
+          Body Muted — We rescue huskies, shepherds, and dogs in need across Southern California. Every dog deserves a second chance at a loving home.
         </p>
-        <p style={s({ fontWeight: 700, fontSize: '0.875rem', lineHeight: 1.6, color: 'var(--color-text-muted)' })}>
+        <p style={body({ fontWeight: 400, fontSize: '0.875rem', lineHeight: 1.6, color: 'var(--color-text-muted)' })}>
           Small — Siberian Husky · Male · 2yr
         </p>
       </div>
 
       {divider}
 
-      {/* Labels & UI text */}
-      <p style={s({ fontSize: '0.7rem', fontWeight: 700, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: 24 })}>Labels &amp; UI Text</p>
+      {/* Labels */}
+      {label('Labels & UI text')}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        <p style={s({ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.14em', textTransform: 'uppercase' })}>
-          NAV LINK / BUTTON LABEL — Adopt · Foster · Donate
+        <p style={body({ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.14em', textTransform: 'uppercase' })}>
+          Nav Link / Button — Adopt · Foster · Donate
         </p>
-        <p style={s({ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.12em', textTransform: 'uppercase' })}>
-          BADGE — Featured · In Foster · Dog of the Week
+        <p style={body({ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.12em', textTransform: 'uppercase' })}>
+          Badge — Featured · In Foster · Dog of the Week
         </p>
-        <p style={s({ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-muted)' })}>
+        <p style={body({ fontWeight: 700, fontSize: '0.7rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'var(--color-text-muted)' })}>
           Table Header — Name · Breed · Status
         </p>
       </div>
+
     </div>
   );
 }

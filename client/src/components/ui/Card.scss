@@ -1,38 +1,119 @@
+@use '../../styles/mixins' as *;
+
 .card {
   background: var(--color-surface);
   border: var(--border);
   border-radius: var(--radius);
+  box-shadow: var(--shadow-md);
+  display: flex;
+  flex-direction: column;
+  @include interactive-card;
 
-  // ── Shadows ──────────────────────────────────────────────────
-  &--shadow-sm { box-shadow: var(--shadow-sm); }
-  &--shadow-md { box-shadow: var(--shadow-md); }
-  &--shadow-lg { box-shadow: var(--shadow-lg); }
+  // ── Photo ─────────────────────────────────────────────────────
+  &__photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-bottom: var(--border);
+    background: var(--color-muted);
+    border-radius: var(--radius) var(--radius) 0 0;
+  }
 
-  // ── Padding ──────────────────────────────────────────────────
-  &--pad-none  { padding: 0; }
-  &--pad-sm    { padding: 16px; }
-  &--pad-md    { padding: 24px; }
-  &--pad-lg    { padding: 40px; }
+  &__no-photo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    font-size: 3rem;
+    background: var(--color-muted);
+  }
 
-  // ── Interactive lift ─────────────────────────────────────────
-  &--interactive {
-    cursor: pointer;
-    transition:
-      transform var(--duration-base) var(--ease),
-      box-shadow var(--duration-base) var(--ease);
+  // ── Body ──────────────────────────────────────────────────────
+  &__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
 
-    &:hover {
-      transform: translateY(-3px);
-      box-shadow: var(--shadow-lg);
-    }
+  &__name {
+    font-family: var(--font-family-heading);
+    font-size: 1.2rem;
+    font-weight: var(--font-weight-heading);
+    letter-spacing: -0.01em;
+    color: var(--color-fg);
+  }
 
-    &:active {
-      transform: translateY(0);
+  &__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-family: var(--font-family);
+    font-size: 0.75rem;
+    font-weight: var(--font-weight-body);
+    color: var(--color-text-muted);
+    letter-spacing: 0.04em;
+
+    span {
+      &::after {
+        content: '·';
+        margin-left: 6px;
+      }
+
+      &:last-child::after {
+        content: '';
+      }
     }
   }
 
-  // ── Accent header band ────────────────────────────────────────
-  &--accent {
-    border-top: 6px solid var(--color-accent);
+  &__description {
+    font-family: var(--font-family);
+    font-size: 0.875rem;
+    font-weight: var(--font-weight-body);
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    flex: 1;
+  }
+
+  &__cta {
+    @include label-type;
+    display: inline-block;
+    margin-top: 8px;
+    padding: 6px 0;
+    color: var(--color-fg);
+    border-bottom: 2px solid var(--color-accent);
+    align-self: flex-start;
+    transition: color var(--duration-fast) var(--ease);
+
+    &:hover {
+      color: var(--color-accent);
+    }
+  }
+
+  // ── Badges ────────────────────────────────────────────────────
+  &__badge {
+    @include label-type;
+    position: absolute;
+    top: 12px;
+    padding: 4px 10px;
+    border: var(--border-width) solid var(--color-border);
+    box-shadow: var(--shadow-xs);
+
+    &--featured {
+      left: 12px;
+      background: var(--color-accent);
+      color: var(--color-accent-fg);
+      transform: rotate(-1.5deg);
+      transform-origin: left center;
+    }
+
+    &--foster {
+      right: 12px;
+      background: var(--color-secondary);
+      color: var(--color-secondary-fg);
+      transform: rotate(1.5deg);
+      transform-origin: right center;
+    }
   }
 }

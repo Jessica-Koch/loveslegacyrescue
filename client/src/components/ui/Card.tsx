@@ -1,43 +1,55 @@
 import './Card.scss';
+import type { Dog } from '../../types';
 
-export type CardShadow = 'sm' | 'md' | 'lg';
-export type CardPadding = 'none' | 'sm' | 'md' | 'lg';
-
-export interface CardProps {
-  children: React.ReactNode;
-  interactive?: boolean;
-  shadow?: CardShadow;
-  padding?: CardPadding;
-  accent?: boolean;
-  as?: keyof React.JSX.IntrinsicElements;
-  className?: string;
-  onClick?: React.MouseEventHandler;
+function formatAge(ageMonths: string | null): string {
+  if (!ageMonths) return '';
+  const months = parseInt(ageMonths, 10);
+  if (isNaN(months)) return '';
+  const years = Math.floor(months / 12);
+  const rem = months % 12;
+  if (years === 0) return `${months}mo`;
+  if (rem === 0) return `${years}yr`;
+  return `${years}yr ${rem}mo`;
 }
 
-export default function Card({
-  children,
-  interactive = false,
-  shadow = 'md',
-  padding = 'md',
-  accent = false,
-  as: Tag = 'div',
-  className,
-  onClick,
-}: CardProps) {
-  const classes = [
-    'card',
-    `card--shadow-${shadow}`,
-    `card--pad-${padding}`,
-    interactive && 'card--interactive',
-    accent && 'card--accent',
-    className,
-  ]
-    .filter(Boolean)
-    .join(' ');
+interface CardProps {
+  dog: Dog;
+}
+
+export default function Card({ dog }: CardProps) {
+  const photo = dog.photoUrls[0];
+  const age = formatAge(dog.age);
 
   return (
-    <Tag className={classes} onClick={onClick}>
-      {children}
-    </Tag>
+    <article className="card">
+      <div className="card__photo">
+        {photo ? (
+          <img src={photo} alt={dog.name} loading="lazy" />
+        ) : (
+          <div className="card__no-photo">🐾</div>
+        )}
+        {dog.featured && <span className="card__badge card__badge--featured">Featured</span>}
+        {dog.inFoster && <span className="card__badge card__badge--foster">In Foster</span>}
+      </div>
+      <div className="card__body">
+        <h2 className="card__name">{dog.name}</h2>
+        <div className="card__meta">
+          {dog.breed && <span>{dog.breed}</span>}
+          {dog.sex && <span>{dog.sex}</span>}
+          {age && <span>{age}</span>}
+        </div>
+        {dog.description && (
+          <p className="card__description">{dog.description.slice(0, 140).trim()}…</p>
+        )}
+        <a
+          href="https://www.loveslegacyrescue.com/adopt"
+          target="_blank"
+          rel="noreferrer"
+          className="card__cta"
+        >
+          Meet {dog.name}
+        </a>
+      </div>
+    </article>
   );
 }

@@ -6,11 +6,12 @@ const preview: Preview = {
   decorators: [
     withThemeByDataAttribute({
       themes: {
+        "Love's Legacy (Brand)": 'default',
+        'Golden Hour': 'golden-hour',
         'Neo-Brutalism': 'neo-brutalism',
-        'Default (Dark)': 'default',
         'Playful Geometric': 'playful-geometric',
       },
-      defaultTheme: 'Neo-Brutalism',
+      defaultTheme: "Love's Legacy (Brand)",
       attributeName: 'data-theme',
     }),
   ],

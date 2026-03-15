@@ -1,5 +1,5 @@
 import type { Dog } from '../types';
-import DogCard from './DogCard';
+import Card from './ui/Card';
 
 interface DogsPageProps {
   dogs: Dog[];
@@ -34,12 +34,12 @@ export default function DogsPage({ dogs, loading }: DogsPageProps) {
                 {featured.photoUrls[0] ? (
                   <img src={featured.photoUrls[0]} alt={featured.name} />
                 ) : (
-                  <div className="dog-card-no-photo">🐾</div>
+                  <div className="card__no-photo">🐾</div>
                 )}
               </div>
               <div className="featured-body">
                 <h3>{featured.name}</h3>
-                <div className="dog-meta">
+                <div className="card__meta">
                   {featured.breed && <span>{featured.breed}</span>}
                   {featured.sex && <span>{featured.sex}</span>}
                 </div>
@@ -48,7 +48,7 @@ export default function DogsPage({ dogs, loading }: DogsPageProps) {
                   href="https://www.loveslegacyrescue.com/adopt"
                   target="_blank"
                   rel="noreferrer"
-                  className="dog-cta"
+                  className="card__cta"
                 >
                   Meet {featured.name}
                 </a>
@@ -64,7 +64,7 @@ export default function DogsPage({ dogs, loading }: DogsPageProps) {
           <p className="section-sub">{dogs.length} dogs looking for their forever home</p>
           <div className="dog-grid">
             {dogs.map((dog) => (
-              <DogCard key={dog.id} dog={dog} />
+              <Card key={dog.id} dog={dog} />
             ))}
           </div>
         </div>
