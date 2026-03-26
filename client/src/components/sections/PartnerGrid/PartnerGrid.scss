@@ -1,0 +1,38 @@
+@use '../../../styles/mixins' as *;
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+
+  &__item {
+    @include bordered-surface(xs);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    min-height: 100px;
+    transition:
+      box-shadow var(--duration-fast) var(--ease),
+      transform var(--duration-fast) var(--ease);
+
+    &:hover {
+      box-shadow: var(--shadow-sm-hover);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__logo {
+    max-height: 60px;
+    object-fit: contain;
+  }
+
+  &__name {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 0.9rem;
+    text-align: center;
+    color: var(--color-fg);
+  }
+}

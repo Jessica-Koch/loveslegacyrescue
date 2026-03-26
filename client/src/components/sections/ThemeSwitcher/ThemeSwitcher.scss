@@ -1,0 +1,111 @@
+.theme-switcher {
+  &__swatches {
+    display: flex;
+    gap: 3px;
+  }
+
+  &__swatch {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  // ── Mobile variant ───────────────────────────────────────
+  &--mobile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  &__mobile-label {
+    font-size: 0.8rem;
+    font-weight: var(--font-weight-heading);
+    color: var(--color-text-muted);
+  }
+
+  &__mobile-options {
+    display: flex;
+    gap: 6px;
+  }
+
+  &__mobile-btn {
+    display: flex;
+    align-items: center;
+    padding: 4px;
+    background: none;
+    border: 1.5px solid transparent;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: border-color var(--duration-fast) var(--ease);
+
+    &--active {
+      border-color: var(--color-accent);
+    }
+  }
+
+  // ── Nav dropdown variant ─────────────────────────────────
+  &--nav {
+    position: relative;
+  }
+
+  &__toggle {
+    font-size: 1rem;
+  }
+
+  &__panel {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    min-width: 180px;
+    padding: 8px;
+    background: var(--color-surface);
+    border: var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-text-muted);
+    padding: 6px 8px;
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px;
+    background: none;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-family: var(--font-family);
+    font-size: 0.85rem;
+    color: var(--color-fg);
+    width: 100%;
+    text-align: left;
+    transition: background var(--duration-fast) var(--ease);
+
+    &:hover {
+      background: var(--color-muted);
+    }
+
+    &--active {
+      font-weight: var(--font-weight-heading);
+      color: var(--color-accent);
+    }
+  }
+
+  &__label {
+    flex: 1;
+  }
+}

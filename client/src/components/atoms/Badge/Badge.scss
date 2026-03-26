@@ -1,0 +1,61 @@
+@use '../../../styles/mixins' as *;
+
+.badge {
+  @include label-type;
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 12px;
+  border: var(--border);
+  border-radius: var(--radius);
+
+  // ── Sizes ──────────────────────────────────────────────
+  &--sm {
+    font-size: 0.6rem;
+    padding: 2px 8px;
+  }
+
+  &--md {
+    font-size: 0.7rem;
+    padding: 4px 12px;
+  }
+
+  // ── Variants ───────────────────────────────────────────
+  &--accent {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    border-color: var(--color-accent);
+  }
+
+  &--secondary {
+    background: var(--color-secondary);
+    color: var(--color-secondary-fg);
+    border-color: var(--color-secondary);
+  }
+
+  &--muted {
+    background: var(--color-muted);
+    color: var(--color-muted-fg);
+    border-color: var(--color-muted);
+  }
+
+  &--outline {
+    background: transparent;
+    color: var(--color-fg);
+    border-color: var(--color-border);
+  }
+
+  &--brand {
+    background: var(--color-brand);
+    color: var(--color-fg);
+    border-color: var(--color-brand);
+  }
+
+  // ── Rotation ───────────────────────────────────────────
+  &--rotate-cw {
+    transform: rotate(3deg);
+  }
+
+  &--rotate-ccw {
+    transform: rotate(-3deg);
+  }
+}

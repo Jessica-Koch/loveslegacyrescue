@@ -1,0 +1,63 @@
+.text-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__label {
+    font-size: 0.85rem;
+    font-weight: var(--font-weight-heading);
+    color: var(--color-fg);
+  }
+
+  &__required {
+    color: var(--color-accent);
+  }
+
+  &__input {
+    padding: 10px 14px;
+    font-family: var(--font-family);
+    font-size: 0.9rem;
+    color: var(--color-fg);
+    background: var(--color-surface);
+    border: var(--border);
+    border-radius: var(--radius);
+    outline: none;
+    transition:
+      border-color var(--duration-fast) var(--ease),
+      box-shadow var(--duration-fast) var(--ease);
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+
+    &:focus {
+      border-color: var(--color-accent);
+      box-shadow: var(--input-focus-shadow);
+    }
+  }
+
+  &__helper {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+
+    &--error {
+      color: #d44;
+    }
+  }
+
+  // ── State modifiers ──────────────────────────────────────
+  &--error {
+    .text-input__input {
+      border-color: #d44;
+    }
+  }
+
+  &--disabled {
+    opacity: 0.5;
+
+    .text-input__input {
+      cursor: not-allowed;
+      background: var(--color-muted);
+    }
+  }
+}

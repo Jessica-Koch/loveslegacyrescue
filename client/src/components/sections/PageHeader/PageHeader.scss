@@ -1,0 +1,20 @@
+.page-header {
+  padding: 48px 0 32px;
+  background: var(--color-muted);
+  text-align: center;
+
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    margin-bottom: 8px;
+  }
+
+  &__sub {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+}

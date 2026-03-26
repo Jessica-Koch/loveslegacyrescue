@@ -1,44 +1,50 @@
-import { useEffect, useState } from 'react';
-import type { Dog } from './types';
-import Header from './components/Header';
-import DogsPage from './components/DogsPage';
-import AdminPage from './components/AdminPage';
-import './App.scss';
+import { lazy, Suspense } from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { DogsProvider } from './context/DogsContext';
+import { Body as Layout } from './components/layout/Body/Body';
 
-const API = 'http://localhost:3001';
+const HomePage = lazy(() => import('./pages/HomePage'));
+const AdoptableDogsPage = lazy(() => import('./pages/adopt/AdoptableDogsPage'));
+const ApplicationProcessPage = lazy(
+  () => import('./pages/adopt/ApplicationProcessPage'),
+);
+const HappyTailsPage = lazy(() => import('./pages/adopt/HappyTailsPage'));
+const FosterPage = lazy(() => import('./pages/foster/FosterPage'));
+const AboutPage = lazy(() => import('./pages/about/AboutPage'));
+const EventsPage = lazy(() => import('./pages/about/EventsPage'));
+const NewsPage = lazy(() => import('./pages/about/NewsPage'));
+const ResourcesPage = lazy(() => import('./pages/about/ResourcesPage'));
+const PartnersPage = lazy(() => import('./pages/about/PartnersPage'));
+const ContactPage = lazy(() => import('./pages/about/ContactPage'));
+const DonatePage = lazy(() => import('./pages/donate/DonatePage'));
+const AdminPage = lazy(() => import('./pages/admin/AdminPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
 
 export default function App() {
-  const [view, setView] = useState<'dogs' | 'admin'>('dogs');
-  const [dogs, setDogs] = useState<Dog[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  async function fetchDogs() {
-    const res = await fetch(`${API}/dogs`);
-    const data = await res.json();
-    setDogs(data);
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    fetchDogs();
-  }, []);
-
   return (
-    <>
-      <Header view={view} onViewChange={setView} />
-      {view === 'dogs' ? (
-        <DogsPage dogs={dogs} loading={loading} />
-      ) : (
-        <AdminPage dogs={dogs} onUpdated={fetchDogs} />
-      )}
-      <footer className="footer">
-        <p>Love's Legacy Rescue &copy; {new Date().getFullYear()}</p>
-        <p>
-          <a href="https://www.loveslegacyrescue.com" target="_blank" rel="noreferrer">
-            loveslegacyrescue.com
-          </a>
-        </p>
-      </footer>
-    </>
+    <BrowserRouter>
+      <DogsProvider>
+        <Suspense fallback={<div className='loading'>Loading…</div>}>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route index element={<HomePage />} />
+              <Route path='adopt/dogs' element={<AdoptableDogsPage />} />
+              <Route path='adopt/apply' element={<ApplicationProcessPage />} />
+              <Route path='adopt/happy-tails' element={<HappyTailsPage />} />
+              <Route path='foster' element={<FosterPage />} />
+              <Route path='about' element={<AboutPage />} />
+              <Route path='about/events' element={<EventsPage />} />
+              <Route path='about/news' element={<NewsPage />} />
+              <Route path='about/resources' element={<ResourcesPage />} />
+              <Route path='about/partners' element={<PartnersPage />} />
+              <Route path='about/contact' element={<ContactPage />} />
+              <Route path='donate' element={<DonatePage />} />
+              <Route path='admin' element={<AdminPage />} />
+              <Route path='*' element={<NotFoundPage />} />
+            </Route>
+          </Routes>
+        </Suspense>
+      </DogsProvider>
+    </BrowserRouter>
   );
 }

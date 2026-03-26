@@ -10,6 +10,8 @@ const preview: Preview = {
         'Golden Hour': 'golden-hour',
         'Neo-Brutalism': 'neo-brutalism',
         'Playful Geometric': 'playful-geometric',
+        'Holographic': 'holographic',
+        'Dog Vision': 'dog-vision',
       },
       defaultTheme: "Love's Legacy (Brand)",
       attributeName: 'data-theme',

@@ -1,0 +1,26 @@
+.sticky-donate {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px 24px;
+  font-family: var(--font-family);
+  font-weight: var(--font-weight-heading);
+  font-size: 0.9rem;
+  background: var(--color-accent);
+  color: var(--color-accent-fg);
+  border: var(--border);
+  border-color: var(--color-accent);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lg);
+  z-index: 90;
+  transition:
+    background var(--duration-fast) var(--ease),
+    transform var(--duration-fast) var(--ease),
+    box-shadow var(--duration-fast) var(--ease);
+
+  &:hover {
+    background: var(--color-accent-hover);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-xl);
+  }
+}

@@ -1,0 +1,113 @@
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--header-bg);
+  backdrop-filter: var(--header-backdrop);
+  -webkit-backdrop-filter: var(--header-backdrop);
+  border-bottom: var(--border);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    height: var(--header-height);
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+  }
+
+  &__nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__link {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-fg);
+    background: none;
+    border: none;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition:
+      background var(--duration-fast) var(--ease),
+      color var(--duration-fast) var(--ease);
+
+    &:hover {
+      background: var(--color-muted);
+    }
+
+    &--active {
+      color: var(--color-accent);
+      font-weight: var(--font-weight-heading);
+    }
+
+    &--accent {
+      color: var(--color-accent);
+    }
+  }
+
+  // ── Hamburger ────────────────────────────────────────────
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 32px;
+    height: 32px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+
+    @media (max-width: 768px) {
+      display: flex;
+    }
+
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: var(--color-fg);
+      border-radius: 1px;
+      transition:
+        transform var(--duration-base) var(--ease),
+        opacity var(--duration-base) var(--ease);
+    }
+
+    &--open {
+      span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+      span:nth-child(2) { opacity: 0; }
+      span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    }
+  }
+
+  // ── Mobile drawer ────────────────────────────────────────
+  &__drawer {
+    display: flex;
+    flex-direction: column;
+    padding: 8px var(--gutter) 16px;
+    border-top: var(--border);
+    background: var(--color-surface);
+
+    .navbar__link {
+      padding: 12px 16px;
+      width: 100%;
+      text-align: left;
+    }
+  }
+}

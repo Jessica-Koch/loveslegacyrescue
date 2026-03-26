@@ -1,10 +1,7 @@
 // ─────────────────────────────────────────────────────────────
-// Shared SCSS mixins — structural interaction patterns.
-// All values are resolved from CSS custom properties so they
-// adapt automatically to whichever theme is active.
+// Shared mixins — consume CSS custom properties for theming
 // ─────────────────────────────────────────────────────────────
 
-// Card lift on hover — translate up + deepen shadow.
 @mixin interactive-card {
   transition:
     transform var(--duration-base) var(--ease),
@@ -16,35 +13,47 @@
   }
 }
 
-// Button press on :active — translate to cover the offset shadow.
 @mixin interactive-btn {
   transition:
-    transform var(--duration-fast) var(--ease),
+    background var(--duration-fast) var(--ease),
+    color var(--duration-fast) var(--ease),
     box-shadow var(--duration-fast) var(--ease),
-    background-color var(--duration-fast) var(--ease),
-    color var(--duration-fast) var(--ease);
+    transform var(--duration-fast) var(--ease);
 
-  &:not(:disabled):active {
-    transform: translate(var(--btn-press-offset), var(--btn-press-offset));
-    box-shadow: none;
+  &:active:not(:disabled) {
+    transform: translateY(var(--btn-press-offset));
   }
 }
 
-// Bordered surface — the base neo-brutalist card/container shell.
 @mixin bordered-surface($shadow: md) {
   background: var(--color-surface);
   border: var(--border);
   border-radius: var(--radius);
-  @if $shadow == sm { box-shadow: var(--shadow-sm); }
-  @else if $shadow == md { box-shadow: var(--shadow-md); }
-  @else if $shadow == lg { box-shadow: var(--shadow-lg); }
+  box-shadow: var(--shadow-#{$shadow});
 }
 
-// Uppercase label — the meta/badge type treatment.
 @mixin label-type {
-  font-family: var(--font-family);
   font-size: 0.7rem;
-  font-weight: var(--font-weight-body);
-  letter-spacing: 0.12em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
+  line-height: 1;
+}
+
+@mixin prismatic-divider {
+  &::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin: 40px auto 0;
+    max-width: 120px;
+    background: linear-gradient(
+      90deg,
+      var(--color-accent),
+      var(--color-secondary),
+      var(--color-muted),
+      var(--color-brand)
+    );
+    border-radius: 999px;
+  }
 }

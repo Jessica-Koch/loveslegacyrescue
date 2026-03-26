@@ -1,71 +1,76 @@
 // ─────────────────────────────────────────────────────────────
-// Design tokens — CSS custom property declarations.
-// These are neutral fallback values. Themes override them via
-// [data-theme="..."] selectors in styles/themes/*.
+// Love's Legacy Rescue — Design Tokens
+//
+// Brand colors sourced from the organization's Squarespace site.
+// Semantic tokens provide a theme-agnostic API that component
+// SCSS files consume via var(--token-name).
 // ─────────────────────────────────────────────────────────────
 
 :root {
-  // Core palette
-  --color-bg: #f8f8f8;
-  --color-fg: #000000;
-  --color-surface: #ffffff;
-  --color-accent: #000000;
-  --color-accent-hover: #333333;
-  --color-accent-fg: #ffffff;
-  --color-secondary: #eeeeee;
-  --color-secondary-hover: #dddddd;
-  --color-secondary-fg: #000000;
-  --color-muted: #cccccc;
-  --color-muted-fg: #000000;
-  --color-brand: #c8a96e;
-  --color-border: #000000;
-  --color-text-muted: #555555;
+  // ── Brand palette (constant across themes) ───────────────
+  --color-navy: #4b548b;
+  --color-periwinkle: #6182b3;
+  --color-yellow: #fff7ad;
+  --color-sky-blue: #abcffe;
+  --color-white: #ffffff;
 
-  // Shadows
-  --shadow-xs: 2px 2px 0px 0px #000000;
-  --shadow-sm: 4px 4px 0px 0px #000000;
-  --shadow-md: 6px 6px 0px 0px #000000;
-  --shadow-lg: 10px 10px 0px 0px #000000;
-  --shadow-xl: 14px 14px 0px 0px #000000;
-  --shadow-xs-hover: 4px 4px 0px 0px #000000;
-  --shadow-sm-hover: 6px 6px 0px 0px #000000;
-  --shadow-md-hover: 10px 10px 0px 0px #000000;
-  --shadow-lg-hover: 14px 14px 0px 0px #000000;
+  // ── Semantic palette ─────────────────────────────────────
+  --color-bg: var(--color-white);
+  --color-fg: var(--color-navy);
+  --color-surface: var(--color-white);
+  --color-accent: var(--color-periwinkle);
+  --color-accent-hover: #4e6f9e;
+  --color-accent-fg: var(--color-white);
+  --color-secondary: var(--color-sky-blue);
+  --color-secondary-hover: #8cbcf5;
+  --color-secondary-fg: var(--color-navy);
+  --color-muted: #f0f0f4;
+  --color-muted-fg: var(--color-navy);
+  --color-brand: var(--color-yellow);
+  --color-border: var(--color-navy);
+  --color-text-muted: #7a7fa8;
 
-  // Borders
-  --border-width: 2px;
+  // ── Shadows ──────────────────────────────────────────────
+  --shadow-xs: 0 1px 2px rgba(75, 84, 139, 0.08);
+  --shadow-sm: 0 2px 4px rgba(75, 84, 139, 0.10);
+  --shadow-md: 0 4px 12px rgba(75, 84, 139, 0.12);
+  --shadow-lg: 0 8px 24px rgba(75, 84, 139, 0.14);
+  --shadow-xl: 0 16px 48px rgba(75, 84, 139, 0.16);
+  --shadow-xs-hover: 0 2px 4px rgba(75, 84, 139, 0.12);
+  --shadow-sm-hover: 0 4px 8px rgba(75, 84, 139, 0.14);
+  --shadow-md-hover: 0 8px 20px rgba(75, 84, 139, 0.16);
+
+  // ── Borders ──────────────────────────────────────────────
+  --border-width: 1px;
   --border: var(--border-width) solid var(--color-border);
 
-  // Radius
-  --radius: 0px;
-  --radius-pill: 9999px;
+  // ── Radius ───────────────────────────────────────────────
+  --radius: 8px;
+  --radius-pill: 999px;
+  --radius-lg: 16px;
 
-  // Typography
-  --font-family: system-ui, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
-  --font-family-heading: var(--font-family); // themes override with a separate heading face
-  --font-family-display: var(--font-family-heading); // large hero text; falls back to heading
-  --font-weight-body: 700;
-  --font-weight-heading: 900;
+  // ── Typography ───────────────────────────────────────────
+  --font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  --font-family-display: 'Josefin Sans', system-ui, sans-serif;
+  --font-family-heading: 'Josefin Sans', system-ui, sans-serif;
+  --font-family-accent: 'Josefin Sans', system-ui, sans-serif;
+  --font-weight-body: 400;
+  --font-weight-heading: 600;
 
-  // Layout
+  // ── Layout ───────────────────────────────────────────────
   --gutter: 4vw;
-  --max-width: 1280px;
+  --max-width: 1200px;
   --header-height: 64px;
+  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-backdrop: blur(10px);
 
-  // Header
-  --header-bg: #f8f8f8;
-  --header-backdrop: none;
-
-  // Component-specific
-  --btn-press-offset: 6px;
-  --heading-border: var(--border-width) solid var(--color-accent);
-  --input-focus-bg: #ffffcc;
-  --hero-pattern: none;
-  --hero-pattern-size: auto;
-
-  // Animation
-  --duration-fast: 100ms;
+  // ── Animation ────────────────────────────────────────────
+  --duration-fast: 120ms;
   --duration-base: 200ms;
-  --duration-slow: 300ms;
-  --ease: ease-out;
+  --duration-slow: 400ms;
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+
+  // ── Component ────────────────────────────────────────────
+  --btn-press-offset: 1px;
+  --input-focus-shadow: 0 0 0 3px rgba(97, 130, 179, 0.25);
 }

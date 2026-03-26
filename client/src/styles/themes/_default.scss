@@ -1,88 +1,50 @@
 // ─────────────────────────────────────────────────────────────
-// Theme: Brand (Love's Legacy Rescue)
+// Default Brand Theme — Love's Legacy Rescue
 //
-// Exact values sourced from Squarespace CSS custom properties:
-//
-//   --black-hsl:       231.56, 29.91%, 41.96%  → #4B548B  (brand navy)
-//   --accent-hsl:      215.85, 35.04%, 54.12%  → #6182B3  (periwinkle)
-//   --lightAccent-hsl:  54.15, 100%,   83.92%  → #FFF7AD  (pale yellow)
-//   --darkAccent-hsl:  213.98, 97.65%, 83.33%  → #ABCFFE  (pale sky blue)
-//   --white-hsl:         0,    0%,    100%      → #FFFFFF
-//
-// "Black" in Squarespace is actually the warm navy — used for text,
-// headings, and borders. The periwinkle is the primary accent/CTA.
-// Pale yellow and pale sky blue serve as highlight / secondary fills.
+// Navy/periwinkle palette with soft, approachable styling.
+// Values here match the :root defaults in _tokens.scss so this
+// file acts as an explicit declaration + any component overrides.
 // ─────────────────────────────────────────────────────────────
 
 [data-theme='default'] {
-  // ── Palette ─────────────────────────────────────────────────
-  --color-bg: #ffffff;           // white canvas — matches Squarespace site
-  --color-fg: #4b548b;           // brand navy ("black") — headings and body text
-  --color-surface: #ffffff;      // cards and panels
+  --color-bg: var(--color-white);
+  --color-fg: var(--color-navy);
+  --color-surface: var(--color-white);
+  --color-accent: var(--color-periwinkle);
+  --color-accent-hover: #4e6f9e;
+  --color-accent-fg: var(--color-white);
+  --color-secondary: var(--color-sky-blue);
+  --color-secondary-hover: #8cbcf5;
+  --color-secondary-fg: var(--color-navy);
+  --color-muted: #f0f0f4;
+  --color-muted-fg: var(--color-navy);
+  --color-brand: var(--color-yellow);
+  --color-border: var(--color-navy);
+  --color-text-muted: #7a7fa8;
 
-  --color-accent: #6182b3;       // periwinkle — primary CTAs, links, focus
-  --color-accent-hover: #4b568a; // darken toward navy on hover
-  --color-accent-fg: #ffffff;    // white on periwinkle (4.5:1 contrast, AA)
+  --shadow-xs: 0 1px 2px rgba(75, 84, 139, 0.08);
+  --shadow-sm: 0 2px 4px rgba(75, 84, 139, 0.10);
+  --shadow-md: 0 4px 12px rgba(75, 84, 139, 0.12);
+  --shadow-lg: 0 8px 24px rgba(75, 84, 139, 0.14);
+  --shadow-xl: 0 16px 48px rgba(75, 84, 139, 0.16);
+  --shadow-xs-hover: 0 2px 4px rgba(75, 84, 139, 0.12);
+  --shadow-sm-hover: 0 4px 8px rgba(75, 84, 139, 0.14);
+  --shadow-md-hover: 0 8px 20px rgba(75, 84, 139, 0.16);
 
-  --color-secondary: #fff7ad;    // pale yellow (lightAccent) — badge fills, highlights
-  --color-secondary-hover: #fff099; // slightly deeper yellow
-  --color-secondary-fg: #4b548b; // navy on yellow — high contrast
-
-  --color-muted: #eef1f8;        // derived very-light lavender — placeholder bgs
-  --color-muted-fg: #4b548b;     // navy on lavender
-
-  --color-brand: #abcffe;        // pale sky blue (darkAccent) — tertiary fills
-  --color-border: #d4d9ec;       // desaturated lavender-gray — soft dividers
-  --color-text-muted: #6182b3;   // periwinkle doubles as muted text — stays on-brand
-
-  // ── Shadows — navy-tinted soft diffused ───────────────────────
-  // rgba(75, 84, 139, …) keeps shadows warm and on-brand rather
-  // than generic black/gray.
-  --shadow-xs: 0 1px 3px rgba(75, 84, 139, 0.10);
-  --shadow-sm: 0 2px 8px rgba(75, 84, 139, 0.14);
-  --shadow-md: 0 4px 16px rgba(75, 84, 139, 0.18);
-  --shadow-lg: 0 8px 32px rgba(75, 84, 139, 0.22);
-  --shadow-xl: 0 12px 48px rgba(75, 84, 139, 0.28);
-  --shadow-xs-hover: 0 2px 6px rgba(75, 84, 139, 0.16);
-  --shadow-sm-hover: 0 3px 12px rgba(75, 84, 139, 0.20);
-  --shadow-md-hover: 0 6px 24px rgba(75, 84, 139, 0.24);
-  --shadow-lg-hover: 0 12px 48px rgba(75, 84, 139, 0.30);
-
-  // ── Borders ──────────────────────────────────────────────────
   --border-width: 1px;
   --border: var(--border-width) solid var(--color-border);
 
-  // ── Radius ───────────────────────────────────────────────────
   --radius: 8px;
-  --radius-pill: 9999px;
+  --radius-pill: 999px;
+  --radius-lg: 16px;
 
-  // ── Typography ───────────────────────────────────────────────
-  // Jost ≈ brandon-grotesque: geometric humanist, clean proportions, weight 700
-  // Josefin Sans ≈ futura-pt: the classic Futura-inspired geometric, weight 600
-  --font-family: 'Josefin Sans', system-ui, sans-serif;
-  --font-family-heading: 'Jost', system-ui, sans-serif;
-  --font-weight-body: 600;
-  --font-weight-heading: 700;
+  --font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Josefin Sans', system-ui, sans-serif;
+  --font-weight-body: 400;
+  --font-weight-heading: 600;
 
-  // ── Layout ───────────────────────────────────────────────────
-  --gutter: 4vw;
-  --max-width: 1280px;
-  --header-height: 68px;
-
-  // ── Header ───────────────────────────────────────────────────
   --header-bg: rgba(255, 255, 255, 0.92);
-  --header-backdrop: blur(8px);
-
-  // ── Component-specific ───────────────────────────────────────
-  --btn-press-offset: 0px;
-  --heading-border: 2px solid var(--color-accent); // periwinkle underline
-  --input-focus-bg: #ffffff;
-  --hero-pattern: none;
-  --hero-pattern-size: auto;
-
-  // ── Animation ────────────────────────────────────────────────
-  --duration-fast: 150ms;
-  --duration-base: 250ms;
-  --duration-slow: 400ms;
-  --ease: ease-in-out;
+  --header-backdrop: blur(10px);
+  --btn-press-offset: 1px;
+  --input-focus-shadow: 0 0 0 3px rgba(97, 130, 179, 0.25);
 }

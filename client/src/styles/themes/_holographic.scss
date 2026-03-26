@@ -1,0 +1,160 @@
+// ─────────────────────────────────────────────────────────────
+// Holographic Theme — Prismatic Pastels
+//
+// Retro-geometric aesthetic with pastel gradients, pill shapes,
+// soft dark outlines, and frosted glass. Inspired by light
+// refracted through a prism.
+// ─────────────────────────────────────────────────────────────
+
+[data-theme='holographic'] {
+  // ── Palette ────────────────────────────────────────────────
+  --color-bg: #f4f6ff;
+  --color-fg: #4b548b;
+  --color-surface: #ffffff;
+  --color-accent: #6182b3;
+  --color-accent-hover: #4e6f9e;
+  --color-accent-fg: #ffffff;
+  --color-secondary: #abcffe;
+  --color-secondary-hover: #8cbcf5;
+  --color-secondary-fg: #4b548b;
+  --color-muted: #eef2fb;
+  --color-muted-fg: #4b548b;
+  --color-brand: #fff7ad;
+  --color-border: #4b548b;
+  --color-text-muted: #7a7fa8;
+
+  // ── Shadows — brand-blue tinted, soft blur ─────────────────
+  --shadow-xs: 1px 1px 3px rgba(75, 84, 139, 0.12);
+  --shadow-sm: 2px 2px 6px rgba(75, 84, 139, 0.14);
+  --shadow-md: 3px 3px 12px rgba(75, 84, 139, 0.16);
+  --shadow-lg: 4px 4px 20px rgba(75, 84, 139, 0.18);
+  --shadow-xl: 6px 6px 32px rgba(75, 84, 139, 0.22);
+  --shadow-xs-hover: 2px 2px 5px rgba(75, 84, 139, 0.18);
+  --shadow-sm-hover: 3px 3px 8px rgba(75, 84, 139, 0.20);
+  --shadow-md-hover: 4px 4px 16px rgba(75, 84, 139, 0.24);
+
+  // ── Borders — soft, thin ───────────────────────────────────
+  --border-width: 1.5px;
+  --border: 1.5px solid var(--color-border);
+
+  // ── Radius — pill-forward ──────────────────────────────────
+  --radius: 12px;
+  --radius-pill: 999px;
+  --radius-lg: 20px;
+
+  // ── Typography ─────────────────────────────────────────────
+  --font-family: 'Jost', system-ui, -apple-system, sans-serif;
+  --font-family-heading: 'Josefin Sans', system-ui, sans-serif;
+  --font-weight-body: 400;
+  --font-weight-heading: 600;
+
+  // ── Layout / Animation ─────────────────────────────────────
+  --header-bg: rgba(244, 246, 255, 0.88);
+  --header-backdrop: blur(12px);
+  --btn-press-offset: 2px;
+  --input-focus-shadow: 0 0 0 3px rgba(97, 130, 179, 0.25);
+
+  // ── Component overrides ────────────────────────────────────
+
+  // Buttons — pill shaped with gradient primary
+  .btn {
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.02em;
+  }
+
+  .btn--primary {
+    background: linear-gradient(135deg, var(--color-accent), #8ba8d4);
+  }
+
+  .btn--secondary {
+    background: linear-gradient(135deg, var(--color-secondary), #c8e0ff);
+  }
+
+  .btn--ghost {
+    border-color: rgba(75, 84, 139, 0.3);
+  }
+
+  // Badges — pill with softer treatment
+  .badge {
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.04em;
+  }
+
+  // Cards — rounded with holographic glow on hover
+  .card {
+    border-radius: var(--radius-lg);
+
+    &:hover {
+      box-shadow: 0 4px 24px rgba(97, 130, 179, 0.22),
+                  0 0 0 1px rgba(97, 130, 179, 0.10);
+    }
+  }
+
+  .card__photo {
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+
+  // Inputs — soft lavender focus glow
+  .text-input__input {
+    border-radius: var(--radius);
+
+    &:focus {
+      box-shadow: var(--input-focus-shadow);
+      border-color: var(--color-accent);
+    }
+  }
+
+  // Dropdowns — pill trigger
+  .dropdown__trigger {
+    border-radius: var(--radius);
+  }
+
+  .dropdown__list {
+    border-radius: var(--radius);
+  }
+
+  // Header — frosted glass
+  .header {
+    backdrop-filter: var(--header-backdrop);
+    -webkit-backdrop-filter: var(--header-backdrop);
+  }
+
+  // Hero — prismatic gradient overlay with brand blues
+  .hero {
+    background:
+      linear-gradient(
+        135deg,
+        rgba(97, 130, 179, 0.10) 0%,
+        rgba(171, 207, 254, 0.12) 35%,
+        rgba(255, 247, 173, 0.08) 65%,
+        rgba(97, 130, 179, 0.06) 100%
+      ),
+      var(--color-bg);
+  }
+
+  // Section headings — prismatic underline with brand blues
+  .section-heading::after {
+    content: '';
+    display: block;
+    height: 2px;
+    margin: 12px auto 0;
+    max-width: 80px;
+    background: linear-gradient(
+      90deg,
+      var(--color-accent),
+      var(--color-secondary),
+      var(--color-brand)
+    );
+    border-radius: 999px;
+  }
+
+  // Footer — navy with brand accents
+  .footer {
+    background: #4b548b;
+    color: #e8ecf4;
+  }
+
+  .footer__heading {
+    color: var(--color-secondary);
+  }
+}

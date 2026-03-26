@@ -1,0 +1,102 @@
+.footer {
+  background: var(--color-fg);
+  color: var(--color-bg);
+  margin-top: auto;
+
+  &__inner {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 32px;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 48px var(--gutter);
+  }
+
+  &__col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__paw {
+    font-size: 1.4rem;
+  }
+
+  &__name {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1.1rem;
+  }
+
+  &__tagline {
+    font-size: 0.85rem;
+    opacity: 0.8;
+    line-height: 1.5;
+  }
+
+  &__heading {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    a {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      transition: opacity var(--duration-fast) var(--ease);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 0.85rem;
+    opacity: 0.8;
+
+    a:hover {
+      opacity: 1;
+    }
+  }
+
+  &__social {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    a {
+      font-size: 0.85rem;
+      opacity: 0.8;
+      transition: opacity var(--duration-fast) var(--ease);
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  &__bottom {
+    text-align: center;
+    padding: 20px var(--gutter);
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    font-size: 0.8rem;
+    opacity: 0.6;
+  }
+}
