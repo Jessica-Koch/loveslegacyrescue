@@ -3,12 +3,13 @@ import type { Dog } from './types';
 import Header from './components/Header';
 import DogsPage from './components/DogsPage';
 import AdminPage from './components/AdminPage';
+import AdoptionGame from './components/AdoptionGame';
 import './App.scss';
 
 const API = 'http://localhost:3001';
 
 export default function App() {
-  const [view, setView] = useState<'dogs' | 'admin'>('dogs');
+  const [view, setView] = useState<'dogs' | 'admin' | 'adopt'>('dogs');
   const [dogs, setDogs] = useState<Dog[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -26,11 +27,9 @@ export default function App() {
   return (
     <>
       <Header view={view} onViewChange={setView} />
-      {view === 'dogs' ? (
-        <DogsPage dogs={dogs} loading={loading} />
-      ) : (
-        <AdminPage dogs={dogs} onUpdated={fetchDogs} />
-      )}
+      {view === 'dogs' && <DogsPage dogs={dogs} loading={loading} onAdopt={() => setView('adopt')} />}
+      {view === 'admin' && <AdminPage dogs={dogs} onUpdated={fetchDogs} />}
+      {view === 'adopt' && <AdoptionGame dogs={dogs} onViewChange={setView} />}
       <footer className="footer">
         <p>Love's Legacy Rescue &copy; {new Date().getFullYear()}</p>
         <p>

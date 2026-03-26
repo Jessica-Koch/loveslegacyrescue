@@ -4,9 +4,10 @@ import Card from './ui/Card';
 interface DogsPageProps {
   dogs: Dog[];
   loading: boolean;
+  onAdopt: () => void;
 }
 
-export default function DogsPage({ dogs, loading }: DogsPageProps) {
+export default function DogsPage({ dogs, loading, onAdopt }: DogsPageProps) {
   const featured = dogs.find((d) => d.featured);
 
   if (loading) {
@@ -19,9 +20,9 @@ export default function DogsPage({ dogs, loading }: DogsPageProps) {
         <div className="hero-content">
           <h1>Give a dog a second chance.</h1>
           <p>Love's Legacy Rescue saves huskies, shepherds, and dogs in need across Southern California.</p>
-          <a href="https://www.loveslegacyrescue.com/adopt" target="_blank" rel="noreferrer" className="hero-cta">
+          <button className="hero-cta" onClick={onAdopt}>
             Start Here
-          </a>
+          </button>
         </div>
       </section>
 
@@ -44,14 +45,9 @@ export default function DogsPage({ dogs, loading }: DogsPageProps) {
                   {featured.sex && <span>{featured.sex}</span>}
                 </div>
                 <p>{featured.description?.slice(0, 300).trim()}…</p>
-                <a
-                  href="https://www.loveslegacyrescue.com/adopt"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="card__cta"
-                >
+                <button className="card__cta" onClick={onAdopt}>
                   Meet {featured.name}
-                </a>
+                </button>
               </div>
             </div>
           </div>

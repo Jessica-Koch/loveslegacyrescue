@@ -1,6 +1,6 @@
 interface HeaderProps {
-  view: 'dogs' | 'admin';
-  onViewChange: (view: 'dogs' | 'admin') => void;
+  view: 'dogs' | 'admin' | 'adopt';
+  onViewChange: (view: 'dogs' | 'admin' | 'adopt') => void;
 }
 
 export default function Header({ view, onViewChange }: HeaderProps) {
@@ -15,6 +15,12 @@ export default function Header({ view, onViewChange }: HeaderProps) {
           <button
             className={`nav-link ${view === 'dogs' ? 'active' : ''}`}
             onClick={() => onViewChange('dogs')}
+          >
+            Dogs
+          </button>
+          <button
+            className={`nav-link ${view === 'adopt' ? 'active' : ''}`}
+            onClick={() => onViewChange('adopt')}
           >
             Adopt
           </button>
