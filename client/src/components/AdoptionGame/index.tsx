@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Dog } from '../../types';
+import HuskySprite from './HuskySprite';
 import './AdoptionGame.scss';
 
 // ── Types ─────────────────────────────────────────────────────
@@ -109,7 +110,7 @@ export default function AdoptionGame({ dogs, onViewChange }: Props) {
               <span>BROS.</span>
             </h1>
             <div className="ag__title-sub">ADOPTION QUEST</div>
-            <div className="ag__husky ag__husky--bounce" aria-hidden="true">🐺</div>
+            <HuskySprite pixelSize={7} className="ag__husky ag__husky--bounce" />
             <button className="ag__press-start" onClick={startGame}>
               ▶ PRESS START
             </button>
@@ -173,7 +174,7 @@ export default function AdoptionGame({ dogs, onViewChange }: Props) {
                 >
                   <span className="ag__map-world">WORLD {lvl.world}</span>
                   <span className="ag__map-icon">
-                    {isDone ? '⭐' : isActive ? '🐺' : isLocked ? '🔒' : '?'}
+                    {isDone ? '⭐' : isActive ? <HuskySprite pixelSize={3} /> : isLocked ? '🔒' : '?'}
                   </span>
                   <span className="ag__map-title">{lvl.title}</span>
                 </button>
@@ -205,7 +206,7 @@ export default function AdoptionGame({ dogs, onViewChange }: Props) {
         </div>
         <div className="ag__victory-content">
           <h1 className="ag__victory-title">YOU WIN!</h1>
-          <div className="ag__husky ag__husky--celebrate" aria-hidden="true">🐺</div>
+          <HuskySprite pixelSize={10} className="ag__husky ag__husky--celebrate" />
           <p className="ag__victory-sub">APPLICATION SUBMITTED!</p>
           <div className="ag__victory-msg">
             THANK YOU FOR YOUR INTEREST IN<br />
@@ -279,7 +280,7 @@ export default function AdoptionGame({ dogs, onViewChange }: Props) {
           <div className="ag__brick" />
           <div className="ag__brick ag__brick--q">?</div>
           <div className="ag__brick" />
-          <div className="ag__husky ag__husky--bounce" aria-hidden="true">🐺</div>
+          <HuskySprite pixelSize={5} className="ag__husky ag__husky--bounce" />
           <div className="ag__pipe" />
         </div>
       </div>
