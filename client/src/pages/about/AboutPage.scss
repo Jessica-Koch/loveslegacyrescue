@@ -1,0 +1,123 @@
+@use '../../styles/mixins' as *;
+
+// ── Founder / Our Story ───────────────────────────────────────
+.about-founder {
+  padding: 56px 0;
+
+  &__content {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: 32px;
+    }
+  }
+
+  &__photo {
+    flex-shrink: 0;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--color-muted);
+    border: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @media (max-width: 768px) {
+      width: 140px;
+      height: 140px;
+    }
+  }
+
+  &__placeholder {
+    font-size: 3rem;
+    opacity: 0.4;
+  }
+
+  &__text {
+    flex: 1;
+
+    .section-heading {
+      text-align: left;
+      margin-bottom: 16px;
+    }
+
+    p {
+      color: var(--color-text-muted);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+// ── Team grid ─────────────────────────────────────────────────
+.about-team {
+  padding: 56px 0 72px;
+  background: var(--color-muted);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  &__card {
+    @include bordered-surface(sm);
+    padding: 28px 20px 24px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+  }
+
+  &__photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: var(--color-bg);
+    border: var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__placeholder {
+    font-size: 2rem;
+    opacity: 0.35;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+
+  &__name {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  &__role {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+  }
+
+  &__bio {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin: 0;
+  }
+}

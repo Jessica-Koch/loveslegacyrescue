@@ -117,7 +117,7 @@ const pairings: FontPairing[] = [
   },
 ];
 
-export default function FontSwitcher() {
+export const FontSwitcher = () => {
   const [open, setOpen] = useState(false);
   const [current, setCurrent] = useState('current');
   const ref = useRef<HTMLDivElement>(null);

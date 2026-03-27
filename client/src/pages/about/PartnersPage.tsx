@@ -1,4 +1,4 @@
-import PageHeader from '../../components/sections/PageHeader/PageHeader';
+import { PageHeader } from '../../components/sections/PageHeader/PageHeader';
 import PartnerGrid, { type Partner } from '../../components/sections/PartnerGrid/PartnerGrid';
 
 const partners: Partner[] = [
@@ -37,7 +37,7 @@ const partners: Partner[] = [
   },
 ];
 
-export default function PartnersPage() {
+export const PartnersPage = () => {
   return (
     <>
       <PageHeader

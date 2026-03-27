@@ -1,15 +1,15 @@
 import { useState, useMemo } from 'react';
 import './AdoptableDogsPage.scss';
 import { useDogs } from '../../hooks/useDogs';
-import PageHeader from '../../components/sections/PageHeader/PageHeader';
-import Card from '../../components/atoms/Card/Card';
-import DogModal from '../../components/atoms/DogModal/DogModal';
+import { PageHeader } from '../../components/sections/PageHeader/PageHeader';
+import { Card } from '../../components/atoms/Card/Card';
+import { DogModal } from '../../components/atoms/DogModal/DogModal';
 import type { Dog } from '../../types';
 
 type FilterKey = 'all' | 'needs-foster' | 'in-foster' | 'male' | 'female';
 type SortKey = 'name-asc' | 'name-desc' | 'age-asc' | 'age-desc';
 
-export default function AdoptableDogsPage() {
+export const AdoptableDogsPage = () => {
   const { dogs, loading } = useDogs();
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState<FilterKey>('all');
@@ -24,7 +24,7 @@ export default function AdoptableDogsPage() {
     else if (filter === 'male') result = result.filter((d) => d.sex?.toLowerCase() === 'male');
     else if (filter === 'female') result = result.filter((d) => d.sex?.toLowerCase() === 'female');
 
-    if (search.trim()) {
+    if (search.trim()) => {
       const q = search.toLowerCase();
       result = result.filter(
         (d) =>

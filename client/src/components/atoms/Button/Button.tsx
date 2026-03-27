@@ -6,6 +6,7 @@ export type ButtonSize = 'sm' | 'md' | 'lg';
 export interface ButtonProps {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  pill?: boolean;
   disabled?: boolean;
   loading?: boolean;
   fullWidth?: boolean;
@@ -18,6 +19,7 @@ export interface ButtonProps {
 export const Button = ({
   variant = 'primary',
   size = 'md',
+  pill = false,
   disabled = false,
   loading = false,
   fullWidth = false,
@@ -30,6 +32,7 @@ export const Button = ({
     'btn',
     `btn--${variant}`,
     `btn--${size}`,
+    pill && 'btn--pill',
     fullWidth && 'btn--full',
     loading && 'btn--loading',
   ]

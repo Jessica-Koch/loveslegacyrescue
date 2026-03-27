@@ -14,7 +14,7 @@ export interface NavbarProps {
   items?: NavItem[];
 }
 
-export default function Navbar({ logo, items = [] }: NavbarProps) {
+export const Navbar = ({ logo, items = [] }: NavbarProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (

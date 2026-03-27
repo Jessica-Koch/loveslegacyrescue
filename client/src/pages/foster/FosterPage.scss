@@ -1,0 +1,416 @@
+@use '../../styles/mixins' as *;
+
+// ── Quick apply bar ────────────────────────────────────────────
+.foster-quick-apply {
+  padding: 20px 0;
+  border-bottom: var(--border);
+  background: var(--color-surface);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    @media (max-width: 540px) {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      margin: 0;
+    }
+  }
+}
+
+// ── Intro ──────────────────────────────────────────────────────
+.foster-intro {
+  padding: 40px 0;
+
+  &__text {
+    max-width: 720px;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.05rem;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+  }
+}
+
+// ── Getting Started tips ───────────────────────────────────────
+.foster-start {
+  padding: 56px 0;
+  background: var(--color-muted);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+  }
+
+  &__card {
+    @include bordered-surface(sm);
+    padding: 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    text-align: center;
+    align-items: center;
+  }
+
+  &__icon {
+    font-size: 2rem;
+  }
+
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1rem;
+    margin: 0;
+  }
+
+  &__desc {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ── How to Prepare ────────────────────────────────────────────
+.foster-prepare {
+  padding: 56px 0;
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    margin-top: 40px;
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+  }
+
+  &__block {
+    h3 + p,
+    h3 + ul {
+      margin-top: 12px;
+    }
+
+    p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.65;
+      margin: 0 0 12px;
+    }
+  }
+
+  &__subtitle {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  &__list {
+    padding-left: 20px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    li {
+      font-size: 0.92rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+    }
+  }
+}
+
+// ── Integration steps ──────────────────────────────────────────
+.foster-integrate {
+  padding: 56px 0;
+  background: var(--color-muted);
+
+  &__steps {
+    margin-top: 32px;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-width: 720px;
+    counter-reset: integrate-steps;
+
+    li {
+      @include bordered-surface(sm);
+      padding: 20px 24px;
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+      line-height: 1.65;
+
+      strong {
+        color: var(--color-fg);
+        display: block;
+        font-family: var(--font-family-heading);
+        font-size: 0.95rem;
+        margin-bottom: 4px;
+      }
+    }
+  }
+}
+
+// ── Your Role ─────────────────────────────────────────────────
+.foster-role {
+  padding: 56px 0;
+
+  &__inner {
+    display: flex;
+    gap: 48px;
+    align-items: center;
+
+    @media (max-width: 640px) {
+      flex-direction: column;
+      gap: 28px;
+    }
+  }
+
+  &__text {
+    flex: 1;
+
+    p {
+      color: var(--color-text-muted);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-top: 16px;
+    }
+  }
+
+  &__cta {
+    flex-shrink: 0;
+  }
+}
+
+// ── Process steps ──────────────────────────────────────────────
+.foster-process {
+  padding: 56px 0;
+  background: var(--color-muted);
+
+  &__list {
+    list-style: none;
+    padding: 0;
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  &__step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    @include bordered-surface(sm);
+    padding: 24px;
+  }
+
+  &__num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1rem;
+    margin: 0 0 6px;
+  }
+
+  &__desc {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    margin: 0;
+  }
+}
+
+// ── FAQ accordion ──────────────────────────────────────────────
+.foster-faq {
+  padding: 56px 0;
+
+  &__list {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__item {
+    @include bordered-surface(xs);
+    border-radius: var(--radius);
+    overflow: hidden;
+
+    &--open {
+      .foster-faq__chevron {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1rem;
+    color: var(--color-fg);
+    text-align: left;
+    gap: 12px;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--duration-base) var(--ease);
+    margin-top: -4px;
+  }
+
+  &__answer {
+    padding: 0 20px 18px;
+
+    p {
+      color: var(--color-text-muted);
+      font-size: 0.92rem;
+      line-height: 1.65;
+      margin: 0;
+    }
+  }
+}
+
+// ── Guides ─────────────────────────────────────────────────────
+.foster-guides {
+  padding: 56px 0;
+  background: var(--color-muted);
+
+  &__cards {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__card {
+    @include bordered-surface(sm);
+    background: var(--color-bg);
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+  }
+
+  &__icon {
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+
+  &__card-text {
+    flex: 1;
+
+    h3 {
+      font-family: var(--font-family-heading);
+      font-weight: var(--font-weight-heading);
+      font-size: 1rem;
+      margin: 0 0 4px;
+    }
+
+    p {
+      font-size: 0.88rem;
+      color: var(--color-text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .btn {
+    flex-shrink: 0;
+  }
+}
+
+// ── CTA ────────────────────────────────────────────────────────
+.foster-cta {
+  padding: 64px 0;
+  background: var(--color-accent);
+
+  &__inner {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  &__heading {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: var(--color-accent-fg);
+    margin: 0;
+  }
+
+  &__sub {
+    color: var(--color-accent-fg);
+    opacity: 0.9;
+    font-size: 0.95rem;
+    max-width: 520px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &__email {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  .btn--primary {
+    background: var(--color-accent-fg);
+    color: var(--color-accent);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

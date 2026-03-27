@@ -17,7 +17,7 @@ interface CardProps {
   onClick?: (dog: Dog) => void;
 }
 
-export default function Card({ dog, onClick }: CardProps) {
+export const Card = ({ dog, onClick }: CardProps) => {
   const photo = dog.photoUrls[0];
   const age = formatAge(dog.age);
   const needsFoster = !dog.inFoster;

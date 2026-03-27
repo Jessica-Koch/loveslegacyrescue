@@ -17,7 +17,7 @@ export interface DropdownProps {
   id?: string;
 }
 
-export default function Dropdown({
+export const Dropdown = ({
   label,
   options,
   value,
@@ -26,7 +26,7 @@ export default function Dropdown({
   disabled = false,
   error,
   id: idProp,
-}: DropdownProps) {
+}: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [focusedIndex, setFocusedIndex] = useState(-1);
   const containerRef = useRef<HTMLDivElement>(null);

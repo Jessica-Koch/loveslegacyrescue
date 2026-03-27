@@ -3,24 +3,27 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { DogsProvider } from './context/DogsContext';
 import { Body as Layout } from './components/layout/Body/Body';
 
-const HomePage = lazy(() => import('./pages/HomePage'));
-const AdoptableDogsPage = lazy(() => import('./pages/adopt/AdoptableDogsPage'));
-const ApplicationProcessPage = lazy(
-  () => import('./pages/adopt/ApplicationProcessPage'),
-);
-const HappyTailsPage = lazy(() => import('./pages/adopt/HappyTailsPage'));
-const FosterPage = lazy(() => import('./pages/foster/FosterPage'));
-const AboutPage = lazy(() => import('./pages/about/AboutPage'));
-const EventsPage = lazy(() => import('./pages/about/EventsPage'));
-const NewsPage = lazy(() => import('./pages/about/NewsPage'));
-const ResourcesPage = lazy(() => import('./pages/about/ResourcesPage'));
-const PartnersPage = lazy(() => import('./pages/about/PartnersPage'));
-const ContactPage = lazy(() => import('./pages/about/ContactPage'));
-const DonatePage = lazy(() => import('./pages/donate/DonatePage'));
-const AdminPage = lazy(() => import('./pages/admin/AdminPage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const wrap = <T extends Record<string, React.ComponentType>>(
+  fn: () => Promise<T>,
+  key: keyof T,
+) => lazy(() => fn().then((m) => ({ default: m[key] as React.ComponentType })));
 
-export default function App() {
+const HomePage = wrap(() => import('./pages/HomePage'), 'HomePage');
+const AdoptableDogsPage = wrap(() => import('./pages/adopt/AdoptableDogsPage'), 'AdoptableDogsPage');
+const ApplicationProcessPage = wrap(() => import('./pages/adopt/ApplicationProcessPage'), 'ApplicationProcessPage');
+const HappyTailsPage = wrap(() => import('./pages/adopt/HappyTailsPage'), 'HappyTailsPage');
+const FosterPage = wrap(() => import('./pages/foster/FosterPage'), 'FosterPage');
+const AboutPage = wrap(() => import('./pages/about/AboutPage'), 'AboutPage');
+const EventsPage = wrap(() => import('./pages/about/EventsPage'), 'EventsPage');
+const NewsPage = wrap(() => import('./pages/about/NewsPage'), 'NewsPage');
+const ResourcesPage = wrap(() => import('./pages/about/ResourcesPage'), 'ResourcesPage');
+const PartnersPage = wrap(() => import('./pages/about/PartnersPage'), 'PartnersPage');
+const ContactPage = wrap(() => import('./pages/about/ContactPage'), 'ContactPage');
+const DonatePage = wrap(() => import('./pages/donate/DonatePage'), 'DonatePage');
+const AdminPage = wrap(() => import('./pages/admin/AdminPage'), 'AdminPage');
+const NotFoundPage = wrap(() => import('./pages/NotFoundPage'), 'NotFoundPage');
+
+export const App = () => {
   return (
     <BrowserRouter>
       <DogsProvider>
@@ -47,4 +50,4 @@ export default function App() {
       </DogsProvider>
     </BrowserRouter>
   );
-}
+};

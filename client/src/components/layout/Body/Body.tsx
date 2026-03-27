@@ -1,7 +1,7 @@
 import './Body.scss';
 import { useEffect } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
-import Header from '../Header/Header';
+import { Header } from '../Header/Header';
 import { Footer } from '../Footer/Footer';
 
 function ScrollToTop() {

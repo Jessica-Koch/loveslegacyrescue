@@ -38,12 +38,12 @@ interface ThemeSwitcherProps {
   variant?: 'nav' | 'mobile';
 }
 
-export default function ThemeSwitcher({ variant = 'nav' }: ThemeSwitcherProps) {
+export const ThemeSwitcher = ({ variant = 'nav' }: ThemeSwitcherProps) => {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(() => {
     return (
-      document.documentElement.getAttribute('data-theme') || 'neo-brutalism'
+      document.documentElement.getAttribute('data-theme') || 'holographic'
     );
   });
 

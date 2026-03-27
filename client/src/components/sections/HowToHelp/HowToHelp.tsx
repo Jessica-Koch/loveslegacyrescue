@@ -25,7 +25,7 @@ const items = [
   },
 ];
 
-export default function HowToHelp() {
+export const HowToHelp = () => {
   return (
     <section className="how-to-help">
       <div className="section-inner">

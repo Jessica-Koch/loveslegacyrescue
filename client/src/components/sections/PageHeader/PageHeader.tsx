@@ -5,7 +5,7 @@ interface PageHeaderProps {
   subheading?: string;
 }
 
-export default function PageHeader({ heading, subheading }: PageHeaderProps) {
+export const PageHeader = ({ heading, subheading }: PageHeaderProps) => {
   return (
     <div className="page-header">
       <div className="section-inner">

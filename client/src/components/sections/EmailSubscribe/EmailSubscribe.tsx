@@ -1,7 +1,7 @@
 import './EmailSubscribe.scss';
 import { useState } from 'react';
 
-export default function EmailSubscribe() {
+export const EmailSubscribe = () => {
   const [email, setEmail] = useState('');
 
   function handleSubmit(e: React.FormEvent) {

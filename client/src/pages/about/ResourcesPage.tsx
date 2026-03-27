@@ -1,4 +1,4 @@
-import PageHeader from '../../components/sections/PageHeader/PageHeader';
+import { PageHeader } from '../../components/sections/PageHeader/PageHeader';
 
 const resources = [
   {
@@ -33,7 +33,7 @@ const resources = [
   },
 ];
 
-export default function ResourcesPage() {
+export const ResourcesPage = () => {
   return (
     <>
       <PageHeader

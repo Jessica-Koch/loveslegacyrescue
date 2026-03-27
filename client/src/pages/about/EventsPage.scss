@@ -1,0 +1,235 @@
+@use '../../styles/mixins' as *;
+
+// ── Loading / error state ─────────────────────────────────────
+.events-state {
+  padding: 64px var(--gutter);
+  text-align: center;
+
+  &__msg {
+    color: var(--color-text-muted);
+    font-size: 1rem;
+
+    a {
+      color: var(--color-accent);
+      text-decoration: underline;
+    }
+  }
+}
+
+// ── Upcoming Events section ───────────────────────────────────
+.events-section {
+  padding: 56px 0 40px;
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 40px;
+  }
+}
+
+// ── Event card ────────────────────────────────────────────────
+.gb-event-card {
+  @include bordered-surface(md);
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__image-wrap {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+
+    @media (max-width: 768px) {
+      aspect-ratio: 16 / 7;
+    }
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__body {
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      padding: 24px 20px;
+    }
+  }
+
+  &__meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__badge {
+    @include label-type;
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    padding: 4px 10px;
+    border-radius: var(--radius-pill);
+  }
+
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
+    margin: 0;
+    line-height: 1.25;
+  }
+
+  &__subtitle {
+    color: var(--color-text-muted);
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__detail {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--color-fg);
+  }
+
+  &__detail-icon {
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  &__description {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.6;
+
+    ul, ol {
+      padding-left: 20px;
+      margin: 6px 0 0;
+
+      li {
+        margin-bottom: 4px;
+      }
+    }
+
+    p {
+      margin: 0 0 6px;
+    }
+
+    // hide any images embedded in the description HTML
+    img {
+      display: none;
+    }
+
+    a {
+      color: var(--color-accent);
+    }
+  }
+}
+
+// ── Progress bar ──────────────────────────────────────────────
+.gb-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  &__bar {
+    height: 8px;
+    border-radius: var(--radius-pill);
+    background: var(--color-muted);
+    overflow: hidden;
+  }
+
+  &__fill {
+    height: 100%;
+    border-radius: var(--radius-pill);
+    background: var(--color-accent);
+    transition: width var(--duration-slow) var(--ease);
+  }
+
+  &__labels {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.78rem;
+  }
+
+  &__raised {
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  &__goal {
+    color: var(--color-text-muted);
+  }
+}
+
+// ── Active Fundraisers section ────────────────────────────────
+.events-fundraisers {
+  padding: 40px 0 72px;
+  background: var(--color-muted);
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+  }
+}
+
+// ── Fundraiser card ───────────────────────────────────────────
+.gb-fundraiser-card {
+  @include bordered-surface(sm);
+  @include interactive-card;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  &__image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    display: block;
+  }
+
+  &__body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    flex: 1;
+  }
+
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1rem;
+    margin: 0;
+    line-height: 1.35;
+  }
+
+  &__raised {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin: 0;
+  }
+
+  .btn {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+}

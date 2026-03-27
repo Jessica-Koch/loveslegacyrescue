@@ -1,6 +1,6 @@
 import './DogGrid.scss';
 import type { Dog } from '../../../types';
-import Card from '../../atoms/Card/Card';
+import { Card } from '../../atoms/Card/Card';
 
 interface DogGridProps {
   dogs: Dog[];
@@ -9,7 +9,7 @@ interface DogGridProps {
   onCardClick?: (dog: Dog) => void;
 }
 
-export default function DogGrid({ dogs, heading, subheading, onCardClick }: DogGridProps) {
+export const DogGrid = ({ dogs, heading, subheading, onCardClick }: DogGridProps) => {
   return (
     <section className="dogs-section">
       <div className="section-inner">

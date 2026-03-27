@@ -2,7 +2,7 @@ import './FeaturedDog.scss';
 import { Link } from 'react-router-dom';
 import { useDogs } from '../../../hooks/useDogs';
 
-export default function FeaturedDog() {
+export const FeaturedDog = () => {
   const { featuredDog } = useDogs();
 
   if (!featuredDog) return null;

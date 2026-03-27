@@ -1,8 +1,8 @@
 import './Header.scss';
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import ThemeSwitcher from '../../sections/ThemeSwitcher/ThemeSwitcher';
-import FontSwitcher from '../../sections/FontSwitcher/FontSwitcher';
+import { ThemeSwitcher } from '../../sections/ThemeSwitcher/ThemeSwitcher';
+import { FontSwitcher } from '../../sections/FontSwitcher/FontSwitcher';
 
 interface DropdownItem {
   label: string;
@@ -87,7 +87,7 @@ const aboutItems: DropdownItem[] = [
   { label: 'Contact Us', to: '/about/contact' },
 ];
 
-export default function Header() {
+export const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<string | null>(null);
   const location = useLocation();

@@ -76,6 +76,22 @@
     }
   }
 
+  // ── Pill ───────────────────────────────────────────────
+  &--pill {
+    border-radius: var(--radius-pill);
+
+    &.btn--outline {
+      border-color: var(--color-text-muted);
+      color: var(--color-text-muted);
+
+      &:hover:not(:disabled) {
+        border-color: var(--color-fg);
+        color: var(--color-fg);
+        background: transparent;
+      }
+    }
+  }
+
   // ── States ─────────────────────────────────────────────
   &--full {
     width: 100%;

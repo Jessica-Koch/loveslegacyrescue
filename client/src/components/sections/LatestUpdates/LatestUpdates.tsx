@@ -25,7 +25,7 @@ const updates = [
   },
 ];
 
-export default function LatestUpdates() {
+export const LatestUpdates = () => {
   return (
     <section className="latest-updates">
       <div className="section-inner">

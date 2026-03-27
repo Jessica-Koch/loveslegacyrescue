@@ -1,0 +1,159 @@
+// Bubble colors — fixed pastel palette, intentionally not theme-switched
+$bubble-yellow:  #f9e383;
+$bubble-red:     #f6979d;
+$bubble-orange:  #fab578;
+$bubble-green:   #8cd694;
+$bubble-blue:    #89a6ec;
+$bubble-purple:  #c987e6;
+
+// Ring colors
+$ring-pink:   #ff6cdf;
+$ring-yellow: #ffd232;
+$ring-blue:   #7bcef2;
+
+.bubbly-btn {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+
+  // Shared pseudo-element base
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    display: none;
+    width: 150%;
+    height: 100%;
+    left: -25%;
+    background-repeat: no-repeat;
+    transition: all ease-in-out 0.5s;
+  }
+
+  // Bubbles above
+  &::before {
+    top: -75%;
+    background-image:
+      radial-gradient(circle, $bubble-yellow  20%, transparent 20%),
+      radial-gradient(circle, transparent 20%, $bubble-red    20%, transparent 30%),
+      radial-gradient(circle, $bubble-purple  20%, transparent 20%),
+      radial-gradient(circle, $bubble-green   20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, $bubble-orange 15%, transparent 20%),
+      radial-gradient(circle, $bubble-purple  20%, transparent 20%),
+      radial-gradient(circle, $bubble-yellow  20%, transparent 20%),
+      radial-gradient(circle, $bubble-blue    20%, transparent 20%),
+      radial-gradient(circle, $bubble-yellow  20%, transparent 20%);
+    background-size:
+      30% 30%, 50% 50%, 40% 40%, 50% 50%, 46% 46%,
+      30% 30%, 40% 40%, 30% 30%, 46% 46%;
+  }
+
+  // Bubbles below
+  &::after {
+    bottom: -75%;
+    background-image:
+      radial-gradient(circle, $bubble-orange 20%, transparent 20%),
+      radial-gradient(circle, $bubble-red    20%, transparent 20%),
+      radial-gradient(circle, transparent 10%, $bubble-blue 15%, transparent 20%),
+      radial-gradient(circle, $bubble-blue   20%, transparent 20%),
+      radial-gradient(circle, $bubble-green  20%, transparent 20%),
+      radial-gradient(circle, $bubble-purple 20%, transparent 20%),
+      radial-gradient(circle, $bubble-green  20%, transparent 20%);
+    background-size:
+      30% 30%, 40% 40%, 36% 36%, 40% 40%, 30% 30%, 20% 20%, 40% 40%;
+  }
+
+  // Animate state — show and run keyframes
+  &--animate {
+    &::before {
+      display: block;
+      animation: bubbly-top ease-in-out 0.75s forwards;
+    }
+
+    &::after {
+      display: block;
+      animation: bubbly-bottom ease-in-out 0.75s forwards;
+    }
+  }
+
+  // ── The button itself ──────────────────────────────────────
+  &__button {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100px;
+    border: none;
+    background-color: #fff;
+    color: #2a2a2a;
+    cursor: pointer;
+    box-shadow:
+      inset 0 0 0 3px  $ring-pink,
+      inset 0 0 0 8px  #fff,
+      inset 0 0 0 12px $ring-yellow;
+    transition:
+      transform var(--duration-fast) var(--ease),
+      box-shadow var(--duration-fast) var(--ease);
+
+    &:focus {
+      outline: none;
+    }
+
+    &:active {
+      transform: scale(0.9);
+    }
+
+    // Expanding border on hover via ::before
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 4px solid $ring-blue;
+      border-radius: 100%;
+      transition: inset var(--duration-base) var(--ease);
+    }
+
+    &:hover::before {
+      inset: -10px;
+    }
+  }
+}
+
+// ── Keyframes ────────────────────────────────────────────────
+@keyframes bubbly-top {
+  0% {
+    background-position:
+      5% 90%, 10% 90%, 10% 90%, 15% 90%, 25% 90%, 25% 90%,
+      40% 90%, 55% 90%, 70% 90%;
+  }
+  50% {
+    background-position:
+      0% 80%, 0% 20%, 10% 40%, 20% 0%, 30% 30%, 22% 50%,
+      50% 50%, 65% 20%, 90% 30%;
+  }
+  100% {
+    background-position:
+      0% 70%, 0% 10%, 10% 30%, 20% -10%, 30% 20%, 22% 40%,
+      50% 40%, 65% 10%, 90% 20%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}
+
+@keyframes bubbly-bottom {
+  0% {
+    background-position:
+      10% -10%, 30% 10%, 55% -10%, 70% -10%, 85% -10%, 70% -10%, 70% 0%;
+  }
+  50% {
+    background-position:
+      0% 80%, 20% 80%, 45% 60%, 60% 100%, 75% 70%, 95% 60%, 105% 0%;
+  }
+  100% {
+    background-position:
+      0% 90%, 20% 90%, 45% 70%, 60% 110%, 75% 80%, 95% 70%, 110% 10%;
+    background-size: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+}

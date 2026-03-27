@@ -10,7 +10,7 @@ interface PartnerGridProps {
   partners: Partner[];
 }
 
-export default function PartnerGrid({ partners }: PartnerGridProps) {
+export const PartnerGrid = ({ partners }: PartnerGridProps) => {
   return (
     <div className="partner-grid">
       {partners.map((partner) => (

@@ -18,7 +18,7 @@ interface DogModalProps {
   onClose: () => void;
 }
 
-export default function DogModal({ dog, onClose }: DogModalProps) {
+export const DogModal = ({ dog, onClose }: DogModalProps) => {
   useEffect(() => {
     if (!dog) return;
     document.body.style.overflow = 'hidden';

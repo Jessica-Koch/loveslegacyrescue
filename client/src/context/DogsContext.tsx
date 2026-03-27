@@ -29,7 +29,7 @@ export function DogsProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const featuredDog = dogs.find((d) => d.featured);
-  const fosterNeededDogs = dogs.filter((d) => d.inFoster);
+  const fosterNeededDogs = dogs.filter((d) => !d.inFoster);
 
   return (
     <DogsContext.Provider value={{ dogs, loading, featuredDog, fosterNeededDogs, fetchDogs }}>

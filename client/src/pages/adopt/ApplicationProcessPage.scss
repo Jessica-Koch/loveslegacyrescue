@@ -1,0 +1,257 @@
+@use '../../styles/mixins' as *;
+
+// ── Intro ──────────────────────────────────────────────────────
+.adopt-intro {
+  padding: 56px 0;
+
+  &__inner {
+    max-width: 720px;
+  }
+
+  h2 {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    margin-bottom: 16px;
+  }
+
+  p {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-size: 1rem;
+  }
+}
+
+// ── Steps ──────────────────────────────────────────────────────
+.adopt-steps {
+  padding: 56px 0;
+  background: var(--color-muted);
+
+  &__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    margin-top: 40px;
+    counter-reset: none;
+  }
+
+  &__step {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    @include bordered-surface(sm);
+    padding: 24px;
+  }
+
+  &__num {
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  &__content {
+    flex: 1;
+  }
+
+  &__title {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 1.05rem;
+    margin-bottom: 6px;
+  }
+
+  &__desc {
+    color: var(--color-text-muted);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+}
+
+// ── FAQ ────────────────────────────────────────────────────────
+.adopt-faq {
+  padding: 56px 0;
+  background: var(--color-muted);
+
+  &__sections {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+  }
+
+  &__section-label {
+    @include label-type;
+    color: var(--color-accent);
+    margin: 0 0 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--color-border);
+  }
+
+  &__section-intro {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.65;
+    margin: 0 0 16px;
+    font-style: italic;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__item {
+    @include bordered-surface(xs);
+    background: var(--color-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+
+    &--open {
+      .adopt-faq__chevron {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: 0.97rem;
+    color: var(--color-fg);
+    text-align: left;
+    gap: 12px;
+  }
+
+  &__chevron {
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform var(--duration-base) var(--ease);
+    margin-top: -4px;
+  }
+
+  &__answer {
+    padding: 0 20px 18px;
+  }
+
+  &__answer-content {
+    p {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      margin: 0 0 10px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__answer-list {
+    padding-left: 20px;
+    margin: 4px 0 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    li {
+      color: var(--color-text-muted);
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ── Foster nudge ───────────────────────────────────────────────
+.adopt-foster-nudge {
+  padding: 24px 0;
+  border-top: var(--border);
+
+  &__inner {
+    text-align: center;
+
+    p {
+      font-size: 0.95rem;
+      color: var(--color-text-muted);
+    }
+  }
+
+  &__link {
+    color: var(--color-accent);
+    font-weight: 600;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// ── CTA ───────────────────────────────────────────────────────
+.adopt-cta {
+  padding: 64px 0;
+  background: var(--color-accent);
+
+  &__inner {
+    text-align: center;
+  }
+
+  &__heading {
+    font-family: var(--font-family-heading);
+    font-weight: var(--font-weight-heading);
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    color: var(--color-accent-fg);
+    margin-bottom: 12px;
+  }
+
+  &__sub {
+    color: var(--color-accent-fg);
+    opacity: 0.85;
+    font-size: 0.95rem;
+    margin-bottom: 28px;
+    max-width: 480px;
+    margin-inline: auto;
+    line-height: 1.5;
+  }
+
+  &__email {
+    color: inherit;
+    text-decoration: underline;
+    opacity: 0.9;
+  }
+
+  .btn--primary {
+    background: var(--color-accent-fg);
+    color: var(--color-accent);
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}

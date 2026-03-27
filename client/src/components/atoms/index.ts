@@ -17,3 +17,6 @@ export type { DropdownProps, DropdownOption } from './Dropdown/Dropdown';
 
 export { Carousel } from './Carousel/Carousel';
 export type { CarouselProps, CarouselSlide } from './Carousel/Carousel';
+
+export { BubblyButton } from './BubblyButton/BubblyButton';
+export type { BubblyButtonProps } from './BubblyButton/BubblyButton';

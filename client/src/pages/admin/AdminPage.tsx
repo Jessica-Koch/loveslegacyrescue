@@ -4,14 +4,14 @@ import type { Dog } from '../../types';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-export default function AdminPage() {
+export const AdminPage = () => {
   const { dogs, fetchDogs } = useDogs();
   const [slackValues, setSlackValues] = useState<Record<string, string>>({});
 
   useEffect(() => {
     setSlackValues((prev) => {
       const next = { ...prev };
-      for (const dog of dogs) {
+      for (const dog of dogs) => {
         if (!(dog.id in next)) {
           next[dog.id] = dog.slackChannelId ?? '';
         }

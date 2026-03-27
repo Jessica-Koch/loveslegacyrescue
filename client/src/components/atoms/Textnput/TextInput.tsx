@@ -17,7 +17,7 @@ export interface TextInputProps {
   autoComplete?: string;
 }
 
-export default function TextInput({
+export const TextInput = ({
   label,
   placeholder,
   value,
@@ -31,7 +31,7 @@ export default function TextInput({
   name,
   id: idProp,
   autoComplete,
-}: TextInputProps) {
+}: TextInputProps) => {
   const generatedId = useId();
   const id = idProp ?? generatedId;
   const helperId = `${id}-helper`;

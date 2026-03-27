@@ -1,6 +1,6 @@
-import PageHeader from '../../components/sections/PageHeader/PageHeader';
+import { PageHeader } from '../../components/sections/PageHeader/PageHeader';
 
-export default function ContactPage() {
+export const ContactPage = () => {
   return (
     <>
       <PageHeader
