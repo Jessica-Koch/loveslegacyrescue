@@ -1,0 +1,282 @@
+// ─────────────────────────────────────────────────────────────
+// Pastel Soft Theme — Love's Legacy Rescue
+//
+// Inspired by HashDash: cream base with colorful gradient blobs,
+// thin 1px black outlines on every surface, Shrikhand display
+// type, Sora headings, Quicksand body. Vibrant but grounded.
+// ─────────────────────────────────────────────────────────────
+
+[data-theme='pastel-soft'] {
+  // ── Palette ────────────────────────────────────────────────
+
+  // Cool off-white base — neutral enough for blobs to read correctly
+  --color-bg: #f4f2ff;
+
+  // Near-black for sharp contrast against the cream
+  --color-fg: #0d0d0d;
+
+  // Card surfaces: pure white so they pop off the cream bg
+  --color-surface: #ffffff;
+
+  // Accent: vibrant violet — the hero CTA and interactive colour
+  --color-accent: #6c3ce1;
+  --color-accent-hover: #5a2dc9;
+  --color-accent-fg: #ffffff;
+
+  // Secondary: sky pastel — softer action / tag colour
+  --color-secondary: #bae6fd;
+  --color-secondary-hover: #93d5f8;
+  --color-secondary-fg: #0d0d0d;
+
+  // Muted: transparent so sections using it don't block the gradient
+  --color-muted: transparent;
+  --color-muted-fg: #2d1f6e;
+
+  // Brand: the rescue's signature warm pink
+  --color-brand: #f9a8d4;
+
+  // Border: solid black outline — the defining trait of this style
+  --color-border: #1a1a1a;
+
+  // Muted text: medium warm grey, readable on both cream and white
+  --color-text-muted: #6b6560;
+
+  // ── Pastel blob palette ────────────────────────────────────
+  --pastel-pink:     #f9a8d4;
+  --pastel-lavender: #c4b5fd;
+  --pastel-yellow:   #fde68a;
+  --pastel-sky:      #bae6fd;
+  --pastel-mint:     #a7f3d0;
+  --pastel-coral:    #fca5a5;
+
+  // ── Shadows — minimal; borders do the heavy lifting ────────
+  --shadow-xs:       0 1px 2px  rgba(0, 0, 0, 0.06);
+  --shadow-sm:       0 2px 6px  rgba(0, 0, 0, 0.08);
+  --shadow-md:       0 4px 14px rgba(0, 0, 0, 0.09);
+  --shadow-lg:       0 8px 24px rgba(0, 0, 0, 0.10);
+  --shadow-xl:       0 16px 40px rgba(0, 0, 0, 0.12);
+  --shadow-xs-hover: 0 2px 5px  rgba(0, 0, 0, 0.10);
+  --shadow-sm-hover: 0 4px 10px rgba(0, 0, 0, 0.12);
+  --shadow-md-hover: 0 8px 20px rgba(0, 0, 0, 0.14);
+
+  // ── Borders — 1px crisp black everywhere ───────────────────
+  --border-width: 1px;
+  --border: 1px solid var(--color-border);
+
+  // ── Radius — large and friendly ────────────────────────────
+  --radius: 14px;
+  --radius-pill: 999px;
+  --radius-lg: 22px;
+
+  // ── Typography ─────────────────────────────────────────────
+  // Body: Quicksand — rounded, warm, highly legible
+  --font-family: 'Nunito', system-ui, sans-serif;
+  // Headings: Sora — geometric, modern, bold at heavy weights
+  --font-family-heading: 'Baloo 2', system-ui, sans-serif;
+  // Display / hero: Shrikhand — expressive, rescue-org personality
+  --font-family-display: 'Shrikhand', system-ui, sans-serif;
+  --font-family-accent: 'Shrikhand', system-ui, sans-serif;
+  --font-weight-body: 500;     // Quicksand reads better at 500
+  --font-weight-heading: 700;
+
+  // ── Layout ─────────────────────────────────────────────────
+  --gutter: 4vw;
+  --max-width: 1200px;
+  --header-height: 68px;
+
+  // Header: frosted cream glass so the blobs show through softly
+  --header-bg: rgba(244, 242, 255, 0.85);
+  --header-backdrop: blur(16px);
+
+  // ── Animation ──────────────────────────────────────────────
+  --duration-fast: 100ms;
+  --duration-base: 180ms;
+  --duration-slow: 360ms;
+  --ease: cubic-bezier(0.34, 1.1, 0.64, 1);
+
+  // ── Component ──────────────────────────────────────────────
+  --btn-press-offset: 0px;
+  --input-focus-shadow: 0 0 0 3px rgba(108, 60, 225, 0.20);
+
+  // ── Component overrides ────────────────────────────────────
+
+  // Page background: light lavender base + vivid radial blobs
+  // No background-attachment:fixed — it breaks gradient rendering on most setups
+  html {
+    background-color: #f4f2ff;
+  }
+
+  body {
+    background-color: transparent;
+    background-image:
+      radial-gradient(ellipse 60% 50% at 5% 20%,   rgba(99, 102, 241, 0.45)  0%, transparent 65%),
+      radial-gradient(ellipse 55% 45% at 95% 10%,  rgba(249, 168, 212, 0.50) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 80% 90%,  rgba(167, 243, 208, 0.40) 0%, transparent 55%),
+      radial-gradient(ellipse 45% 40% at 15% 88%,  rgba(253, 224, 71, 0.35)  0%, transparent 55%),
+      radial-gradient(ellipse 40% 35% at 50% 50%,  rgba(196, 181, 253, 0.25) 0%, transparent 65%);
+    background-color: #f4f2ff;
+    min-height: 100vh;
+  }
+
+  // Buttons — pill-shaped, black-outlined
+  .btn {
+    border-radius: var(--radius-pill);
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    border: 1.5px solid #1a1a1a;
+  }
+
+  .btn--primary {
+    background: #6c3ce1;
+    color: #ffffff;
+    border-color: #1a1a1a;
+    box-shadow: 3px 3px 0 #1a1a1a;
+
+    &:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 #1a1a1a;
+    }
+
+    &:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 #1a1a1a;
+    }
+  }
+
+  .btn--secondary {
+    background: var(--pastel-sky);
+    color: #0d0d0d;
+    border-color: #1a1a1a;
+    box-shadow: 2px 2px 0 #1a1a1a;
+  }
+
+  .btn--ghost {
+    background: transparent;
+    border: 1.5px solid #1a1a1a;
+    color: var(--color-fg);
+    border-radius: var(--radius-pill);
+
+    &:hover {
+      background: var(--color-muted);
+    }
+  }
+
+  // Cards — white plane, solid black border, hard offset shadow
+  .card {
+    border-radius: var(--radius-lg);
+    border: 1.5px solid #1a1a1a;
+    background: #ffffff;
+    box-shadow: 4px 4px 0 #1a1a1a;
+    transition: transform var(--duration-base) var(--ease),
+                box-shadow var(--duration-base) var(--ease);
+
+    &:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0 #1a1a1a;
+    }
+  }
+
+  .card__photo {
+    border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+  }
+
+  // Inputs
+  .text-input__input {
+    border-radius: var(--radius);
+    border: 1.5px solid #1a1a1a;
+    background: #ffffff;
+    font-family: var(--font-family);
+
+    &:focus {
+      border-color: #6c3ce1;
+      box-shadow: var(--input-focus-shadow);
+    }
+  }
+
+  .dropdown__trigger {
+    border-radius: var(--radius);
+    border: 1.5px solid #1a1a1a;
+  }
+
+  .dropdown__list {
+    border-radius: var(--radius);
+    border: 1.5px solid #1a1a1a;
+    box-shadow: 4px 4px 0 #1a1a1a;
+  }
+
+  // Header — frosted cream with solid black bottom border
+  .header {
+    backdrop-filter: var(--header-backdrop);
+    -webkit-backdrop-filter: var(--header-backdrop);
+    border-bottom: 1.5px solid #1a1a1a;
+  }
+
+  // Hero — let the body blobs show through, no additional bg
+  .hero {
+    background: transparent;
+  }
+
+  // Section headings — bold underline bar in violet
+  .section-heading {
+    font-family: var(--font-family-display);
+
+    &::after {
+      content: '';
+      display: block;
+      height: 3px;
+      margin: 10px auto 0;
+      max-width: 56px;
+      background: #6c3ce1;
+      border-radius: 999px;
+    }
+  }
+
+  // Badges — outlined pill chips
+  .badge {
+    border-radius: var(--radius-pill);
+    border: 1.5px solid #1a1a1a;
+    background: var(--pastel-lavender);
+    color: #2d1f6e;
+    font-family: var(--font-family-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  // All sections transparent — let the gradient show through everything
+  section {
+    background: transparent !important;
+  }
+
+  // Buttons on accent-colored sections — flip to white so they're visible
+  .foster-cta,
+  .donate-cta,
+  .hero--accent {
+    .btn--primary,
+    .btn {
+      background: #ffffff;
+      color: #6c3ce1;
+      border-color: #ffffff;
+      box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.25);
+
+      &:hover {
+        background: #f0ebff;
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  // Footer — near-black so the cream page feels anchored
+  .footer {
+    background: #111111;
+    color: #e8e4de;
+    border-top: 1px solid rgba(0, 0, 0, 0.30);
+  }
+
+  .footer__heading {
+    color: var(--pastel-lavender);
+    font-family: var(--font-family-display);
+  }
+}

@@ -28,6 +28,11 @@ const themes = [
     colors: ['#f2b8ec', '#c8b8f2', '#b8f2e0', '#b8daf2'],
   },
   {
+    id: 'pastel-soft',
+    label: 'Pastel Soft',
+    colors: ['#6c3ce1', '#f9a8d4', '#f0ede6', '#fde68a'],
+  },
+  {
     id: 'dog-vision',
     label: 'Dog Vision',
     colors: ['#4a90d9', '#e8d44a', '#c8c4b8', '#89b4e4'],

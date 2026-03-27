@@ -1,8 +1,6 @@
 import './Header.scss';
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ThemeSwitcher } from '../../sections/ThemeSwitcher/ThemeSwitcher';
-import { FontSwitcher } from '../../sections/FontSwitcher/FontSwitcher';
 
 interface DropdownItem {
   label: string;
@@ -126,8 +124,9 @@ export const Header = () => {
             <NavLink to='/donate' className='nav-link nav-link--donate'>
               Donate
             </NavLink>
-            <FontSwitcher />
-            <ThemeSwitcher variant='nav' />
+            <NavLink to='/admin' className={({ isActive }) => `nav-link nav-link--admin${isActive ? ' active' : ''}`}>
+              Admin
+            </NavLink>
           </div>
         </nav>
 

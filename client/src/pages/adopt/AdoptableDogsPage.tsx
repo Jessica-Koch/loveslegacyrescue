@@ -24,7 +24,7 @@ export const AdoptableDogsPage = () => {
     else if (filter === 'male') result = result.filter((d) => d.sex?.toLowerCase() === 'male');
     else if (filter === 'female') result = result.filter((d) => d.sex?.toLowerCase() === 'female');
 
-    if (search.trim()) => {
+    if (search.trim()) {
       const q = search.toLowerCase();
       result = result.filter(
         (d) =>

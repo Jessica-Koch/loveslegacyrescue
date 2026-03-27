@@ -178,6 +178,51 @@ fastify.post('/feature/set/:id', async (req) => {
   return { success: true, featured: dog.name };
 });
 
+// ── Facebook Page proxy routes ────────────────────────────────────────────────
+
+fastify.get('/facebook/posts', async (req) => {
+  const { limit = '10' } = req.query as { limit?: string };
+  const token = process.env.FACEBOOK_PAGE_TOKEN;
+  const pageId = process.env.FACEBOOK_PAGE_ID;
+  if (!token || !pageId) throw new Error('Facebook credentials not set');
+
+  const url = new URL(`https://graph.facebook.com/v21.0/${pageId}/posts`);
+  url.searchParams.set('fields', 'id,message,story,created_time,full_picture,permalink_url,attachments');
+  url.searchParams.set('limit', limit);
+  url.searchParams.set('access_token', token);
+
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`Facebook error: ${res.status}`);
+  return res.json();
+});
+
+// ── GiveButter proxy routes ───────────────────────────────────────────────────
+
+const GB_BASE = 'https://api.givebutter.com/v1';
+
+function gbHeaders() {
+  const key = process.env.GIVE_BUTTER_API_KEY;
+  if (!key) throw new Error('GIVE_BUTTER_API_KEY not set');
+  return { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' };
+}
+
+fastify.get('/givebutter/campaigns', async () => {
+  const res = await fetch(`${GB_BASE}/campaigns?limit=50`, { headers: gbHeaders() });
+  if (!res.ok) throw new Error(`GiveButter error: ${res.status}`);
+  return res.json();
+});
+
+fastify.get('/givebutter/transactions', async (req) => {
+  const { limit = '50' } = req.query as { limit?: string };
+  const url = new URL(`${GB_BASE}/transactions`);
+  url.searchParams.set('limit', limit);
+  const res = await fetch(url.toString(), { headers: gbHeaders() });
+  if (!res.ok) throw new Error(`GiveButter error: ${res.status}`);
+  return res.json();
+});
+
+// ─────────────────────────────────────────────────────────────────────────────
+
 const start = async () => {
   await fastify.listen({ port: 3001, host: '0.0.0.0' });
 };
