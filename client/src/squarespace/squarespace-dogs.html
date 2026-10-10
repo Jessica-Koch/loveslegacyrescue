@@ -1901,11 +1901,11 @@
             },
           ]
         : []),
-      ...(dog.DOBUnixTime
+      ...(dog.dobUnixTime
         ? [
             {
               label: 'Date of Birth',
-              value: new Date(dog.lastIntakeUnixTime * 1000).toLocaleDateString(
+              value: new Date(dog.dobUnixTime * 1000).toLocaleDateString(
                 'en-US',
                 { month: 'short', day: 'numeric', year: 'numeric' },
               ),
