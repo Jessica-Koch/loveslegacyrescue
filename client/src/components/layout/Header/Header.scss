@@ -8,14 +8,30 @@
   border-bottom: var(--border);
 }
 
-.header-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--gutter);
-  height: var(--header-height);
+// ── Tier 1: logo + quick actions ─────────────────────────────
+
+.header-top {
+  border-bottom: var(--border);
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    height: var(--header-height);
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 }
 
 .logoUrl {
@@ -35,26 +51,29 @@
   align-items: center;
 }
 
-// ── Desktop nav ──────────────────────────────────────────────
+// ── Tier 2: main nav strip ────────────────────────────────────
 
 .header-nav {
   display: flex;
-  align-items: center;
-  gap: 4px;
+  justify-content: center;
 
   @media (max-width: 768px) {
     display: none;
   }
+
+  &__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    max-width: var(--max-width);
+    width: 100%;
+    margin: 0 auto;
+    padding: 6px var(--gutter);
+  }
 }
 
-.header-nav__quick {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  margin-left: 8px;
-  padding-left: 12px;
-  border-left: var(--border);
-}
+// ── Nav links ─────────────────────────────────────────────────
 
 .nav-link {
   display: inline-flex;
@@ -90,13 +109,8 @@
     font-size: 0.75rem;
     opacity: 0.6;
 
-    &:hover {
-      opacity: 1;
-    }
-
-    &.active {
-      opacity: 1;
-    }
+    &:hover { opacity: 1; }
+    &.active { opacity: 1; }
   }
 
   &--donate {
@@ -115,13 +129,11 @@
     font-size: 0.6em;
     transition: transform var(--duration-fast) var(--ease);
 
-    &::after {
-      content: '▾';
-    }
+    &::after { content: '▾'; }
   }
 }
 
-// ── Desktop dropdown ─────────────────────────────────────────
+// ── Desktop dropdown ──────────────────────────────────────────
 
 .header-dropdown {
   position: relative;
@@ -146,9 +158,7 @@
     color: var(--color-fg);
     transition: background var(--duration-fast) var(--ease);
 
-    &:hover {
-      background: var(--color-muted);
-    }
+    &:hover { background: var(--color-muted); }
 
     &--active {
       color: var(--color-accent);
@@ -157,10 +167,13 @@
   }
 }
 
-// ── Hamburger ────────────────────────────────────────────────
+// ── Mobile hamburger ──────────────────────────────────────────
 
 .header-hamburger {
   display: none;
+  position: absolute;
+  right: var(--gutter);
+  top: calc(var(--header-height) / 2 - 16px);
   flex-direction: column;
   justify-content: center;
   gap: 5px;
@@ -187,19 +200,13 @@
   }
 
   &--open {
-    span:nth-child(1) {
-      transform: translateY(7px) rotate(45deg);
-    }
-    span:nth-child(2) {
-      opacity: 0;
-    }
-    span:nth-child(3) {
-      transform: translateY(-7px) rotate(-45deg);
-    }
+    span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    span:nth-child(2) { opacity: 0; }
+    span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
   }
 }
 
-// ── Mobile drawer ────────────────────────────────────────────
+// ── Mobile drawer ─────────────────────────────────────────────
 
 .header-drawer {
   display: flex;
@@ -238,9 +245,7 @@
     font-size: 0.6em;
     transition: transform var(--duration-fast) var(--ease);
 
-    &::after {
-      content: '▾';
-    }
+    &::after { content: '▾'; }
   }
 
   &__items {
@@ -257,13 +262,9 @@
     border-radius: var(--radius);
     transition: background var(--duration-fast) var(--ease);
 
-    &:hover {
-      background: var(--color-muted);
-    }
+    &:hover { background: var(--color-muted); }
 
-    &--quick {
-      font-weight: var(--font-weight-heading);
-    }
+    &--quick { font-weight: var(--font-weight-heading); }
 
     &--donate {
       color: var(--color-accent);

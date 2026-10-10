@@ -1,6 +1,7 @@
 import './Header.scss';
 import { useState, useRef, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import { FontSwitcher } from '../../sections/FontSwitcher/FontSwitcher';
 
 interface DropdownItem {
   label: string;
@@ -101,13 +102,35 @@ export const Header = () => {
 
   return (
     <header className='header'>
-      <div className='header-inner'>
-        <Link to='/' className='logoUrl'>
-          <div className='logo' />
-        </Link>
+      {/* ── Tier 1: logo + quick actions ── */}
+      <div className='header-top'>
+        <div className='header-top__inner'>
+          <Link to='/' className='logoUrl'>
+            <div className='logo' />
+          </Link>
+          <div className='header-top__actions'>
+            <FontSwitcher />
+            <NavLink to='/adopt/dogs' className='nav-link nav-link--quick'>
+              Available Dogs
+            </NavLink>
+            <NavLink to='/donate' className='nav-link nav-link--donate'>
+              Donate
+            </NavLink>
+            <NavLink
+              to='/admin'
+              className={({ isActive }) =>
+                `nav-link nav-link--admin${isActive ? ' active' : ''}`
+              }
+            >
+              Admin
+            </NavLink>
+          </div>
+        </div>
+      </div>
 
-        {/* Desktop nav */}
-        <nav className='header-nav' aria-label='Main navigation'>
+      {/* ── Tier 2: main nav strip ── */}
+      <nav className='header-nav' aria-label='Main navigation'>
+        <div className='header-nav__inner'>
           <NavDropdown label='Adopt' basePath='/adopt' items={adoptItems} />
           <NavLink
             to='/foster'
@@ -116,34 +139,22 @@ export const Header = () => {
             Foster
           </NavLink>
           <NavDropdown label='About' basePath='/about' items={aboutItems} />
+        </div>
+      </nav>
 
-          <div className='header-nav__quick'>
-            <NavLink to='/adopt/dogs' className='nav-link nav-link--quick'>
-              Available Dogs
-            </NavLink>
-            <NavLink to='/donate' className='nav-link nav-link--donate'>
-              Donate
-            </NavLink>
-            <NavLink to='/admin' className={({ isActive }) => `nav-link nav-link--admin${isActive ? ' active' : ''}`}>
-              Admin
-            </NavLink>
-          </div>
-        </nav>
+      {/* ── Mobile hamburger ── */}
+      <button
+        className={`header-hamburger${menuOpen ? ' header-hamburger--open' : ''}`}
+        onClick={() => setMenuOpen((o) => !o)}
+        aria-expanded={menuOpen}
+        aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+      >
+        <span />
+        <span />
+        <span />
+      </button>
 
-        {/* Mobile hamburger */}
-        <button
-          className={`header-hamburger${menuOpen ? ' header-hamburger--open' : ''}`}
-          onClick={() => setMenuOpen((o) => !o)}
-          aria-expanded={menuOpen}
-          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
-
-      {/* Mobile drawer */}
+      {/* ── Mobile drawer ── */}
       {menuOpen && (
         <nav className='header-drawer' aria-label='Mobile navigation'>
           <div className='header-drawer__section'>
@@ -158,11 +169,7 @@ export const Header = () => {
             {mobileExpanded === 'adopt' && (
               <div className='header-drawer__items'>
                 {adoptItems.map((item) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    className='header-drawer__link'
-                  >
+                  <NavLink key={item.to} to={item.to} className='header-drawer__link'>
                     {item.label}
                   </NavLink>
                 ))}
@@ -186,11 +193,7 @@ export const Header = () => {
             {mobileExpanded === 'about' && (
               <div className='header-drawer__items'>
                 {aboutItems.map((item) => (
-                  <NavLink
-                    key={item.to}
-                    to={item.to}
-                    className='header-drawer__link'
-                  >
+                  <NavLink key={item.to} to={item.to} className='header-drawer__link'>
                     {item.label}
                   </NavLink>
                 ))}
@@ -199,16 +202,10 @@ export const Header = () => {
           </div>
 
           <div className='header-drawer__quick'>
-            <NavLink
-              to='/adopt/dogs'
-              className='header-drawer__link header-drawer__link--quick'
-            >
+            <NavLink to='/adopt/dogs' className='header-drawer__link header-drawer__link--quick'>
               Available Dogs
             </NavLink>
-            <NavLink
-              to='/donate'
-              className='header-drawer__link header-drawer__link--donate'
-            >
+            <NavLink to='/donate' className='header-drawer__link header-drawer__link--donate'>
               Donate
             </NavLink>
           </div>
@@ -216,4 +213,4 @@ export const Header = () => {
       )}
     </header>
   );
-}
+};

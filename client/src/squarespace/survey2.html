@@ -1,0 +1,1343 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tell Us About You — Love's Legacy Rescue</title>
+    <!-- Fonts loaded via Squarespace's Adobe Fonts kit (brandon-grotesque, futura-pt) -->
+
+    <!--
+  ═══════════════════════════════════════════════════════════════════
+  GOOGLE SHEETS SETUP INSTRUCTIONS
+  ═══════════════════════════════════════════════════════════════════
+
+  1. Go to https://sheets.google.com and create a new spreadsheet.
+     Add these headers in row 1:
+     Timestamp | State | Why Follow | Involvement | Content Types | Barriers | Discovery | Comments | Email
+
+  2. Go to https://script.google.com and create a new project.
+     Paste this code into the editor:
+
+  ──────────────────────────────────────────────────────────────────
+  function doPost(e) {
+    try {
+      var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+      var data = JSON.parse(e.postData.contents);
+      sheet.appendRow([
+        data.timestamp,
+        data.state,
+        data.whyFollow,
+        data.involvement,
+        data.contentTypes,
+        data.barriers,
+        data.discovery,
+        data.comments,
+        data.email
+      ]);
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: 'success' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    } catch(err) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ status: 'error', message: err.toString() }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+  }
+  ──────────────────────────────────────────────────────────────────
+
+  3. In the script editor, go to:
+     Deploy → New deployment → Select type: Web app
+     - Description: LLR Survey
+     - Execute as: Me
+     - Who has access: Anyone
+     Click Deploy and copy the Web App URL.
+
+  4. Paste the URL below where it says YOUR_GOOGLE_SCRIPT_URL_HERE.
+
+  5. For Squarespace: On a blank page, add a "Code Block",
+     paste the entire contents of this file, and save.
+     (Requires Squarespace Business plan or higher.)
+  ═══════════════════════════════════════════════════════════════════
+  -->
+
+    <style>
+      :root {
+        --navy: #1e2d4f;
+        --blue-mid: #4a5d8c;
+        --blue-light: #5d72a5;
+        --blue-pale: #8aaad5;
+        --blue-muted: #7a8fb5;
+        --blue-bg: #eef1f8;
+        --border: #dde3f0;
+        --border-hover: #b8cae8;
+        --border-sel: #8aaad5;
+        --sel-bg: #dce8f5;
+        --hover-bg: #f0f4fc;
+        --amber: hsla(54.15, 100%, 83.92%, 1);
+        --amber-dark: hsla(54.15, 100%, 72%, 1);
+        --cb-border: #c8d5e8;
+        --font-heading: 'brandon-grotesque', sans-serif;
+        --font-body: 'futura-pt', sans-serif;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background: var(--blue-bg);
+        min-height: 100vh;
+      }
+
+      /* ── Header ── */
+      .survey-header {
+        background: linear-gradient(160deg, #4a5d8c 0%, #5d72a5 100%);
+        text-align: center;
+      }
+
+      .survey-header-inner {
+        max-width: 780px;
+        margin: 0 auto;
+        padding: 40px 32px 0;
+      }
+
+      .paw-icon {
+        font-size: 2rem;
+        display: block;
+        margin-bottom: 12px;
+        color: #3d3020;
+      }
+
+      .survey-header h1 {
+        font-family: var(--font-heading);
+        font-size: 3.2rem;
+        font-weight: 400;
+        color: #ffffff;
+        margin-bottom: 12px;
+        line-height: 1.15;
+        letter-spacing: 0.01em;
+      }
+
+      .survey-header h1 em {
+        font-style: italic;
+        color: var(--amber);
+      }
+
+      .survey-header p {
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.82);
+        max-width: 420px;
+        margin: 0 auto 18px;
+        line-height: 1.6;
+      }
+
+      .badge {
+        display: inline-block;
+        border: 1.5px solid var(--amber);
+        border-radius: 999px;
+        padding: 5px 18px;
+        font-size: 0.7rem;
+        letter-spacing: 0.13em;
+        color: var(--amber);
+        margin-bottom: 24px;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-family: var(--font-body);
+      }
+
+      .progress-bar {
+        height: 4px;
+        background: rgba(255, 255, 255, 0.15);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: var(--amber);
+        transition: width 0.4s ease;
+      }
+
+      /* ── Body ── */
+      .survey-body {
+        background: var(--blue-bg);
+        padding: 40px 32px 32px;
+        overflow: hidden;
+        font-family: var(--font-body);
+      }
+
+      .survey-body-inner {
+        max-width: 780px;
+        margin: 0 auto;
+      }
+
+      @keyframes enterFromRight {
+        from {
+          transform: translateX(48px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes enterFromLeft {
+        from {
+          transform: translateX(-48px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      .step {
+        display: none;
+      }
+
+      .step.active {
+        display: block;
+      }
+
+      .step.enter-forward {
+        display: block;
+        animation: enterFromRight 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .step.enter-back {
+        display: block;
+        animation: enterFromLeft 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      }
+
+      .step-label {
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--blue-muted);
+        margin-bottom: 8px;
+        font-variant: small-caps;
+      }
+
+      .step-question {
+        font-family: var(--font-heading);
+        font-size: 2rem;
+        font-weight: 900;
+        color: var(--navy);
+        margin-bottom: 6px;
+        line-height: 1.2;
+      }
+
+      .step-hint {
+        font-size: 0.88rem;
+        color: var(--blue-muted);
+        margin-bottom: 24px;
+        line-height: 1.55;
+      }
+
+      /* ── Form controls ── */
+      .form-label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--navy);
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      select,
+      textarea,
+      input[type='email'] {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        font-family: var(--font-body);
+        font-size: 0.9rem;
+        color: var(--navy);
+        background: #ffffff;
+        -webkit-appearance: none;
+        appearance: none;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      select:focus,
+      textarea:focus,
+      input[type='email']:focus {
+        border-color: var(--blue-pale);
+      }
+
+      .select-wrapper {
+        position: relative;
+      }
+
+      .select-wrapper::after {
+        content: '';
+        position: absolute;
+        right: 16px;
+        top: 50%;
+        transform: translateY(-50%) rotate(45deg);
+        width: 7px;
+        height: 7px;
+        border-right: 2px solid var(--blue-muted);
+        border-bottom: 2px solid var(--blue-muted);
+        pointer-events: none;
+        margin-top: -2px;
+      }
+
+      textarea {
+        resize: vertical;
+        min-height: 96px;
+      }
+
+      /* ── Checkbox / Radio option rows ── */
+      .option-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .option-item {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        background: #ffffff;
+        border: 2px solid var(--border);
+        border-radius: 10px;
+        padding: 14px 16px;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        font-size: 0.92rem;
+        color: var(--navy);
+        user-select: none;
+        line-height: 1.4;
+        font-weight: 500;
+      }
+
+      .option-item:hover {
+        background: var(--hover-bg);
+        border-color: var(--border-hover);
+      }
+
+      .option-item.selected {
+        background: var(--sel-bg);
+        border-color: var(--border-sel);
+      }
+
+      .option-item input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      /* Custom checkbox — plain div, CSS-only */
+      .custom-check {
+        flex-shrink: 0;
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--cb-border);
+        border-radius: 4px;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
+        position: relative;
+      }
+
+      .option-item.selected .custom-check {
+        background: #4a6fa5;
+        border-color: #4a6fa5;
+      }
+
+      .custom-check::after {
+        content: '';
+        display: none;
+        width: 4px;
+        height: 8px;
+        border-right: 2px solid #ffffff;
+        border-bottom: 2px solid #ffffff;
+        transform: rotate(45deg) translate(-1px, -1px);
+      }
+
+      .option-item.selected .custom-check::after {
+        display: block;
+      }
+
+      /* Custom radio — plain div with inner circle */
+      .custom-radio {
+        flex-shrink: 0;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--cb-border);
+        border-radius: 50%;
+        background: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: border-color 0.15s;
+        position: relative;
+      }
+
+      .option-item.selected .custom-radio {
+        border-color: #4a6fa5;
+      }
+
+      .custom-radio::after {
+        content: '';
+        display: none;
+        width: 10px;
+        height: 10px;
+        background: #4a6fa5;
+        border-radius: 50%;
+      }
+
+      .option-item.selected .custom-radio::after {
+        display: block;
+      }
+
+      /* ── Content card grid ── */
+      .content-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+
+      .content-card {
+        background: #ffffff;
+        border: 2px solid var(--border);
+        border-radius: 12px;
+        padding: 20px 10px 16px;
+        text-align: center;
+        cursor: pointer;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
+        user-select: none;
+      }
+
+      .content-card:hover {
+        background: var(--hover-bg);
+        border-color: var(--border-hover);
+      }
+
+      .content-card.selected {
+        background: var(--sel-bg);
+        border-color: var(--border-sel);
+      }
+
+      .content-card .card-emoji {
+        font-size: 1.8rem;
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      .content-card .card-label {
+        font-size: 0.82rem;
+        color: var(--navy);
+        font-weight: 600;
+        line-height: 1.3;
+      }
+
+      /* ── Navigation row ── */
+      .nav-row {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-top: 28px;
+      }
+
+      .btn-back {
+        padding: 11px 18px;
+        border: 2px solid var(--cb-border);
+        border-radius: 999px;
+        background: #ffffff;
+        font-family: var(--font-body);
+        font-size: 0.88rem;
+        color: #4a6fa5;
+        cursor: pointer;
+        white-space: nowrap;
+        font-weight: 600;
+        transition: background 0.15s;
+      }
+
+      .btn-back:hover {
+        background: var(--hover-bg);
+      }
+
+      .step-counter {
+        color: var(--blue-muted);
+        font-size: 0.82rem;
+        white-space: nowrap;
+        padding: 0 4px;
+        font-family: var(--font-body);
+      }
+
+      .btn-continue {
+        flex: 1;
+        padding: 15px;
+        background: var(--amber);
+        border: none;
+        border-radius: 8px;
+        font-family: var(--font-body);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: var(--navy);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .btn-continue:hover {
+        background: var(--amber-dark);
+      }
+
+      .btn-continue:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+
+      .validation-error {
+        display: none;
+        color: #c0392b;
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-top: 10px;
+      }
+
+      .validation-error.visible {
+        display: block;
+      }
+
+      /* ── Step 5 form sections ── */
+      .form-section {
+        margin-bottom: 24px;
+        padding-bottom: 24px;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .form-section:last-of-type {
+        border-bottom: none;
+        margin-bottom: 0;
+      }
+
+      .form-section-label {
+        font-size: 0.87rem;
+        font-weight: 700;
+        color: var(--navy);
+        margin-bottom: 3px;
+        line-height: 1.4;
+      }
+
+      .form-section-hint {
+        font-size: 0.8rem;
+        color: var(--blue-muted);
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
+
+      .optional-tag {
+        color: var(--blue-muted);
+        font-weight: 500;
+        font-size: 0.76rem;
+      }
+
+      /* ── Success screen ── */
+      #success-screen {
+        display: none;
+        text-align: center;
+        padding: 60px 32px 40px;
+        max-width: 780px;
+        margin: 0 auto;
+      }
+
+      #success-screen .success-paw {
+        font-size: 3rem;
+        display: block;
+        margin-bottom: 18px;
+      }
+
+      #success-screen h2 {
+        font-family: var(--font-heading);
+        font-size: 1.9rem;
+        font-weight: 900;
+        color: var(--navy);
+        margin-bottom: 12px;
+        letter-spacing: -0.01em;
+      }
+
+      #success-screen p {
+        color: var(--blue-muted);
+        font-size: 0.88rem;
+        line-height: 1.6;
+        max-width: 340px;
+        margin: 0 auto;
+      }
+
+      /* ── Footer ── */
+      .survey-footer {
+        background: var(--blue-bg);
+        padding: 20px 32px 36px;
+        text-align: center;
+        font-size: 0.78rem;
+        font-family: var(--font-body);
+        color: #9aabcc;
+        line-height: 1.5;
+      }
+
+      /* ── Responsive ── */
+      @media (max-width: 600px) {
+        .survey-header-inner {
+          padding: 28px 20px 0;
+        }
+
+        .survey-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .survey-body {
+          padding: 28px 20px 24px;
+        }
+
+        .step-question {
+          font-size: 1.5rem;
+        }
+
+        .content-grid {
+          gap: 8px;
+        }
+
+        .content-card {
+          padding: 16px 8px 12px;
+        }
+
+        .survey-footer {
+          padding: 16px 20px 28px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ── Header (always visible) ── -->
+    <header class="survey-header">
+      <div class="survey-header-inner">
+        <span class="paw-icon">🐾</span>
+        <h1>Tell Us About <em>You</em></h1>
+        <p>
+          Help Love's Legacy Rescue understand our community — so we can share
+          the stories and content that matter most to you.
+        </p>
+        <div class="badge">2 MINUTES &nbsp;·&nbsp; ANONYMOUS</div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width: 20%"></div>
+      </div>
+    </header>
+
+    <!-- ── Survey body ── -->
+    <div class="survey-body" id="survey-body">
+      <div class="survey-body-inner">
+        <!-- ────────────────────────────────────────────────
+         STEP 1 — Where are you based?
+        ──────────────────────────────────────────────── -->
+        <div class="step active" id="step-1">
+          <div class="step-label">About You &nbsp;·&nbsp; 1 of 5</div>
+          <h2 class="step-question">Where are you based?</h2>
+          <p class="step-hint">
+            Our rescue pulls dogs from Southern California — but our community
+            stretches far beyond. Where are you joining us from?
+          </p>
+
+          <label class="form-label" for="state-select">State / Province</label>
+          <div class="select-wrapper">
+            <select id="state-select">
+              <option value="">Select one...</option>
+              <option>Alabama</option>
+              <option>Alaska</option>
+              <option>Arizona</option>
+              <option>Arkansas</option>
+              <option>California</option>
+              <option>Colorado</option>
+              <option>Connecticut</option>
+              <option>Delaware</option>
+              <option>Florida</option>
+              <option>Georgia</option>
+              <option>Hawaii</option>
+              <option>Idaho</option>
+              <option>Illinois</option>
+              <option>Indiana</option>
+              <option>Iowa</option>
+              <option>Kansas</option>
+              <option>Kentucky</option>
+              <option>Louisiana</option>
+              <option>Maine</option>
+              <option>Maryland</option>
+              <option>Massachusetts</option>
+              <option>Michigan</option>
+              <option>Minnesota</option>
+              <option>Mississippi</option>
+              <option>Missouri</option>
+              <option>Montana</option>
+              <option>Nebraska</option>
+              <option>Nevada</option>
+              <option>New Hampshire</option>
+              <option>New Jersey</option>
+              <option>New Mexico</option>
+              <option>New York</option>
+              <option>North Carolina</option>
+              <option>North Dakota</option>
+              <option>Ohio</option>
+              <option>Oklahoma</option>
+              <option>Oregon</option>
+              <option>Pennsylvania</option>
+              <option>Rhode Island</option>
+              <option>South Carolina</option>
+              <option>South Dakota</option>
+              <option>Tennessee</option>
+              <option>Texas</option>
+              <option>Utah</option>
+              <option>Vermont</option>
+              <option>Virginia</option>
+              <option>Washington</option>
+              <option>West Virginia</option>
+              <option>Wisconsin</option>
+              <option>Wyoming</option>
+              <option>Washington D.C.</option>
+              <option disabled>──────────────</option>
+              <option>Canada</option>
+              <option>United Kingdom</option>
+              <option>Australia</option>
+              <option>Other / International</option>
+            </select>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn-continue" onclick="nextStep(1)">
+              Continue →
+            </button>
+          </div>
+          <div class="validation-error" id="error-1">
+            Please select a state or province to continue.
+          </div>
+        </div>
+
+        <!-- ────────────────────────────────────────────────
+         STEP 2 — Why do you follow Love's Legacy?
+        ──────────────────────────────────────────────── -->
+        <div class="step" id="step-2">
+          <div class="step-label">Your Connection &nbsp;·&nbsp; 2 of 5</div>
+          <h2 class="step-question">Why do you follow Love's Legacy?</h2>
+          <p class="step-hint">Select everything that applies.</p>
+
+          <div class="option-list" id="why-follow-list">
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="I'm a dog lover and love the content"
+              />
+              <div class="custom-check"></div>
+              I'm a dog lover and love the content
+            </label>
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="I'm considering fostering or adopting"
+              />
+              <div class="custom-check"></div>
+              I'm considering fostering or adopting
+            </label>
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="I've fostered or adopted through LLR"
+              />
+              <div class="custom-check"></div>
+              I've fostered or adopted through LLR
+            </label>
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="I believe in the rescue mission and want to support it"
+              />
+              <div class="custom-check"></div>
+              I believe in the rescue mission and want to support it
+            </label>
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="I care about the SoCal shelter crisis"
+              />
+              <div class="custom-check"></div>
+              I care about the SoCal shelter crisis
+            </label>
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="A friend shared it and I stuck around"
+              />
+              <div class="custom-check"></div>
+              A friend shared it and I stuck around
+            </label>
+            <label class="option-item">
+              <input
+                type="checkbox"
+                value="I donate or want to donate to LLR"
+              />
+              <div class="custom-check"></div>
+              I donate or want to donate to LLR
+            </label>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn-back" onclick="prevStep(2)">← Back</button>
+            <span class="step-counter">2 of 5</span>
+            <button class="btn-continue" onclick="nextStep(2)">
+              Continue →
+            </button>
+          </div>
+          <div class="validation-error" id="error-2">
+            Please select at least one option to continue.
+          </div>
+        </div>
+
+        <!-- ────────────────────────────────────────────────
+         STEP 3 — How are you involved?
+        ──────────────────────────────────────────────── -->
+        <div class="step" id="step-3">
+          <div class="step-label">Your Role &nbsp;·&nbsp; 3 of 5</div>
+          <h2 class="step-question">
+            How are you involved with Love's Legacy?
+          </h2>
+          <p class="step-hint">Choose the option that best describes you.</p>
+
+          <div class="option-list" id="involvement-list">
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I'm currently fostering an LLR dog"
+              />
+              <div class="custom-radio"></div>
+              I'm currently fostering an LLR dog
+            </label>
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I've fostered in the past"
+              />
+              <div class="custom-radio"></div>
+              I've fostered in the past
+            </label>
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I adopted a dog through LLR"
+              />
+              <div class="custom-radio"></div>
+              I adopted a dog through LLR
+            </label>
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I'm a donor or have donated"
+              />
+              <div class="custom-radio"></div>
+              I'm a donor or have donated
+            </label>
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I volunteer with LLR in another way"
+              />
+              <div class="custom-radio"></div>
+              I volunteer with LLR in another way
+            </label>
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I follow and cheer from the sidelines"
+              />
+              <div class="custom-radio"></div>
+              I follow and cheer from the sidelines
+            </label>
+            <label class="option-item">
+              <input
+                type="radio"
+                name="involvement"
+                value="I'm interested but haven't gotten involved yet"
+              />
+              <div class="custom-radio"></div>
+              I'm interested but haven't gotten involved yet
+            </label>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn-back" onclick="prevStep(3)">← Back</button>
+            <span class="step-counter">3 of 5</span>
+            <button class="btn-continue" onclick="nextStep(3)">
+              Continue →
+            </button>
+          </div>
+          <div class="validation-error" id="error-3">
+            Please choose an option to continue.
+          </div>
+        </div>
+
+        <!-- ────────────────────────────────────────────────
+         STEP 4 — What content do you love most?
+        ──────────────────────────────────────────────── -->
+        <div class="step" id="step-4">
+          <div class="step-label">Content &nbsp;·&nbsp; 4 of 5</div>
+          <h2 class="step-question">What content do you love most?</h2>
+          <p class="step-hint">
+            Select your top picks — this helps us know what to post more of.
+          </p>
+
+          <div class="content-grid" id="content-grid">
+            <div
+              class="content-card"
+              data-value="Dog photos & reels"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">🐶</span>
+              <span class="card-label">Dog photos &amp; reels</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Adoption success stories"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">🌟</span>
+              <span class="card-label">Adoption success stories</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Foster family spotlights"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">❤️</span>
+              <span class="card-label">Foster family spotlights</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Dogs available to adopt"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">🔍</span>
+              <span class="card-label">Dogs available to adopt</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Behind-the-scenes content"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">🎬</span>
+              <span class="card-label">Behind-the-scenes content</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Shelter crisis awareness"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">📣</span>
+              <span class="card-label">Shelter crisis awareness</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Fundraisers & events"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">🎉</span>
+              <span class="card-label">Fundraisers &amp; events</span>
+            </div>
+            <div
+              class="content-card"
+              data-value="Training & dog care tips"
+              onclick="toggleCard(this)"
+            >
+              <span class="card-emoji">🎓</span>
+              <span class="card-label">Training &amp; dog care tips</span>
+            </div>
+          </div>
+
+          <div class="nav-row">
+            <button class="btn-back" onclick="prevStep(4)">← Back</button>
+            <span class="step-counter">4 of 5</span>
+            <button class="btn-continue" onclick="nextStep(4)">
+              Continue →
+            </button>
+          </div>
+          <div class="validation-error" id="error-4">
+            Please select at least one content type to continue.
+          </div>
+        </div>
+
+        <!-- ────────────────────────────────────────────────
+         STEP 5 — A couple more quick ones
+        ──────────────────────────────────────────────── -->
+        <div class="step" id="step-5">
+          <div class="step-label">Last Step &nbsp;·&nbsp; 5 of 5</div>
+          <h2 class="step-question">A couple more quick ones</h2>
+          <p class="step-hint">Optional but incredibly helpful.</p>
+
+          <div class="form-section">
+            <div class="form-section-label">
+              If you haven't fostered or adopted, what's held you back?
+              <span class="optional-tag">(optional)</span>
+            </div>
+            <div
+              class="option-list"
+              id="barriers-list"
+              style="margin-top: 10px"
+            >
+              <label class="option-item">
+                <input type="checkbox" value="My housing doesn't allow pets" />
+                <div class="custom-check"></div>
+                My housing doesn't allow pets
+              </label>
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  value="My schedule or travel makes it hard"
+                />
+                <div class="custom-check"></div>
+                My schedule or travel makes it hard
+              </label>
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  value="I have other pets that may not adjust well"
+                />
+                <div class="custom-check"></div>
+                I have other pets that may not adjust well
+              </label>
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  value="I'm not sure about the financial commitment"
+                />
+                <div class="custom-check"></div>
+                I'm not sure about the financial commitment
+              </label>
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  value="I don't know how to get started"
+                />
+                <div class="custom-check"></div>
+                I don't know how to get started
+              </label>
+              <label class="option-item">
+                <input
+                  type="checkbox"
+                  value="Not applicable — I have fostered or adopted"
+                />
+                <div class="custom-check"></div>
+                Not applicable — I have fostered or adopted
+              </label>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-label">
+              How did you first discover Love's Legacy?
+              <span class="optional-tag">(optional)</span>
+            </div>
+            <div class="select-wrapper" style="margin-top: 10px">
+              <select id="discovery-select">
+                <option value="">Select one...</option>
+                <option>Instagram</option>
+                <option>Facebook</option>
+                <option>TikTok</option>
+                <option>YouTube</option>
+                <option>A friend or family member</option>
+                <option>Google search</option>
+                <option>Local event or shelter</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-label">
+              Anything else you'd like us to know?
+              <span class="optional-tag">(optional)</span>
+            </div>
+            <textarea
+              id="comments"
+              placeholder="Shoutouts, suggestions, your dog's name — all welcome here"
+              style="margin-top: 10px"
+            ></textarea>
+          </div>
+
+          <div class="form-section">
+            <div class="form-section-label">
+              Want to receive updates from Love's Legacy?
+              <span class="optional-tag">(optional)</span>
+            </div>
+            <div class="form-section-hint">
+              Share your email and we'll keep you in the loop on new dogs,
+              upcoming events, and rescue stories.
+            </div>
+            <input type="email" id="email-input" placeholder="your@email.com" />
+          </div>
+
+          <div class="nav-row">
+            <button class="btn-back" onclick="prevStep(5)">← Back</button>
+            <span class="step-counter">5 of 5</span>
+            <button
+              class="btn-continue"
+              id="submit-btn"
+              onclick="submitSurvey()"
+            >
+              Submit ✓
+            </button>
+          </div>
+        </div>
+
+        <!-- ── Success screen ── -->
+        <div id="success-screen">
+          <span class="success-paw">🐾</span>
+          <h2>Thank you so much!</h2>
+          <p>
+            Your responses help Love's Legacy Rescue better understand and serve
+            our community. We're so grateful you're part of this.
+          </p>
+        </div>
+      </div>
+      <!-- /survey-body-inner -->
+    </div>
+    <!-- /survey-body -->
+
+    <footer class="survey-footer" id="survey-footer">
+      This survey is anonymous. Your responses help Love's Legacy Rescue better
+      understand and serve our community.
+    </footer>
+
+    <script>
+      // ============================================================
+      // PASTE YOUR GOOGLE APPS SCRIPT WEB APP URL HERE:
+      // ============================================================
+      var GOOGLE_SCRIPT_URL =
+        'https://script.google.com/macros/s/AKfycbxdzblwk-tF3BQcklufrK4oAsfsK9A4vsLs9vvFwwNrdWuOAAx3KOoANfeZPyC86MKV/exec';
+      // ============================================================
+
+      var currentStep = 1;
+      var totalSteps = 5;
+
+      function updateProgress(step) {
+        var pct = (step / totalSteps) * 100;
+        document.getElementById('progress-fill').style.width = pct + '%';
+      }
+
+      function showStep(n, direction) {
+        document.querySelectorAll('.step').forEach(function (s) {
+          s.classList.remove('active', 'enter-forward', 'enter-back');
+        });
+        var el = document.getElementById('step-' + n);
+        if (el) {
+          var animClass = direction === 'back' ? 'enter-back' : 'enter-forward';
+          el.classList.add('active', animClass);
+          el.addEventListener(
+            'animationend',
+            function () {
+              el.classList.remove('enter-forward', 'enter-back');
+            },
+            { once: true },
+          );
+        }
+        currentStep = n;
+        updateProgress(n);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      function showError(step) {
+        var el = document.getElementById('error-' + step);
+        if (el) {
+          el.classList.add('visible');
+        }
+      }
+
+      function clearError(step) {
+        var el = document.getElementById('error-' + step);
+        if (el) {
+          el.classList.remove('visible');
+        }
+      }
+
+      function validate(step) {
+        if (step === 1) {
+          return document.getElementById('state-select').value !== '';
+        }
+        if (step === 2) {
+          return (
+            document.querySelectorAll('#why-follow-list input:checked').length >
+            0
+          );
+        }
+        if (step === 3) {
+          return (
+            document.querySelector('input[name="involvement"]:checked') !== null
+          );
+        }
+        if (step === 4) {
+          return (
+            document.querySelectorAll('#content-grid .content-card.selected')
+              .length > 0
+          );
+        }
+        return true;
+      }
+
+      function nextStep(from) {
+        if (!validate(from)) {
+          showError(from);
+          return;
+        }
+        clearError(from);
+        showStep(from + 1, 'forward');
+      }
+
+      function prevStep(from) {
+        showStep(from - 1, 'back');
+      }
+
+      // Checkbox styling
+      document
+        .querySelectorAll('.option-item input[type="checkbox"]')
+        .forEach(function (input) {
+          input.addEventListener('change', function () {
+            this.closest('.option-item').classList.toggle(
+              'selected',
+              this.checked,
+            );
+            if (this.checked) clearError(currentStep);
+          });
+        });
+
+      // Radio styling
+      document
+        .querySelectorAll('.option-item input[type="radio"]')
+        .forEach(function (input) {
+          input.addEventListener('change', function () {
+            var name = this.name;
+            document
+              .querySelectorAll('input[name="' + name + '"]')
+              .forEach(function (r) {
+                r.closest('.option-item').classList.remove('selected');
+              });
+            this.closest('.option-item').classList.add('selected');
+            clearError(currentStep);
+          });
+        });
+
+      // Content card toggle
+      function toggleCard(card) {
+        card.classList.toggle('selected');
+        if (card.classList.contains('selected')) clearError(currentStep);
+      }
+
+      // State dropdown
+      document
+        .getElementById('state-select')
+        .addEventListener('change', function () {
+          if (this.value) clearError(1);
+        });
+
+      // Collect checked values from a list
+      function getChecked(listId) {
+        return Array.from(
+          document.querySelectorAll(
+            '#' + listId + ' input[type="checkbox"]:checked',
+          ),
+        )
+          .map(function (i) {
+            return i.value;
+          })
+          .join(', ');
+      }
+
+      function submitSurvey() {
+        var btn = document.getElementById('submit-btn');
+        btn.disabled = true;
+        btn.textContent = 'Submitting...';
+
+        var selectedRadio = document.querySelector(
+          'input[name="involvement"]:checked',
+        );
+        var selectedCards = Array.from(
+          document.querySelectorAll('#content-grid .content-card.selected'),
+        )
+          .map(function (c) {
+            return c.dataset.value;
+          })
+          .join(', ');
+
+        var data = {
+          timestamp: new Date().toISOString(),
+          state: document.getElementById('state-select').value,
+          whyFollow: getChecked('why-follow-list'),
+          involvement: selectedRadio ? selectedRadio.value : '',
+          contentTypes: selectedCards,
+          barriers: getChecked('barriers-list'),
+          discovery: document.getElementById('discovery-select').value,
+          comments: document.getElementById('comments').value,
+          email: document.getElementById('email-input').value,
+        };
+
+        function showSuccess() {
+          document.querySelectorAll('.step').forEach(function (s) {
+            s.classList.remove('active');
+          });
+          document.getElementById('success-screen').style.display = 'block';
+          document.getElementById('survey-footer').style.display = 'none';
+          document.getElementById('progress-fill').style.width = '100%';
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        if (
+          !GOOGLE_SCRIPT_URL ||
+          GOOGLE_SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_URL_HERE'
+        ) {
+          // No URL configured — log to console and show success anyway
+          console.log('Survey response (no URL configured):', data);
+          showSuccess();
+          return;
+        }
+
+        // POST to Google Apps Script
+        // Using no-cors so the browser doesn't block the request.
+        // The script still receives and saves the data — we just can't read the response.
+        fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: JSON.stringify(data),
+        })
+          .then(function () {
+            showSuccess();
+          })
+          .catch(function (err) {
+            console.warn('Submission error:', err);
+            // Show success anyway — the request likely still went through
+            showSuccess();
+          });
+      }
+    </script>
+  </body>
+</html>

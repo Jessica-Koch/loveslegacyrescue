@@ -1,13 +1,11 @@
 // ─────────────────────────────────────────────────────────────
 // Default Brand Theme — Love's Legacy Rescue
 //
-// Navy/periwinkle palette with soft, approachable styling.
-// Values here match the :root defaults in _tokens.scss so this
-// file acts as an explicit declaration + any component overrides.
+// Brand blues only: navy, periwinkle, sky-blue, yellow.
 // ─────────────────────────────────────────────────────────────
 
 [data-theme='default'] {
-  --color-bg: var(--color-white);
+  --color-bg: #f4f6ff;
   --color-fg: var(--color-navy);
   --color-surface: var(--color-white);
   --color-accent: var(--color-periwinkle);
@@ -16,14 +14,14 @@
   --color-secondary: var(--color-sky-blue);
   --color-secondary-hover: #8cbcf5;
   --color-secondary-fg: var(--color-navy);
-  --color-muted: #f0f0f4;
+  --color-muted: #eef2fb;
   --color-muted-fg: var(--color-navy);
   --color-brand: var(--color-yellow);
-  --color-border: var(--color-navy);
+  --color-border: #c8d4f0;
   --color-text-muted: #7a7fa8;
 
   --shadow-xs: 0 1px 2px rgba(75, 84, 139, 0.08);
-  --shadow-sm: 0 2px 4px rgba(75, 84, 139, 0.10);
+  --shadow-sm: 0 2px 4px rgba(75, 84, 139, 0.1);
   --shadow-md: 0 4px 12px rgba(75, 84, 139, 0.12);
   --shadow-lg: 0 8px 24px rgba(75, 84, 139, 0.14);
   --shadow-xl: 0 16px 48px rgba(75, 84, 139, 0.16);
@@ -38,13 +36,13 @@
   --radius-pill: 999px;
   --radius-lg: 16px;
 
-  --font-family: 'Jost', system-ui, -apple-system, sans-serif;
-  --font-family-heading: 'Josefin Sans', system-ui, sans-serif;
-  --font-weight-body: 400;
-  --font-weight-heading: 600;
-
-  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-bg: rgba(244, 246, 255, 0.92);
   --header-backdrop: blur(10px);
   --btn-press-offset: 1px;
   --input-focus-shadow: 0 0 0 3px rgba(97, 130, 179, 0.25);
+
+  --darker: var(--color-navy);
+  --bright2: var(--color-periwinkle);
+  --dark2: var(--color-sky-blue);
+  --bright1: #eef2fb;
 }

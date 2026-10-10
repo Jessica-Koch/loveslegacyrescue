@@ -20,3 +20,5 @@ export type { CarouselProps, CarouselSlide } from './Carousel/Carousel';
 
 export { BubblyButton } from './BubblyButton/BubblyButton';
 export type { BubblyButtonProps } from './BubblyButton/BubblyButton';
+
+export { Loader } from './Loader/Loader';

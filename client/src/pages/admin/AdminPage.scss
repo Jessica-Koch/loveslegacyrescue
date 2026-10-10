@@ -37,6 +37,137 @@
   color: #b91c1c;
 }
 
+// ── Instagram section ────────────────────────────────────────────────────────
+
+.ig-not-linked {
+  padding: 20px;
+  border-radius: 10px;
+  background: #fef9c3;
+  border: 1.5px solid #ca8a04;
+  font-size: 0.9rem;
+
+  p + p {
+    margin-top: 8px;
+  }
+
+  &__hint {
+    color: #6b7280;
+  }
+}
+
+.ig-account {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding: 16px;
+  border: 1.5px solid var(--color-border, #e5e7eb);
+  border-radius: 10px;
+  background: var(--color-surface, #fff);
+
+  &__avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-border, #e5e7eb);
+  }
+
+  &__name {
+    font-weight: 700;
+    font-size: 1rem;
+  }
+
+  &__handle {
+    font-size: 0.85rem;
+    color: var(--color-text-muted, #6b7280);
+  }
+
+  &__followers {
+    font-size: 0.8rem;
+    color: var(--color-text-muted, #6b7280);
+    margin-top: 2px;
+  }
+}
+
+.ig-composer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-width: 560px;
+}
+
+.ig-label {
+  font-size: 0.85rem;
+  font-weight: 600;
+
+  &__hint {
+    font-weight: 400;
+    color: var(--color-text-muted, #6b7280);
+  }
+}
+
+.ig-input {
+  padding: 9px 14px;
+  border: 1.5px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: #6c3ce1;
+  }
+}
+
+.ig-preview {
+  &__img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1.5px solid var(--color-border, #e5e7eb);
+  }
+}
+
+.ig-textarea {
+  padding: 9px 14px;
+  border: 1.5px solid var(--color-border, #e5e7eb);
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  width: 100%;
+
+  &:focus {
+    outline: none;
+    border-color: #6c3ce1;
+  }
+}
+
+.ig-char-count {
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #6b7280);
+  text-align: right;
+  margin-top: -6px;
+}
+
+.ig-result {
+  font-size: 0.875rem;
+  padding: 10px 14px;
+  border-radius: 8px;
+
+  &--ok {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &--err {
+    background: #fee2e2;
+    color: #991b1b;
+  }
+}
+
 // ── GiveButter campaigns ────────────────────────────────────────────────────
 
 .gb-campaigns {

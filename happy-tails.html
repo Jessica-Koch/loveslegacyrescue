@@ -1,0 +1,302 @@
+<style>
+  :root {
+    --white: hsla(var(--safeInverseDarkAccent-hsl), 1);
+    --brand-yellow: #f8ef91;
+    --brand-lightest-blue: #e9f0fb;
+    --brand-blue: #7f9feb;
+    --brand-dark-blue: #506286;
+    --brand-darkest-blue: #2c3953;
+    --brand-navy: #12161e;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .dog-cards-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .year-group {
+    margin-bottom: 64px;
+  }
+
+  .year-group-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 8px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--brand-lightest-blue);
+  }
+
+  .year-heading {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--brand-darkest-blue);
+    line-height: 1;
+  }
+
+  .year-caption {
+    font-size: 1rem;
+    color: var(--brand-dark-blue);
+    opacity: 0.75;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 24px;
+  }
+
+  .overlay-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    height: 400px;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .overlay-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .overlay-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .overlay-card-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      to top,
+      rgba(20, 30, 48, 0.95) 0%,
+      rgba(20, 30, 48, 0.75) 60%,
+      transparent 100%
+    );
+    color: white;
+    padding: 60px 20px 20px;
+  }
+
+  .overlay-card-name {
+    font-size: calc((var(--large-text-size-value) - 1) * 1.2vw + 1rem);
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .overlay-card-divider {
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    margin: 12px 0;
+    width: 100% !important;
+  }
+
+  .overlay-card-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .overlay-card-detail {
+    font-family: var(--body-font-font-family);
+    font-style: var(--body-font-font-style);
+    font-weight: var(--body-font-font-weight);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .message {
+    text-align: center;
+    padding: 40px;
+    color: #465e87;
+    font-size: 1.1em;
+  }
+
+  @media (max-width: 768px) {
+    .year-heading {
+      font-size: 1.8rem;
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .overlay-card {
+      height: 350px;
+    }
+
+    .overlay-card-name {
+      font-size: 1.6rem;
+    }
+  }
+</style>
+
+<div class="dog-cards-container" id="dogCardsContainer">
+  <p class="message">Loading...</p>
+</div>
+
+<script>
+  function createMessage(text) {
+    const p = document.createElement('p');
+    p.className = 'message';
+    p.textContent = text;
+    return p;
+  }
+
+  function getAdoptionYear(val) {
+    const ts = parseInt(val, 10);
+    return new Date(ts * 1000).getFullYear();
+  }
+
+  function buildCard(dog) {
+    const photoUrl =
+      dog.CoverPhoto ||
+      (dog.Photos && dog.Photos.length > 0 ? dog.Photos[0] : '');
+
+    let ageDisplay = 'Unknown';
+    if (dog.Age !== undefined && dog.Age !== null) {
+      const years = Math.floor(dog.Age / 12);
+      const months = dog.Age % 12;
+      if (years > 0 && months > 0) {
+        ageDisplay = `${years}y ${months}m`;
+      } else if (years > 0) {
+        ageDisplay = `${years} year${years > 1 ? 's' : ''}`;
+      } else {
+        ageDisplay = `${months} month${months > 1 ? 's' : ''}`;
+      }
+    }
+
+    const card = document.createElement('div');
+    card.className = 'overlay-card';
+
+    const img = document.createElement('img');
+    img.className = 'overlay-card-image';
+    img.src = photoUrl;
+    img.alt = dog.Name || 'Dog photo';
+    img.loading = 'lazy';
+
+    const footer = document.createElement('div');
+    footer.className = 'overlay-card-footer';
+
+    const name = document.createElement('div');
+    name.className = 'overlay-card-name';
+    name.textContent = dog.Name || 'Unknown';
+
+    const hr = document.createElement('hr');
+    hr.className = 'overlay-card-divider';
+
+    const details = document.createElement('div');
+    details.className = 'overlay-card-details';
+
+    const age = document.createElement('span');
+    age.className = 'overlay-card-detail';
+    age.textContent = ageDisplay;
+
+    const sex = document.createElement('span');
+    sex.className = 'overlay-card-detail';
+    sex.textContent = dog.Sex || 'Unknown';
+
+    details.appendChild(age);
+    details.appendChild(sex);
+    footer.appendChild(name);
+    footer.appendChild(hr);
+    footer.appendChild(details);
+    card.appendChild(img);
+    card.appendChild(footer);
+
+    return card;
+  }
+
+  async function loadAdoptedDogs() {
+    const container = document.getElementById('dogCardsContainer');
+
+    try {
+      const response = await fetch(
+        'https://willowy-toffee-908bc8.netlify.app/.netlify/functions/get-dogs',
+      );
+      const data = await response.json();
+
+      container.textContent = '';
+
+      if (!data.success) {
+        container.appendChild(
+          createMessage('Error loading dogs. Please try again later.'),
+        );
+        return;
+      }
+
+      if (data.dogs.length === 0) {
+        container.appendChild(
+          createMessage('No dogs to display at this time.'),
+        );
+        return;
+      }
+
+      // Group dogs by adoption year, newest year first
+      const byYear = {};
+      data.dogs.forEach((dog) => {
+        const year = getAdoptionYear(dog);
+        if (!byYear[year]) byYear[year] = [];
+        byYear[year].push(dog);
+      });
+
+      const years = Object.keys(byYear)
+        .map(Number)
+        .sort((a, b) => b - a);
+
+      years.forEach((year) => {
+        const dogs = byYear[year];
+        const count = dogs.length;
+
+        const group = document.createElement('div');
+        group.className = 'year-group';
+
+        // Year heading + caption
+        const header = document.createElement('div');
+        header.className = 'year-group-header';
+
+        const heading = document.createElement('h2');
+        heading.className = 'year-heading';
+        heading.textContent = year;
+
+        const caption = document.createElement('span');
+        caption.className = 'year-caption';
+        caption.textContent = `${count} dog${count !== 1 ? 's' : ''} found their forever home`;
+
+        header.appendChild(heading);
+        header.appendChild(caption);
+
+        // Cards grid
+        const grid = document.createElement('div');
+        grid.className = 'cards-grid';
+
+        dogs.forEach((dog) => grid.appendChild(buildCard(dog)));
+
+        group.appendChild(header);
+        group.appendChild(grid);
+        container.appendChild(group);
+      });
+    } catch (error) {
+      console.error('Error:', error);
+      container.textContent = '';
+      container.appendChild(
+        createMessage('Error loading dogs. Please try again later.'),
+      );
+    }
+  }
+
+  loadAdoptedDogs();
+</script>

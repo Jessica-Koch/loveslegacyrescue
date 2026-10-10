@@ -13,9 +13,9 @@ const pairings: FontPairing[] = [
   {
     id: 'current',
     label: 'Current',
-    display: "'Josefin Sans', system-ui, sans-serif",
-    heading: "'Jost', system-ui, sans-serif",
-    body: "'Jost', system-ui, sans-serif",
+    display: "'Shrikhand', system-ui, sans-serif",
+    heading: "'Baloo 2', system-ui, sans-serif",
+    body: "'Nunito', system-ui, sans-serif",
   },
 
   // ── Fredoka — rounded, bubbly, modern brand energy ─────
@@ -80,6 +80,57 @@ const pairings: FontPairing[] = [
     display: "'Bagel Fat One', cursive",
     heading: "'Sora', sans-serif",
     body: "'DM Sans', sans-serif",
+  },
+
+  // ── Holographic rainbow picks (Shrikhand display) ─────
+  {
+    id: 'shrikhand-syne-dm',
+    label: 'Shrikhand / Syne / DM Sans',
+    display: "'Shrikhand', serif",
+    heading: "'Syne', sans-serif",
+    body: "'DM Sans', sans-serif",
+  },
+  {
+    id: 'shrikhand-syne-figtree',
+    label: 'Shrikhand / Syne / Figtree',
+    display: "'Shrikhand', serif",
+    heading: "'Syne', sans-serif",
+    body: "'Figtree', sans-serif",
+  },
+  {
+    id: 'shrikhand-syne-manrope',
+    label: 'Shrikhand / Syne / Manrope',
+    display: "'Shrikhand', serif",
+    heading: "'Syne', sans-serif",
+    body: "'Manrope', sans-serif",
+  },
+  {
+    id: 'shrikhand-space-dm',
+    label: 'Shrikhand / Space Grotesk / DM Sans',
+    display: "'Shrikhand', serif",
+    heading: "'Space Grotesk', sans-serif",
+    body: "'DM Sans', sans-serif",
+  },
+  {
+    id: 'shrikhand-space-outfit',
+    label: 'Shrikhand / Space Grotesk / Outfit',
+    display: "'Shrikhand', serif",
+    heading: "'Space Grotesk', sans-serif",
+    body: "'Outfit', sans-serif",
+  },
+  {
+    id: 'shrikhand-raleway-dm',
+    label: 'Shrikhand / Raleway / DM Sans',
+    display: "'Shrikhand', serif",
+    heading: "'Raleway', sans-serif",
+    body: "'DM Sans', sans-serif",
+  },
+  {
+    id: 'shrikhand-outfit-karla',
+    label: 'Shrikhand / Outfit / Karla',
+    display: "'Shrikhand', serif",
+    heading: "'Outfit', sans-serif",
+    body: "'Karla', sans-serif",
   },
 
   // ── Shrikhand — thick, punchy, Indian-inspired serif ───

@@ -5,6 +5,14 @@ import './AdminPage.scss';
 
 const API = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
+interface IGAccount {
+  id: string;
+  name?: string;
+  username?: string;
+  profile_picture_url?: string;
+  followers_count?: number;
+}
+
 interface GBCampaign {
   id: number;
   title: string;
@@ -52,6 +60,47 @@ export const AdminPage = () => {
   const [syncResult, setSyncResult] = useState<string | null>(null);
   const [search, setSearch] = useState('');
 
+  // ── Instagram state ─────────────────────────────────────────
+  const [igAccount, setIgAccount] = useState<IGAccount | null>(null);
+  const [igNotLinked, setIgNotLinked] = useState(false);
+  const [igCaption, setIgCaption] = useState('');
+  const [igImageUrl, setIgImageUrl] = useState('');
+  const [igPosting, setIgPosting] = useState(false);
+  const [igResult, setIgResult] = useState<{ ok: boolean; msg: string } | null>(null);
+
+  useEffect(() => {
+    fetch(`${API}/instagram/account`)
+      .then((r) => r.json())
+      .then((d) => {
+        if (d && d.id) setIgAccount(d);
+        else setIgNotLinked(true);
+      })
+      .catch(() => setIgNotLinked(true));
+  }, []);
+
+  async function postToInstagram() {
+    if (!igImageUrl.trim()) return;
+    setIgPosting(true);
+    setIgResult(null);
+    try {
+      const res = await fetch(`${API}/instagram/post`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ image_url: igImageUrl.trim(), caption: igCaption }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message ?? 'Post failed');
+      setIgResult({ ok: true, msg: 'Posted successfully!' });
+      setIgCaption('');
+      setIgImageUrl('');
+    } catch (e: any) {
+      setIgResult({ ok: false, msg: e.message });
+    } finally {
+      setIgPosting(false);
+    }
+  }
+
+  // ── GiveButter state ─────────────────────────────────────────
   const [campaigns, setCampaigns] = useState<GBCampaign[]>([]);
   const [allTransactions, setAllTransactions] = useState<GBTransaction[]>([]);
   const [gbLoading, setGbLoading] = useState(true);
@@ -138,6 +187,80 @@ export const AdminPage = () => {
     <main className="admin-page">
       <div className="section-inner">
         <h2 className="section-heading">Admin</h2>
+
+        {/* ── Instagram ──────────────────────────────────────────────── */}
+        <section className="admin-section">
+          <h3 className="admin-section-title">Instagram</h3>
+
+          {igNotLinked && (
+            <div className="ig-not-linked">
+              <p>No Instagram Business Account is linked to the Love's Legacy Facebook Page yet.</p>
+              <p className="ig-not-linked__hint">
+                Go to <strong>Facebook Business Settings → Accounts → Instagram Accounts</strong> and connect
+                the <strong>@loveslegacyrescue</strong> account to the Love's Legacy Page. Once linked,
+                refresh this page.
+              </p>
+            </div>
+          )}
+
+          {igAccount && (
+            <>
+              <div className="ig-account">
+                {igAccount.profile_picture_url && (
+                  <img src={igAccount.profile_picture_url} alt="" className="ig-account__avatar" />
+                )}
+                <div>
+                  <div className="ig-account__name">{igAccount.name ?? igAccount.username}</div>
+                  {igAccount.username && <div className="ig-account__handle">@{igAccount.username}</div>}
+                  {igAccount.followers_count != null && (
+                    <div className="ig-account__followers">{igAccount.followers_count.toLocaleString()} followers</div>
+                  )}
+                </div>
+              </div>
+
+              <div className="ig-composer">
+                <label className="ig-label">Image URL <span className="ig-label__hint">(must be publicly accessible)</span></label>
+                <input
+                  type="url"
+                  className="ig-input"
+                  placeholder="https://example.com/photo.jpg"
+                  value={igImageUrl}
+                  onChange={(e) => setIgImageUrl(e.target.value)}
+                />
+
+                {igImageUrl.trim() && (
+                  <div className="ig-preview">
+                    <img src={igImageUrl} alt="Preview" className="ig-preview__img" />
+                  </div>
+                )}
+
+                <label className="ig-label">Caption</label>
+                <textarea
+                  className="ig-textarea"
+                  placeholder="Write a caption… #loveslegacyrescue"
+                  rows={4}
+                  value={igCaption}
+                  onChange={(e) => setIgCaption(e.target.value)}
+                />
+                <div className="ig-char-count">{igCaption.length} / 2200</div>
+
+                <button
+                  className="action-btn"
+                  onClick={postToInstagram}
+                  disabled={igPosting || !igImageUrl.trim()}
+                >
+                  {igPosting ? 'Posting…' : 'Post to Instagram'}
+                </button>
+
+                {igResult && (
+                  <p className={`ig-result ${igResult.ok ? 'ig-result--ok' : 'ig-result--err'}`}>
+                    {igResult.msg}
+                  </p>
+                )}
+              </div>
+            </>
+          )}
+        </section>
 
         {/* ── GiveButter ─────────────────────────────────────────────── */}
         <section className="admin-section">

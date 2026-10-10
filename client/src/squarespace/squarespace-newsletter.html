@@ -1,0 +1,204 @@
+<style>
+  :root {
+    --white: hsla(var(--safeInverseDarkAccent-hsl), 1);
+    --brand-yellow: #f8ef91;
+    --brand-lightest-blue: #e9f0fb;
+    --brand-blue: #7f9feb;
+    --brand-dark-blue: #506286;
+    --brand-darkest-blue: #2c3953;
+    --brand-navy: #12161e;
+    --error: tomato;
+  }
+  .jtp-section {
+    padding: 60px 20px;
+    text-align: center;
+    font-family: inherit;
+  }
+
+  .jtp-heading {
+    font-size: 2.4rem;
+    font-weight: 800;
+    color: var(--brand-dark-blue);
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+
+  .jtp-sub {
+    font-size: 1rem;
+    color: var(--brand-dark-blue);
+    margin-bottom: 36px;
+  }
+
+  .jtp-form {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin: 0 auto;
+  }
+
+  .jtp-input {
+    flex: 1;
+    min-width: 180px;
+    max-width: 280px;
+    padding: 14px 18px;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    background: var(--white, white);
+    font-size: 0.95rem;
+    color: var(--brand-darkest-blue);
+    outline: none;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .jtp-input::placeholder {
+    color: var(--brand-dark-blue);
+    opacity: 0.6;
+  }
+
+  .jtp-input:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 3px rgba(127, 159, 235, 0.2);
+  }
+
+  .jtp-btn {
+    padding: 14px 32px;
+    background: var(--brand-blue);
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition:
+      background 0.2s,
+      transform 0.15s;
+    white-space: nowrap;
+    letter-spacing: 0.02em;
+  }
+
+  .jtp-btn:hover {
+    background: var(--brand-dark-blue);
+    transform: translateY(-1px);
+  }
+
+  .jtp-btn:disabled {
+    opacity: 0.6;
+    cursor: default;
+    transform: none;
+  }
+
+  .jtp-message {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    min-height: 1.2em;
+  }
+
+  .jtp-message--success {
+    color: var(--brand-darkest-blue);
+  }
+  .jtp-message--error {
+    color: var(--error);
+  }
+
+  @media (max-width: 640px) {
+    .jtp-form {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .jtp-input {
+      max-width: 100%;
+    }
+
+    .jtp-btn {
+      width: 100%;
+    }
+  }
+</style>
+
+<div class="jtp-section">
+  <h2 class="jtp-heading">Join The Pack</h2>
+  <p class="jtp-sub">Sign up for our monthly newsletter</p>
+
+  <form class="jtp-form" id="jtpForm" novalidate>
+    <input
+      class="jtp-input"
+      type="text"
+      id="jtpFirst"
+      placeholder="First Name"
+      autocomplete="given-name"
+    />
+    <input
+      class="jtp-input"
+      type="text"
+      id="jtpLast"
+      placeholder="Last Name"
+      autocomplete="family-name"
+    />
+    <input
+      class="jtp-input"
+      type="email"
+      id="jtpEmail"
+      placeholder="Email Address"
+      autocomplete="email"
+      required
+    />
+    <button class="jtp-btn" type="submit" id="jtpBtn">Sign Up</button>
+  </form>
+
+  <div class="jtp-message" id="jtpMessage" aria-live="polite"></div>
+</div>
+
+<script>
+  const SUBSCRIBE_URL =
+    'https://willowy-toffee-908bc8.netlify.app/.netlify/functions/subscribe';
+
+  document.getElementById('jtpForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const first = document.getElementById('jtpFirst').value.trim();
+    const last = document.getElementById('jtpLast').value.trim();
+    const email = document.getElementById('jtpEmail').value.trim();
+    const msg = document.getElementById('jtpMessage');
+    const btn = document.getElementById('jtpBtn');
+
+    if (!email) {
+      msg.textContent = 'Please enter your email address.';
+      msg.className = 'jtp-message jtp-message--error';
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Signing up…';
+    msg.textContent = '';
+    msg.className = 'jtp-message';
+
+    try {
+      const res = await fetch(SUBSCRIBE_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ first_name: first, last_name: last, email }),
+      });
+
+      if (!res.ok) throw new Error(await res.text());
+
+      msg.textContent = "You're in! Welcome to the pack 🐾";
+      msg.className = 'jtp-message jtp-message--success';
+      document.getElementById('jtpFirst').value = '';
+      document.getElementById('jtpLast').value = '';
+      document.getElementById('jtpEmail').value = '';
+      btn.textContent = 'Sign Up';
+      btn.disabled = false;
+    } catch (err) {
+      msg.textContent = 'Something went wrong. Please try again.';
+      msg.className = 'jtp-message jtp-message--error';
+      btn.textContent = 'Sign Up';
+      btn.disabled = false;
+    }
+  });
+</script>

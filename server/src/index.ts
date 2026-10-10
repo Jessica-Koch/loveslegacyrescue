@@ -196,6 +196,57 @@ fastify.get('/facebook/posts', async (req) => {
   return res.json();
 });
 
+// ── Instagram proxy routes ────────────────────────────────────────────────────
+
+fastify.get('/instagram/account', async () => {
+  const token = process.env.FACEBOOK_PAGE_TOKEN;
+  const pageId = process.env.FACEBOOK_PAGE_ID;
+  if (!token || !pageId) throw new Error('Facebook credentials not set');
+
+  const url = new URL(`https://graph.facebook.com/v21.0/${pageId}`);
+  url.searchParams.set('fields', 'instagram_business_account{id,name,username,profile_picture_url,followers_count}');
+  url.searchParams.set('access_token', token);
+
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`Facebook error: ${res.status}`);
+  const data = await res.json() as { instagram_business_account?: { id: string; name?: string; username?: string; profile_picture_url?: string; followers_count?: number } };
+  return data.instagram_business_account ?? null;
+});
+
+fastify.post('/instagram/post', async (req) => {
+  const token = process.env.FACEBOOK_PAGE_TOKEN;
+  const igUserId = process.env.INSTAGRAM_USER_ID;
+  if (!token) throw new Error('Facebook credentials not set');
+  if (!igUserId) throw new Error('INSTAGRAM_USER_ID not set — link Instagram to the Facebook Page first');
+
+  const { image_url, caption } = req.body as { image_url: string; caption?: string };
+  if (!image_url) throw new Error('image_url is required');
+
+  const containerUrl = new URL(`https://graph.facebook.com/v21.0/${igUserId}/media`);
+  containerUrl.searchParams.set('image_url', image_url);
+  containerUrl.searchParams.set('caption', caption ?? '');
+  containerUrl.searchParams.set('access_token', token);
+
+  const containerRes = await fetch(containerUrl.toString(), { method: 'POST' });
+  if (!containerRes.ok) {
+    const err = await containerRes.json() as { error?: { message?: string } };
+    throw new Error(err.error?.message ?? `Instagram container error: ${containerRes.status}`);
+  }
+  const { id: creationId } = await containerRes.json() as { id: string };
+
+  const publishUrl = new URL(`https://graph.facebook.com/v21.0/${igUserId}/media_publish`);
+  publishUrl.searchParams.set('creation_id', creationId);
+  publishUrl.searchParams.set('access_token', token);
+
+  const publishRes = await fetch(publishUrl.toString(), { method: 'POST' });
+  if (!publishRes.ok) {
+    const err = await publishRes.json() as { error?: { message?: string } };
+    throw new Error(err.error?.message ?? `Instagram publish error: ${publishRes.status}`);
+  }
+  const result = await publishRes.json() as { id: string };
+  return { success: true, post_id: result.id };
+});
+
 // ── GiveButter proxy routes ───────────────────────────────────────────────────
 
 const GB_BASE = 'https://api.givebutter.com/v1';

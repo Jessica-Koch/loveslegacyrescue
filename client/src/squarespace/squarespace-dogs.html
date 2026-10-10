@@ -1,0 +1,2354 @@
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+<style>
+  :root {
+    --white: hsla(var(--safeInverseDarkAccent-hsl), 1);
+    --brand-yellow: #f8ef91;
+    --brand-lightest-blue: #e9f0fb;
+    --brand-blue: #7f9feb;
+    --brand-dark-blue: #506286;
+    --brand-darkest-blue: #2c3953;
+    --brand-gold: #f5c800;
+    --brand-red: tomato;
+  }
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  .section-description {
+    text-align: center;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 40px;
+    font-size: 1.125rem;
+  }
+
+  .dog-cards-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+
+  .controls {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .search-box {
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .search-box input {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid var(--brand-blue, #506286);
+    border-radius: 8px;
+    font-size: 1rem;
+    color: var(--brand-darkest-blue, #2c3953);
+    background: var(--brand-lightest-blue, #e9f0fb);
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .search-box input::placeholder {
+    color: var(--brand-dark-blue, #506286);
+    opacity: 0.7;
+  }
+
+  .search-box input:focus {
+    outline: none;
+    border-color: var(--brand-blue, #7f9feb);
+    box-shadow: 0 0 0 3px rgba(127, 159, 235, 0.25);
+  }
+
+  .filter-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .filter-btn {
+    padding: 10px 20px;
+    border: 2px solid var(--text-highlight-color-on-background);
+    background: white;
+    color: var(--text-highlight-color-on-background);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    letter-spacing: 0.01em;
+  }
+
+  .filter-btn:hover {
+    background: var(--brand-dark-blue);
+  }
+
+  .filter-btn.active {
+    background: var(--text-highlight-color-on-background);
+    color: white;
+  }
+
+  .sort-select {
+    display: none;
+  }
+
+  .custom-select {
+    position: relative;
+    min-width: 200px;
+  }
+
+  .custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 16px;
+    border: 2px solid var(--brand-blue, #506286);
+    border-radius: 8px;
+    background: var(--brand-lightest-blue, #e9f0fb);
+    color: var(--brand-darkest-blue, #2c3953);
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      border-color 0.2s,
+      box-shadow 0.2s;
+  }
+
+  .custom-select-trigger:focus,
+  .custom-select.open .custom-select-trigger {
+    outline: none;
+    border-color: var(--brand-blue, #7f9feb);
+    box-shadow: 0 0 0 3px rgba(127, 159, 235, 0.25);
+  }
+
+  .custom-select-arrow {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    transition: transform 0.2s;
+    flex-shrink: 0;
+  }
+
+  .custom-select.open .custom-select-arrow {
+    transform: rotate(180deg);
+  }
+
+  .custom-select-options {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: white;
+    border: 2px solid var(--brand-blue, #7f9feb);
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(44, 57, 83, 0.15);
+    z-index: 100;
+    overflow: hidden;
+    list-style: none;
+  }
+
+  .custom-select.open .custom-select-options {
+    display: block;
+  }
+
+  .custom-select-option {
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    color: var(--brand-darkest-blue, #2c3953);
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+
+  .custom-select-option:hover {
+    background: var(--brand-lightest-blue, #e9f0fb);
+  }
+
+  .custom-select-option.selected {
+    background: var(--brand-lightest-blue, #e9f0fb);
+    font-weight: 700;
+    color: var(--brand-dark-blue, #506286);
+  }
+
+  .results-count {
+    color: white;
+    font-weight: 600;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .error {
+    background: #fee;
+    border: 2px solid #c33;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    color: #c33;
+    text-align: center;
+  }
+
+  .no-results {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+  }
+
+  /* Card Styles */
+  .overlay-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    height: 500px;
+    cursor: pointer;
+    touch-action: pan-y;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+  }
+
+  .overlay-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .overlay-card:focus {
+    outline: 3px solid var(--text-highlight-color-on-background);
+    outline-offset: 2px;
+  }
+
+  .overlay-card-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.3s ease;
+  }
+
+  .overlay-card:hover .overlay-card-image {
+    transform: scale(1.05);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  }
+
+  .overlay-card-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(
+      to top,
+      rgba(12, 18, 30, 0.97) 0%,
+      rgba(20, 28, 46, 0.88) 50%,
+      rgba(40, 54, 80, 0.4) 80%,
+      transparent 100%
+    );
+    color: white;
+    padding: 100px 24px 24px;
+    transition: all 0.3s ease;
+  }
+
+  .overlay-card:hover .overlay-card-content {
+    padding: 60px 24px 24px;
+    background: linear-gradient(
+      to top,
+      rgba(12, 18, 30, 0.99) 0%,
+      rgba(20, 28, 46, 0.92) 60%,
+      rgba(40, 54, 80, 0.5) 85%,
+      transparent 100%
+    );
+  }
+
+  .overlay-card-name {
+    color: var(--brand-lightest-blue);
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+  }
+
+  .overlay-card-breed {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 16px;
+    opacity: 0.95;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+
+  .info-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+
+  .overlay-card:hover .info-row {
+    opacity: 1;
+    max-height: 100px;
+  }
+
+  .info-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: hsla(var(--darkAccent-hsl), 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid hsla(var(--darkAccent-hsl), 0.3);
+  }
+
+  .info-badge-trained {
+    background: color-mix(in srgb, var(--brand-yellow) 20%, transparent);
+    color: var(--brand-gold);
+    border: 1px solid color-mix(in srgb, var(--brand-gold) 30%, transparent);
+    font-weight: 700;
+  }
+  .info-badge-trained i {
+    font-size: 1rem;
+    line-height: 1;
+  }
+  .modal-trained-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--brand-yellow);
+    color: #988322;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-top: 14px;
+    margin-bottom: 7px;
+    width: fit-content;
+  }
+  .modal-trained-badge i {
+    font-size: 1.1rem;
+    line-height: 1;
+  }
+  .overlay-card-description {
+    font-size: 0.9rem;
+    font-weight: 400;
+    line-height: 1.6;
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s ease;
+    margin-bottom: 12px;
+    /* Clamp to 3 lines on hover */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    /* Preserve line breaks from ShelterLuv */
+    white-space: pre-line;
+  }
+
+  .overlay-card:hover .overlay-card-description {
+    opacity: 0.95;
+    max-height: 200px;
+  }
+
+  .foster-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 10px 18px;
+    border-radius: 25px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+    z-index: 10;
+    animation: pulse 2s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    pointer-events: none;
+  }
+
+  .foster-badge::before {
+    content: '❤';
+    font-size: 1.1rem;
+    animation: heartbeat 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%,
+    100% {
+      transform: scale(1);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.5);
+    }
+    50% {
+      transform: scale(1.05);
+      box-shadow: 0 6px 16px rgba(255, 107, 107, 0.7);
+    }
+  }
+
+  @keyframes heartbeat {
+    0%,
+    100% {
+      transform: scale(1);
+    }
+    10%,
+    30% {
+      transform: scale(1.2);
+    }
+    20%,
+    40% {
+      transform: scale(1);
+    }
+  }
+
+  .needs-foster {
+    border: 3px solid #ff6b6b;
+  }
+
+  /* Modal Styles */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(12, 18, 30, 0.75);
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+    animation: fadeIn 0.3s ease;
+    isolation: isolate;
+    transform: translateZ(0);
+  }
+
+  /* Override display:flex when hidden */
+  .modal:not(.active) {
+    display: none;
+  }
+
+  .modal.active {
+    display: flex;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Two-column layout on desktop */
+  .modal-content {
+    display: grid;
+    grid-template-columns: 44% 56%;
+    grid-template-rows: 1fr;
+    max-width: 1140px;
+    width: 100%;
+    height: min(78vh, 680px);
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    animation: slideUp 0.4s ease;
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(40px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .modal-link-btn {
+    position: absolute;
+    top: 16px;
+    right: 68px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+    transition:
+      background 0.2s,
+      box-shadow 0.2s,
+      color 0.2s;
+    color: inherit;
+  }
+
+  .modal-link-btn i {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  .modal-link-btn:hover {
+    background: white;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  }
+
+  .modal-link-btn--copied {
+    color: #3a7d44;
+  }
+
+  @media (max-width: 768px) {
+    .modal-link-btn {
+      width: 38px;
+      height: 38px;
+      right: 62px;
+    }
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255, 255, 255, 0.95);
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.2s,
+      transform 0.25s,
+      box-shadow 0.2s;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  }
+
+  .modal-close i {
+    font-size: 1.3rem;
+    line-height: 1;
+  }
+
+  .modal-close:hover {
+    color: var(--brand-blue, #2c3953);
+    background: white;
+    transform: rotate(90deg);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+  }
+
+  /* ── Left panel: carousel ──────────────────────────────────── */
+
+  .modal-carousel {
+    display: flex;
+    flex-direction: column;
+    background: #fff;
+    overflow: hidden;
+    padding: 24px 16px 16px;
+    gap: 12px;
+    min-height: 0;
+  }
+
+  .modal-carousel-main {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+    border-radius: 14px;
+  }
+
+  .modal-carousel-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+    border-radius: 14px;
+  }
+
+  .modal-image-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 260px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 6rem;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  }
+
+  .modal-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.88);
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    transition:
+      background 0.2s,
+      box-shadow 0.2s,
+      opacity 0.2s;
+    z-index: 5;
+    color: var(--brand-darkest-blue, #2c3953);
+  }
+
+  .modal-carousel-btn:hover:not(:disabled) {
+    background: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28);
+  }
+
+  .modal-carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+
+  .modal-carousel-btn i {
+    font-size: 1.25rem;
+    line-height: 1;
+  }
+
+  .modal-carousel-btn-prev {
+    left: 10px;
+  }
+  .modal-carousel-btn-next {
+    right: 10px;
+  }
+
+  .modal-thumbnails-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+
+  .modal-thumbnails {
+    display: flex;
+    gap: 6px;
+    overflow: hidden;
+    flex: 1;
+    scroll-behavior: smooth;
+  }
+
+  .modal-thumb-arrow {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(44, 57, 83, 0.12);
+    color: var(--brand-darkest-blue, #2c3953);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      background 0.2s,
+      opacity 0.2s;
+    padding: 0;
+  }
+
+  .modal-thumb-arrow i {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .modal-thumb-arrow:hover:not(:disabled) {
+    background: rgba(44, 57, 83, 0.22);
+  }
+
+  .modal-thumb-arrow:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
+  .modal-thumbnail {
+    flex-shrink: 0;
+    width: 54px;
+    height: 54px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2.5px solid transparent;
+    padding: 0;
+    cursor: pointer;
+    background: none;
+    transition:
+      border-color 0.2s,
+      transform 0.2s;
+  }
+
+  .modal-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .modal-thumbnail:hover {
+    transform: scale(1.06);
+  }
+  .modal-thumbnail.active {
+    border-color: var(--brand-blue, #7f9feb);
+  }
+
+  /* ── Right panel: info ─────────────────────────────────────── */
+
+  .modal-panel {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .modal-name-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+
+  .modal-foster-badge {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+    color: white;
+    padding: 7px 16px;
+    border-radius: 9999px;
+    font-weight: 700;
+    font-size: 0.8rem;
+    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .modal-foster-badge::before {
+    content: '❤';
+    font-size: 0.95rem;
+  }
+
+  .modal-dog-name {
+    color: var(--headingMediumColor);
+    letter-spacing: 0.65768px;
+    line-height: 1.1;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .modal-name-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+
+  .modal-dog-breed {
+    font-size: 16px;
+    font-weight: 500;
+    margin-block-start: 16px;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--brand-darkest-blue);
+  }
+
+  .modal-panel-header {
+    padding: 70px 32px 0;
+    flex-shrink: 0;
+  }
+
+  .modal-body {
+    padding: 0 32px 24px;
+    overflow-y: auto;
+    flex: 1;
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-dark-blue) transparent;
+  }
+
+  .modal-body::-webkit-scrollbar {
+    width: 3px;
+  }
+  .modal-body::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .modal-body::-webkit-scrollbar-thumb {
+    background: linear-gradient(
+      to bottom,
+      var(--brand-blue),
+      var(--brand-dark-blue)
+    );
+    border-radius: 9999px;
+  }
+
+  /* Info grid: 2-col label/value pairs */
+  .modal-info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px 28px;
+    padding: 20px 0;
+    margin: 20px 0;
+  }
+
+  .modal-info-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .modal-info-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    padding-bottom: 10px;
+    color: var(--brand-dark-blue);
+  }
+
+  .modal-info-value {
+    font-size: 1.05rem;
+    color: var(--brand-blue, #7f9feb);
+  }
+
+  .modal-info-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .modal-info-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: var(--brand-lightest-blue, #e9f0fb);
+    color: var(--brand-darkest-blue, #2c3953);
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .modal-info-chip-icon {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+
+  .modal-info-chip-icon i {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .modal-fee-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+  }
+
+  .modal-fee-item {
+    background: #f8f9fa;
+    padding: 16px;
+    border-radius: 10px;
+    text-align: center;
+  }
+
+  .modal-fee-item.highlight {
+    background: #e8f5e9;
+  }
+
+  .modal-fee-label {
+    font-size: 0.78rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+
+  .modal-fee-value {
+    font-size: 1.15rem;
+    color: #333;
+    font-weight: 600;
+  }
+
+  .modal-fee-value.highlight-text {
+    color: #2e7d32;
+  }
+
+  .modal-section {
+    margin-bottom: 22px;
+  }
+
+  .modal-section-title {
+    color: var(--brand-dark-blue);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--timelinestopbackground, #e0e0e0);
+  }
+
+  .modal-description {
+    font-size: 1rem;
+    color: var(--brand-darkest-blue);
+    font-weight: 400;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  .modal-attributes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .modal-attribute-tag {
+    background: var(--brand-lightest-blue);
+    color: var(--brand-blue);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 400;
+  }
+
+  /* Compatibility row (Good with: cats / dogs / kids) */
+  .modal-compat {
+    margin: 0 0 20px;
+  }
+
+  .modal-compat-heading {
+    color: var(--brand-darkest-blue);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 10px;
+    padding-bottom: 7px;
+    border-bottom: 1px solid var(--timelinestopbackground, #e0e0e0);
+    opacity: 0.6;
+  }
+
+  .modal-compat-icons {
+    display: grid;
+    grid-template-columns: 1.5rem 3.5rem 1.1rem auto;
+    gap: 10px 10px;
+    align-items: center;
+  }
+
+  .modal-compat-animal {
+    font-size: 1.3rem;
+    color: var(--brand-darkest-blue);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-compat-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--brand-dark-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .modal-compat-status {
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-compat-status--yes {
+    color: #3a7d44;
+  }
+  .modal-compat-status--no {
+    color: var(--brand-red);
+  }
+  .modal-compat-status--caveat {
+    color: var(--brand-dark-blue);
+  }
+  .modal-compat-status--unknown {
+    color: var(--brand-dark-blue);
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .modal-compat-note-icon {
+    font-size: 0.95rem;
+    color: var(--brand-dark-blue);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .modal-foster-info {
+    background: #fff3e0;
+    padding: 16px;
+    border-radius: 10px;
+    border-left: 4px solid #ff6b6b;
+  }
+
+  .modal-foster-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 4px;
+  }
+
+  .modal-foster-date {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  /* Actions pinned to bottom of right panel */
+  .modal-actions {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+    padding: 20px 32px 28px;
+    flex-shrink: 0;
+  }
+
+  .modal-actions .modal-btn {
+    flex: 1;
+  }
+
+  .secondary-btn,
+  .primary-btn,
+  .filter-btn {
+    border-radius: 9999px;
+    font-family: var(--primary-button-font-font-family);
+    font-style: var(--primary-button-font-font-style);
+    font-weight: var(--primary-button-font-font-weight);
+    line-height: var(--primary-button-font-line-height);
+    letter-spacing: var(--primary-button-font-letter-spacing);
+    text-transform: var(--primary-button-font-text-transform);
+  }
+
+  .modal-btn {
+    width: 100%;
+    padding: 16px 28px;
+    border: none;
+    border-radius: 9999px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .modal-btn:hover,
+  .modal-btn:focus-visible {
+    filter: brightness(0.9);
+    transform: translateY(-1px);
+    outline: none;
+  }
+
+  .modal-btn-foster {
+    background: transparent;
+    color: var(--brand-darkest-blue, #2c3953);
+    border: 2px solid var(--brand-darkest-blue, #2c3953);
+  }
+
+  .modal-btn-adopt,
+  .primary-btn {
+    background-color: var(--brand-blue, #7f9feb);
+    border: 2px solid var(--brand-blue, #7f9feb);
+    color: var(--white, #fff);
+  }
+
+  /* ── Responsive ─────────────────────────────────────────────── */
+
+  @media (max-width: 768px) {
+    .controls {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .search-box {
+      min-width: 100%;
+    }
+    .filter-group {
+      width: 100%;
+    }
+    .filter-btn {
+      flex: 1;
+    }
+
+    .cards-grid {
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .overlay-card {
+      height: 450px;
+    }
+    .overlay-card-name {
+      font-size: 1.6rem;
+    }
+
+    /* Stack to single column on mobile */
+    .modal {
+      padding: 0;
+      align-items: flex-end;
+    }
+
+    .modal-content {
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      width: 100%;
+      height: auto;
+      max-height: 95vh;
+      border-radius: 20px 20px 0 0;
+    }
+
+    .modal-carousel {
+      flex-shrink: 0;
+      padding: 14px 14px 8px;
+      gap: 8px;
+    }
+
+    .modal-carousel-main {
+      height: 56vw;
+      min-height: 200px;
+      max-height: 360px;
+    }
+
+    .modal-thumbnail {
+      width: 46px;
+      height: 46px;
+    }
+
+    .modal-panel-header {
+      padding: 20px 20px 0;
+    }
+
+    .modal-body {
+      padding: 0 20px 16px;
+    }
+
+    .modal-dog-name {
+      font-size: 1.9rem;
+    }
+
+    .modal-info-grid {
+      gap: 14px 20px;
+    }
+
+    .modal-actions {
+      flex-direction: column;
+      padding: 16px 20px 24px;
+    }
+
+    .modal-actions .modal-btn {
+      flex: unset;
+    }
+
+    .modal-close {
+      width: 38px;
+      height: 38px;
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .modal-carousel-main {
+      height: 64vw;
+    }
+
+    .modal-dog-name {
+      font-size: 1.65rem;
+    }
+
+    .modal-thumbnail {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  /* Push Squarespace navbar behind modal when open */
+  body.dog-modal-open .header,
+  body.dog-modal-open .header .header-announcement-bar-wrapper {
+    z-index: 0 !important;
+  }
+</style>
+
+<div class="dog-cards-container">
+  <p class="section-description">Find your perfect companion</p>
+
+  <div class="controls">
+    <div class="search-box">
+      <input
+        type="text"
+        id="searchInput"
+        placeholder="Search by name or breed..."
+        aria-label="Search dogs"
+      />
+    </div>
+
+    <div class="filter-group">
+      <button class="filter-btn active" data-filter="all" aria-pressed="true">
+        All Dogs
+      </button>
+      <button
+        class="primary-btn filter-btn"
+        data-filter="needs-foster"
+        aria-pressed="false"
+      >
+        Needs Foster
+      </button>
+      <button
+        class="primary-btn filter-btn"
+        data-filter="in-foster"
+        aria-pressed="false"
+      >
+        In Foster
+      </button>
+      <button
+        class="primary-btn filter-btn"
+        data-filter="male"
+        aria-pressed="false"
+      >
+        Male
+      </button>
+      <button
+        class="primary-btn filter-btn"
+        data-filter="female"
+        aria-pressed="false"
+      >
+        Female
+      </button>
+    </div>
+
+    <select id="sortSelect" class="sort-select" aria-label="Sort dogs">
+      <option value="name-asc">Name (A-Z)</option>
+      <option value="name-desc">Name (Z-A)</option>
+      <option value="age-asc">Age (Youngest)</option>
+      <option value="age-desc">Age (Oldest)</option>
+      <option value="intake-desc">Intake Date (Newest)</option>
+      <option value="intake-asc">Intake Date (Oldest)</option>
+      <option value="time-in-rescue-asc">Time in Rescue (Shortest)</option>
+      <option value="time-in-rescue-desc">Time in Rescue (Longest)</option>
+    </select>
+
+    <div class="custom-select" id="customSort" aria-label="Sort dogs">
+      <button
+        class="custom-select-trigger"
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded="false"
+      >
+        <span id="customSortLabel">Name (A-Z)</span>
+        <span class="custom-select-arrow"
+          ><i class="ph ph-caret-down" aria-hidden="true"></i
+        ></span>
+      </button>
+      <ul class="custom-select-options" role="listbox">
+        <li
+          class="custom-select-option selected"
+          data-value="name-asc"
+          role="option"
+        >
+          Name (A-Z)
+        </li>
+        <li class="custom-select-option" data-value="name-desc" role="option">
+          Name (Z-A)
+        </li>
+        <li class="custom-select-option" data-value="age-asc" role="option">
+          Age (Youngest)
+        </li>
+        <li class="custom-select-option" data-value="age-desc" role="option">
+          Age (Oldest)
+        </li>
+        <li class="custom-select-option" data-value="intake-desc" role="option">
+          Intake Date (Newest)
+        </li>
+        <li class="custom-select-option" data-value="intake-asc" role="option">
+          Intake Date (Oldest)
+        </li>
+        <li
+          class="custom-select-option"
+          data-value="time-in-rescue-asc"
+          role="option"
+        >
+          Time in Rescue (Shortest)
+        </li>
+        <li
+          class="custom-select-option"
+          data-value="time-in-rescue-desc"
+          role="option"
+        >
+          Time in Rescue (Longest)
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="resultsCount" class="results-count" style="display: none"></div>
+  <div id="error" class="error" style="display: none"></div>
+  <div id="noResults" class="no-results" style="display: none">
+    <p>No dogs found matching your criteria.</p>
+  </div>
+
+  <div id="dogCardsGrid" class="cards-grid"></div>
+</div>
+
+<!-- Modal for dog details -->
+<div id="dogModal" class="modal">
+  <div class="modal-content">
+    <button
+      class="modal-link-btn"
+      id="modalLinkBtn"
+      aria-label="Copy link to this dog"
+    >
+      <i class="ph ph-link" aria-hidden="true"></i>
+    </button>
+    <button class="modal-close" id="modalClose" aria-label="Close modal">
+      <i class="ph ph-x" aria-hidden="true"></i>
+    </button>
+    <!-- Left: image carousel (built by JS) -->
+    <div class="modal-carousel" id="modalCarousel"></div>
+    <!-- Right: name, info, description, actions -->
+    <div class="modal-panel" id="modalPanel">
+      <div class="modal-panel-header" id="modalPanelHeader"></div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const API_URL =
+    'https://willowy-toffee-908bc8.netlify.app/.netlify/functions/adoptable-dogs';
+  const POLL_INTERVAL_MS = 30 * 60 * 1000; // 30 minutes
+
+  const SVG_CARET_LEFT = '<i class="ph ph-caret-left" aria-hidden="true"></i>';
+  const SVG_CARET_RIGHT =
+    '<i class="ph ph-caret-right" aria-hidden="true"></i>';
+
+  // icon class per compat status (Phosphor ph-* names)
+  const COMPAT_ICON = {
+    yes: 'ph-check-circle',
+    caveat: 'ph-check-circle',
+    no: 'ph-x-circle',
+    unknown: 'ph-question',
+  };
+
+  let allDogs = [];
+  let filteredDogs = [];
+  let currentFilter = 'all';
+  let currentSort = 'name-asc';
+  let searchTerm = '';
+
+  // ── Utilities ──────────────────────────────────────────────────────────────
+  function isTrainingGrad(dog) {
+    return (dog.attributes || []).some((a) => {
+      const pub = a.Publish;
+      const isPublished =
+        pub === true ||
+        pub === 1 ||
+        (typeof pub === 'string' && pub.toLowerCase() === 'yes');
+      return (
+        isPublished && (a.AttributeName || '').toLowerCase().includes('trained')
+      );
+    });
+  }
+  function calculateAge(ageInMonths) {
+    if (!ageInMonths) return 'Age unknown';
+    if (ageInMonths < 12)
+      return `${ageInMonths} month${ageInMonths !== 1 ? 's' : ''}`;
+    const years = Math.floor(ageInMonths / 12);
+    const months = ageInMonths % 12;
+    if (months === 0) return `${years} year${years !== 1 ? 's' : ''}`;
+    return `${years}y ${months}m`;
+  }
+
+  function formatWeight(weightPounds) {
+    if (!weightPounds) return null;
+    const weight = parseFloat(weightPounds);
+    return isNaN(weight) ? null : `${weight.toFixed(1)} lbs`;
+  }
+
+  function formatBreed(breedString) {
+    if (!breedString) return 'Mixed Breed';
+    return breedString
+      .split('/')
+      .map((breed) => {
+        const parts = breed
+          .trim()
+          .split(',')
+          .map((p) => p.trim());
+        return parts.length === 2 ? `${parts[1]} ${parts[0]}` : breed.trim();
+      })
+      .join(' • ');
+  }
+
+  const SHELTERLUV_EMBED_ID = 'shelterluv_wrap_1748401771';
+  const SHELTERLUV_ORG_PREFIX = 'LLRO';
+
+  function shelterLuvAdoptUrl(id, internalId) {
+    const animalId = `${SHELTERLUV_ORG_PREFIX}-A-${id}`;
+    const params = new URLSearchParams({
+      nid: internalId,
+      iframeId: SHELTERLUV_EMBED_ID,
+    });
+    return `https://new.shelterluv.com/matchme/adopt/${animalId}?${params}`;
+  }
+
+  function mapDog(animal) {
+    return {
+      id: animal.ID,
+      internalId: animal['Internal-ID'],
+      adoptUrl: shelterLuvAdoptUrl(animal.ID, animal['Internal-ID']),
+      name: animal.Name || 'Unknown',
+      breed: formatBreed(animal.Breed),
+      breedRaw: animal.Breed || 'Mixed Breed',
+      age: animal.Age,
+      ageDisplay: calculateAge(animal.Age),
+      sex: animal.Sex || 'Unknown',
+      weight: formatWeight(animal.CurrentWeightPounds),
+      description: animal.Description || 'No description available.',
+      coverPhoto: animal.CoverPhoto,
+      photos: animal.Photos || [],
+      videos: animal.Videos || [],
+      status: animal.Status || '',
+      inFoster: animal.InFoster || false,
+      needsFoster: !animal.InFoster,
+      associatedPerson: animal.AssociatedPerson || [],
+      altered: animal.Altered,
+      color: animal.Color,
+      pattern: animal.Pattern,
+      size: animal.Size,
+      currentLocation: animal.CurrentLocation || {},
+      locationState: (animal.CurrentLocation || {}).State || null,
+      attributes: animal.Attributes || [],
+      microchips: animal.Microchips || [],
+      previousIds: animal.PreviousIds || [],
+      adoptionFeeGroup: animal.AdoptionFeeGroup || [],
+      dobUnixTime: animal.DOBUnixTime,
+      lastIntakeUnixTime: animal.LastIntakeUnixTime,
+      lastUpdatedUnixTime: animal.LastUpdatedUnixTime,
+      litterGroupId: animal.LitterGroupId,
+    };
+  }
+
+  // ── Data fetching ──────────────────────────────────────────────────────────
+
+  async function fetchDogs() {
+    const errorEl = document.getElementById('error');
+
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data = await response.json();
+      allDogs = data.dogs.filter((a) => a.Type === 'Dog').map(mapDog);
+
+      if (allDogs.length === 0) {
+        document.getElementById('noResults').style.display = 'block';
+      } else {
+        applyFiltersAndSort();
+        const dogId = new URLSearchParams(window.location.search).get('dog');
+        if (dogId) {
+          const dog = allDogs.find((d) => d.id === dogId);
+          if (dog) openDogModal(dog);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching dogs:', error);
+      errorEl.textContent = `Failed to load dogs: ${error.message}`;
+      errorEl.style.display = 'block';
+    }
+  }
+
+  // Silently refresh data in the background without disrupting the UI.
+  async function silentRefresh() {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) return;
+      const data = await response.json();
+      allDogs = data.dogs.filter((a) => a.Type === 'Dog').map(mapDog);
+      applyFiltersAndSort();
+    } catch (e) {
+      // Swallow errors — don't disrupt the user on background refreshes.
+    }
+  }
+
+  // ── Filtering & rendering ──────────────────────────────────────────────────
+
+  function applyFiltersAndSort() {
+    filteredDogs = allDogs.filter((dog) => {
+      let passes = true;
+
+      if (currentFilter === 'needs-foster') passes = dog.needsFoster;
+      else if (currentFilter === 'in-foster') passes = dog.inFoster;
+      else if (currentFilter === 'male')
+        passes = dog.sex && dog.sex.toLowerCase() === 'male';
+      else if (currentFilter === 'female')
+        passes = dog.sex && dog.sex.toLowerCase() === 'female';
+
+      if (searchTerm) {
+        const q = searchTerm.toLowerCase();
+        passes =
+          passes &&
+          (dog.name.toLowerCase().includes(q) ||
+            dog.breed.toLowerCase().includes(q));
+      }
+
+      return passes;
+    });
+
+    filteredDogs.sort((a, b) => {
+      switch (currentSort) {
+        case 'name-asc':
+          return a.name.localeCompare(b.name);
+        case 'name-desc':
+          return b.name.localeCompare(a.name);
+        case 'age-asc':
+          return (a.age || 0) - (b.age || 0);
+        case 'age-desc':
+          return (b.age || 0) - (a.age || 0);
+        case 'intake-asc':
+          return (a.lastIntakeUnixTime || 0) - (b.lastIntakeUnixTime || 0);
+        case 'intake-desc':
+          return (b.lastIntakeUnixTime || 0) - (a.lastIntakeUnixTime || 0);
+        case 'time-in-rescue-asc':
+          return (b.lastIntakeUnixTime || 0) - (a.lastIntakeUnixTime || 0);
+        case 'time-in-rescue-desc':
+          return (a.lastIntakeUnixTime || 0) - (b.lastIntakeUnixTime || 0);
+        default:
+          return 0;
+      }
+    });
+
+    updateResultsCount();
+    renderDogs();
+  }
+
+  function updateResultsCount() {
+    const countEl = document.getElementById('resultsCount');
+    const noResultsEl = document.getElementById('noResults');
+
+    if (filteredDogs.length > 0) {
+      countEl.textContent = `Showing ${filteredDogs.length} dog${filteredDogs.length !== 1 ? 's' : ''}`;
+      countEl.style.display = 'block';
+      noResultsEl.style.display = 'none';
+    } else {
+      countEl.style.display = 'none';
+      noResultsEl.style.display = 'block';
+    }
+  }
+
+  function renderDogs() {
+    const grid = document.getElementById('dogCardsGrid');
+    grid.innerHTML = '';
+
+    filteredDogs.forEach((dog) => {
+      const card = document.createElement('div');
+      card.className =
+        'overlay-card' + (dog.needsFoster ? ' needs-foster' : '');
+      card.setAttribute('role', 'article');
+      card.setAttribute('aria-label', `${dog.name}, ${dog.breed}`);
+      card.setAttribute('tabindex', '0');
+
+      if (dog.needsFoster) {
+        const badge = document.createElement('div');
+        badge.className = 'foster-badge';
+        badge.textContent = 'Needs Foster';
+        badge.setAttribute('aria-label', 'This dog needs a foster home');
+        card.appendChild(badge);
+      }
+
+      if (dog.coverPhoto) {
+        const img = document.createElement('img');
+        img.className = 'overlay-card-image';
+        img.src = dog.coverPhoto;
+        img.alt = `Photo of ${dog.name}`;
+        img.loading = 'lazy';
+        img.onerror = function () {
+          this.style.display = 'none';
+          const placeholder = document.createElement('div');
+          placeholder.className = 'image-placeholder';
+          placeholder.textContent = '🐕';
+          card.appendChild(placeholder);
+        };
+        card.appendChild(img);
+      } else {
+        const placeholder = document.createElement('div');
+        placeholder.className = 'image-placeholder';
+        placeholder.textContent = '🐕';
+        card.appendChild(placeholder);
+      }
+
+      const content = document.createElement('div');
+      content.className = 'overlay-card-content';
+
+      const name = document.createElement('h3');
+      name.className = 'overlay-card-name';
+      name.textContent = dog.name;
+
+      const breed = document.createElement('div');
+      breed.className = 'overlay-card-breed';
+      breed.textContent = dog.breed;
+
+      const infoRow = document.createElement('div');
+      infoRow.className = 'info-row';
+
+      const ageBadge = document.createElement('span');
+      ageBadge.className = 'info-badge';
+      ageBadge.textContent = dog.ageDisplay;
+      ageBadge.setAttribute('aria-label', `Age: ${dog.ageDisplay}`);
+      infoRow.appendChild(ageBadge);
+
+      const sexBadge = document.createElement('span');
+      sexBadge.className = 'info-badge';
+      sexBadge.textContent = dog.sex;
+      sexBadge.setAttribute('aria-label', `Sex: ${dog.sex}`);
+      infoRow.appendChild(sexBadge);
+
+      if (dog.locationState) {
+        const stateBadge = document.createElement('span');
+        stateBadge.className = 'info-badge';
+        stateBadge.textContent = dog.locationState;
+        stateBadge.setAttribute('aria-label', `Location: ${dog.locationState}`);
+        infoRow.appendChild(stateBadge);
+      }
+
+      if (isTrainingGrad(dog)) {
+        const trainedBadge = document.createElement('span');
+        trainedBadge.className = 'info-badge info-badge-trained';
+        trainedBadge.innerHTML =
+          '<i class="ph-fill ph-graduation-cap" aria-hidden="true"></i> Training Grad';
+        trainedBadge.setAttribute('aria-label', 'Training graduate');
+        infoRow.appendChild(trainedBadge);
+      }
+
+      const description = document.createElement('div');
+      description.className = 'overlay-card-description';
+      description.textContent = dog.description;
+
+      content.appendChild(name);
+      content.appendChild(breed);
+      content.appendChild(infoRow);
+      content.appendChild(description);
+
+      card.appendChild(content);
+      card.addEventListener('click', () => openDogModal(dog));
+      card.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openDogModal(dog);
+        }
+      });
+
+      grid.appendChild(card);
+    });
+  }
+
+  // ── Modal ──────────────────────────────────────────────────────────────────
+
+  function openDogModal(dog) {
+    const modal = document.getElementById('dogModal');
+    const modalCarousel = document.getElementById('modalCarousel');
+    const modalPanelHeader = document.getElementById('modalPanelHeader');
+    const modalBody = document.getElementById('modalBody');
+    const modalActions = document.getElementById('modalActions');
+
+    modalCarousel.innerHTML = '';
+    modalPanelHeader.innerHTML = '';
+    modalBody.innerHTML = '';
+    modalActions.innerHTML = '';
+
+    // ── Build carousel (left panel) ──────────────────────────────
+
+    const allPhotos =
+      dog.photos && dog.photos.length > 0
+        ? dog.photos
+        : dog.coverPhoto
+          ? [dog.coverPhoto]
+          : [];
+
+    let activeIndex = 0;
+
+    const carouselMain = document.createElement('div');
+    carouselMain.className = 'modal-carousel-main';
+
+    let mainImg;
+    if (allPhotos.length > 0) {
+      mainImg = document.createElement('img');
+      mainImg.className = 'modal-carousel-img';
+      mainImg.src = allPhotos[0];
+      mainImg.alt = `Photo of ${dog.name}`;
+      carouselMain.appendChild(mainImg);
+    } else {
+      const placeholder = document.createElement('div');
+      placeholder.className = 'modal-image-placeholder';
+      placeholder.textContent = '🐕';
+      carouselMain.appendChild(placeholder);
+    }
+
+    // Prev/next buttons
+    let prevBtn,
+      nextBtn,
+      thumbnailBtns = [];
+    if (allPhotos.length > 1) {
+      prevBtn = document.createElement('button');
+      prevBtn.className = 'modal-carousel-btn modal-carousel-btn-prev';
+      prevBtn.setAttribute('aria-label', 'Previous photo');
+      prevBtn.innerHTML = SVG_CARET_LEFT;
+      prevBtn.disabled = true;
+      carouselMain.appendChild(prevBtn);
+
+      nextBtn = document.createElement('button');
+      nextBtn.className = 'modal-carousel-btn modal-carousel-btn-next';
+      nextBtn.setAttribute('aria-label', 'Next photo');
+      nextBtn.innerHTML = SVG_CARET_RIGHT;
+      carouselMain.appendChild(nextBtn);
+    }
+
+    modalCarousel.appendChild(carouselMain);
+
+    // Thumbnail strip with arrow nav
+    if (allPhotos.length > 1) {
+      const thumbWrapper = document.createElement('div');
+      thumbWrapper.className = 'modal-thumbnails-wrapper';
+
+      const thumbPrevBtn = document.createElement('button');
+      thumbPrevBtn.className = 'modal-thumb-arrow modal-thumb-arrow-prev';
+      thumbPrevBtn.setAttribute('aria-label', 'Scroll thumbnails left');
+      thumbPrevBtn.disabled = true;
+      thumbPrevBtn.innerHTML = SVG_CARET_LEFT;
+
+      const thumbStrip = document.createElement('div');
+      thumbStrip.className = 'modal-thumbnails';
+
+      const thumbNextBtn = document.createElement('button');
+      thumbNextBtn.className = 'modal-thumb-arrow modal-thumb-arrow-next';
+      thumbNextBtn.setAttribute('aria-label', 'Scroll thumbnails right');
+      thumbNextBtn.innerHTML = SVG_CARET_RIGHT;
+
+      allPhotos.forEach((url, i) => {
+        const btn = document.createElement('button');
+        btn.className = 'modal-thumbnail' + (i === 0 ? ' active' : '');
+        btn.setAttribute('aria-label', `View photo ${i + 1}`);
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+        img.loading = 'lazy';
+        btn.appendChild(img);
+        btn.addEventListener('click', () => goTo(i));
+        thumbStrip.appendChild(btn);
+        thumbnailBtns.push(btn);
+      });
+
+      const THUMB_SCROLL = 120; // ~2 thumbnails per click
+
+      function updateThumbArrows() {
+        thumbPrevBtn.disabled = thumbStrip.scrollLeft <= 0;
+        thumbNextBtn.disabled =
+          thumbStrip.scrollLeft >=
+          thumbStrip.scrollWidth - thumbStrip.clientWidth - 1;
+      }
+
+      thumbPrevBtn.addEventListener('click', () => {
+        thumbStrip.scrollBy({ left: -THUMB_SCROLL, behavior: 'smooth' });
+        setTimeout(updateThumbArrows, 320);
+      });
+      thumbNextBtn.addEventListener('click', () => {
+        thumbStrip.scrollBy({ left: THUMB_SCROLL, behavior: 'smooth' });
+        setTimeout(updateThumbArrows, 320);
+      });
+      thumbStrip.addEventListener('scroll', updateThumbArrows);
+
+      thumbWrapper.appendChild(thumbPrevBtn);
+      thumbWrapper.appendChild(thumbStrip);
+      thumbWrapper.appendChild(thumbNextBtn);
+      modalCarousel.appendChild(thumbWrapper);
+
+      // Init arrow state after layout
+      requestAnimationFrame(updateThumbArrows);
+    }
+
+    function goTo(index) {
+      activeIndex = index;
+      if (mainImg) {
+        mainImg.src = allPhotos[activeIndex];
+        mainImg.alt = `Photo ${activeIndex + 1} of ${dog.name}`;
+      }
+      thumbnailBtns.forEach((btn, i) =>
+        btn.classList.toggle('active', i === activeIndex),
+      );
+      if (prevBtn) prevBtn.disabled = activeIndex === 0;
+      if (nextBtn) nextBtn.disabled = activeIndex === allPhotos.length - 1;
+    }
+
+    if (prevBtn)
+      prevBtn.addEventListener('click', () =>
+        goTo(Math.max(activeIndex - 1, 0)),
+      );
+    if (nextBtn)
+      nextBtn.addEventListener('click', () =>
+        goTo(Math.min(activeIndex + 1, allPhotos.length - 1)),
+      );
+
+    // ── Build right panel header (name + breed + foster badge) ────
+
+    const nameRow = document.createElement('div');
+    nameRow.className = 'modal-name-row';
+
+    const nameEl = document.createElement('h3');
+    nameEl.className = 'modal-dog-name';
+    nameEl.textContent = dog.name;
+    nameRow.appendChild(nameEl);
+
+    if (dog.needsFoster) {
+      const badge = document.createElement('div');
+      badge.className = 'modal-foster-badge';
+      badge.textContent = 'Needs Foster';
+      nameRow.appendChild(badge);
+    }
+
+    modalPanelHeader.appendChild(nameRow);
+
+    if (dog.breed) {
+      const breedEl = document.createElement('div');
+      breedEl.className = 'modal-dog-breed';
+      breedEl.textContent = dog.breed;
+      modalPanelHeader.appendChild(breedEl);
+    }
+
+    // ── Info grid (label / value pairs) ──────────────────────────
+
+    const infoGrid = document.createElement('div');
+    infoGrid.className = 'modal-info-grid';
+
+    const gridItems = [
+      { label: 'Age', value: dog.ageDisplay },
+      { label: 'Sex', value: dog.sex || 'Unknown' },
+      ...(dog.weight ? [{ label: 'Weight', value: dog.weight }] : []),
+      { label: 'Altered', value: dog.altered === 'Yes' ? 'Yes' : 'No' },
+      ...(dog.lastIntakeUnixTime
+        ? [
+            {
+              label: 'Intake Date',
+              value: new Date(dog.lastIntakeUnixTime * 1000).toLocaleDateString(
+                'en-US',
+                { month: 'short', day: 'numeric', year: 'numeric' },
+              ),
+            },
+          ]
+        : []),
+      ...(dog.DOBUnixTime
+        ? [
+            {
+              label: 'Date of Birth',
+              value: new Date(dog.lastIntakeUnixTime * 1000).toLocaleDateString(
+                'en-US',
+                { month: 'short', day: 'numeric', year: 'numeric' },
+              ),
+            },
+          ]
+        : []),
+      ...(dog.color
+        ? [{ label: 'Color', value: dog.color.replace(/\//g, ' & ') }]
+        : []),
+    ];
+
+    gridItems.forEach(({ label, value }) => {
+      const item = document.createElement('div');
+      item.className = 'modal-info-item';
+      const lbl = document.createElement('div');
+      lbl.className = 'modal-info-label';
+      lbl.textContent = label;
+      const val = document.createElement('div');
+      val.className = 'modal-info-value';
+      val.textContent = value;
+      item.appendChild(lbl);
+      item.appendChild(val);
+      infoGrid.appendChild(item);
+    });
+
+    modalBody.appendChild(infoGrid);
+
+    // ── Compatibility row (Dogs / Cats / Kids) ────────────────────
+    {
+      const attrs = dog.attributes || [];
+      const hasAttr = (...keywords) =>
+        attrs.some((a) => {
+          const pub = a.Publish;
+          const isPublished =
+            pub === true ||
+            pub === 1 ||
+            (typeof pub === 'string' && pub.toLowerCase() === 'yes');
+          if (!isPublished) return false;
+          return keywords.some((k) =>
+            (a.AttributeName || '').toLowerCase().includes(k.toLowerCase()),
+          );
+        });
+
+      // Dogs: yes / no / male-preferred / female-preferred / unknown
+      let dogsType,
+        dogsNote = null;
+      if (hasAttr('not good with dog', 'no dog')) {
+        dogsType = 'no';
+      } else if (hasAttr('male dog home preferred')) {
+        dogsType = 'caveat';
+        dogsNote = 'ph-gender-male';
+      } else if (hasAttr('female dog home preferred')) {
+        dogsType = 'caveat';
+        dogsNote = 'ph-gender-female';
+      } else if (hasAttr('good with dog')) {
+        dogsType = 'yes';
+      } else {
+        dogsType = 'yes';
+      }
+
+      // Cats
+      let catsType;
+      if (hasAttr('not good with cats')) catsType = 'no';
+      else if (hasAttr('good with cats')) catsType = 'yes';
+      else catsType = 'unknown';
+
+      // Kids
+      let kidsType,
+        kidsNote = null;
+      if (hasAttr('not good with kids')) {
+        kidsType = 'no';
+      } else if (
+        hasAttr('older-child home preferred', 'adult-only home preferred')
+      ) {
+        kidsType = 'caveat';
+        kidsNote = 'Adults preferred';
+      } else if (hasAttr('good with kids')) {
+        kidsType = 'yes';
+      } else {
+        kidsType = 'yes';
+      }
+
+      const compatRow = document.createElement('div');
+      compatRow.className = 'modal-compat';
+
+      const compatHeading = document.createElement('h2');
+      compatHeading.className = 'modal-section-title';
+      compatHeading.textContent = 'Good with';
+      compatRow.appendChild(compatHeading);
+
+      const iconsRow = document.createElement('div');
+      iconsRow.className = 'modal-compat-icons';
+
+      const STATUS_ICON = {
+        yes: 'ph-check',
+        no: 'ph-x',
+        caveat: 'ph-warning',
+      };
+
+      [
+        { phIcon: 'ph-dog', label: 'Dogs', type: dogsType, note: dogsNote },
+        { phIcon: 'ph-cat', label: 'Cats', type: catsType, note: null },
+        { phIcon: 'ph-baby', label: 'Kids', type: kidsType, note: kidsNote },
+      ].forEach(({ phIcon, label, type, note }) => {
+        // Column 1: animal icon
+        const animalIcon = document.createElement('i');
+        animalIcon.className = `ph ${phIcon} modal-compat-animal`;
+        animalIcon.setAttribute('aria-hidden', 'true');
+        iconsRow.appendChild(animalIcon);
+
+        // Column 2: label
+        const labelEl = document.createElement('span');
+        labelEl.className = 'modal-compat-label';
+        labelEl.textContent = label;
+        iconsRow.appendChild(labelEl);
+
+        // Column 2: status icon
+        let statusEl;
+        if (type === 'unknown') {
+          statusEl = document.createElement('span');
+          statusEl.textContent = '?';
+        } else {
+          statusEl = document.createElement('i');
+          statusEl.className = `ph ${STATUS_ICON[type]}`;
+          statusEl.setAttribute('aria-hidden', 'true');
+        }
+        statusEl.classList.add(
+          'modal-compat-status',
+          `modal-compat-status--${type}`,
+        );
+        iconsRow.appendChild(statusEl);
+
+        // Column 3: caveat note icon (empty span otherwise)
+        if (note) {
+          const noteEl = document.createElement('i');
+          noteEl.className = `ph ${note} modal-compat-note-icon`;
+          noteEl.setAttribute('aria-hidden', 'true');
+          iconsRow.appendChild(noteEl);
+        } else {
+          iconsRow.appendChild(document.createElement('span'));
+        }
+      });
+
+      compatRow.appendChild(iconsRow);
+      modalBody.appendChild(compatRow);
+    }
+
+    // Attributes
+    if (dog.attributes && dog.attributes.length > 0) {
+      const COMPAT_ATTR_EXCLUDE = [
+        'adult-only home preferred',
+        'good with cats',
+        'not good with cats',
+        'good with kids',
+        'good with children',
+        'not good with dogs',
+        'good with dogs',
+        'female dog home preferred',
+        'male dog home preferred',
+        'trained',
+      ];
+      const published = dog.attributes.filter((a) => {
+        if (a.Publish !== 'Yes') return false;
+        const name = a.AttributeName.toLowerCase();
+        return !COMPAT_ATTR_EXCLUDE.some((ex) => name.includes(ex));
+      });
+      if (published.length > 0) {
+        const section = document.createElement('div');
+        section.className = 'modal-section';
+        section.innerHTML =
+          '<h2 class="modal-section-title">What makes me special</h2>';
+        const container = document.createElement('div');
+        container.className = 'modal-attributes';
+        published.forEach((attr) => {
+          const tag = document.createElement('span');
+          tag.className = 'modal-attribute-tag';
+          tag.textContent = attr.AttributeName.toLowerCase();
+          container.appendChild(tag);
+        });
+        section.appendChild(container);
+        modalBody.appendChild(section);
+      }
+    }
+
+    // Description — textContent keeps it XSS-safe; pre-wrap handles line breaks
+    if (dog.description) {
+      const section = document.createElement('div');
+      section.className = 'modal-section';
+      const title = document.createElement('h2');
+      title.className = 'modal-section-title';
+      title.textContent = `About ${dog.name}`;
+      const desc = document.createElement('p');
+      desc.className = 'modal-description';
+      desc.textContent = dog.description;
+      section.appendChild(title);
+      section.appendChild(desc);
+      modalBody.appendChild(section);
+    }
+
+    // Foster info
+    if (
+      dog.inFoster &&
+      dog.associatedPerson &&
+      dog.associatedPerson.length > 0
+    ) {
+      const fosterPerson = dog.associatedPerson.find(
+        (p) => p.RelationshipType === 'foster',
+      );
+      if (fosterPerson) {
+        const fosterDate = fosterPerson.OutDateUnixTime
+          ? new Date(fosterPerson.OutDateUnixTime * 1000).toLocaleDateString(
+              'en-US',
+              { year: 'numeric', month: 'long', day: 'numeric' },
+            )
+          : 'Unknown';
+        const section = document.createElement('div');
+        section.className = 'modal-section';
+        section.innerHTML = `
+          <h2 class="modal-section-title">Foster Information</h2>
+          <div class="modal-foster-info">
+            <div class="modal-foster-name">Foster Parent: ${fosterPerson.FirstName} ${fosterPerson.LastName}</div>
+            <div class="modal-foster-date">In foster since: ${fosterDate}</div>
+          </div>
+        `;
+        modalBody.appendChild(section);
+      }
+    }
+
+    // Adoption Fee
+    if (dog.adoptionFeeGroup && dog.adoptionFeeGroup.length > 0) {
+      const feeGroup = dog.adoptionFeeGroup[0];
+      const totalFee =
+        (feeGroup.Price || 0) - (feeGroup.Discount || 0) + (feeGroup.Tax || 0);
+      const section = document.createElement('div');
+      section.className = 'modal-section';
+      section.innerHTML = '<h2 class="modal-section-title">Adoption Fee</h2>';
+
+      const feeGrid = document.createElement('div');
+      feeGrid.className = 'modal-fee-grid';
+
+      const feeItems = [
+        { label: 'Fee Group', value: feeGroup.Name, highlight: false },
+        {
+          label: 'Base Price',
+          value: `$${feeGroup.Price || 0}`,
+          highlight: false,
+        },
+        ...(feeGroup.Discount
+          ? [
+              {
+                label: 'Discount',
+                value: `-$${feeGroup.Discount}`,
+                highlight: false,
+              },
+            ]
+          : []),
+        { label: 'Total Fee', value: `$${totalFee}`, highlight: true },
+      ];
+
+      feeItems.forEach((item) => {
+        const el = document.createElement('div');
+        el.className = item.highlight
+          ? 'modal-fee-item highlight'
+          : 'modal-fee-item';
+        el.innerHTML = `
+          <div class="modal-fee-label">${item.label}</div>
+          <div class="modal-fee-value ${item.highlight ? 'highlight-text' : ''}">${item.value}</div>
+        `;
+        feeGrid.appendChild(el);
+      });
+
+      section.appendChild(feeGrid);
+      modalBody.appendChild(section);
+    }
+
+    // ── Action buttons ────────────────────────────────────────────
+
+    const adoptBtn = document.createElement('button');
+    adoptBtn.className = 'primary-btn modal-btn modal-btn-adopt';
+    adoptBtn.textContent = 'Apply to Adopt →';
+    adoptBtn.onclick = () => handleAdoptApplication(dog);
+    modalActions.appendChild(adoptBtn);
+
+    if (dog.needsFoster) {
+      const fosterBtn = document.createElement('button');
+      fosterBtn.className = 'secondary-btn modal-btn modal-btn-foster';
+      fosterBtn.textContent = 'Apply to Foster →';
+      fosterBtn.onclick = () => handleFosterApplication(dog);
+      modalActions.appendChild(fosterBtn);
+    }
+
+    if (isTrainingGrad(dog)) {
+      const trainedChip = document.createElement('div');
+      trainedChip.className = 'modal-trained-badge';
+      trainedChip.innerHTML =
+        '<i class="ph-fill ph-graduation-cap" aria-hidden="true"></i><span>Training Program Graduate</span>';
+      modalPanelHeader.appendChild(trainedChip);
+    }
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+    document.body.classList.add('dog-modal-open');
+
+    const url = new URL(window.location.href);
+    url.searchParams.set('dog', dog.id);
+    history.pushState({ dogId: dog.id }, '', url);
+  }
+
+  function closeDogModal() {
+    document.getElementById('dogModal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+    document.body.classList.remove('dog-modal-open');
+
+    const url = new URL(window.location.href);
+    url.searchParams.delete('dog');
+    history.pushState({}, '', url);
+  }
+
+  function handleFosterApplication(dog) {
+    window.open(
+      'https://new.shelterluv.com/matchme/foster/LLRO/Dog',
+      '_blank',
+      'noopener,noreferrer',
+    );
+  }
+
+  function handleAdoptApplication(dog) {
+    window.open(dog.adoptUrl, '_blank', 'noopener,noreferrer');
+  }
+
+  // ── Event listeners ────────────────────────────────────────────────────────
+
+  document.getElementById('searchInput').addEventListener('input', (e) => {
+    searchTerm = e.target.value;
+    applyFiltersAndSort();
+  });
+
+  document.querySelectorAll('.filter-btn').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      document.querySelectorAll('.filter-btn').forEach((b) => {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
+      });
+      e.target.classList.add('active');
+      e.target.setAttribute('aria-pressed', 'true');
+      currentFilter = e.target.dataset.filter;
+      applyFiltersAndSort();
+    });
+  });
+
+  document.getElementById('sortSelect').addEventListener('change', (e) => {
+    currentSort = e.target.value;
+    applyFiltersAndSort();
+  });
+
+  // ── Custom sort dropdown ───────────────────────────────────────────────────
+  (function () {
+    const dropdown = document.getElementById('customSort');
+    const trigger = dropdown.querySelector('.custom-select-trigger');
+    const label = document.getElementById('customSortLabel');
+    const options = dropdown.querySelectorAll('.custom-select-option');
+
+    trigger.addEventListener('click', () => {
+      const isOpen = dropdown.classList.toggle('open');
+      trigger.setAttribute('aria-expanded', isOpen);
+    });
+
+    options.forEach((opt) => {
+      opt.addEventListener('click', () => {
+        options.forEach((o) => o.classList.remove('selected'));
+        opt.classList.add('selected');
+        label.textContent = opt.textContent;
+        currentSort = opt.dataset.value;
+        dropdown.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+        applyFiltersAndSort();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) {
+        dropdown.classList.remove('open');
+        trigger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  })();
+
+  document
+    .getElementById('modalClose')
+    .addEventListener('click', closeDogModal);
+
+  document.getElementById('modalLinkBtn').addEventListener('click', () => {
+    navigator.clipboard.writeText(window.location.href).then(() => {
+      const btn = document.getElementById('modalLinkBtn');
+      const icon = btn.querySelector('i');
+      icon.className = 'ph ph-check';
+      btn.classList.add('modal-link-btn--copied');
+      setTimeout(() => {
+        icon.className = 'ph ph-link';
+        btn.classList.remove('modal-link-btn--copied');
+      }, 1800);
+    });
+  });
+
+  document.getElementById('dogModal').addEventListener('click', (e) => {
+    if (e.target.id === 'dogModal') closeDogModal();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeDogModal();
+    if (!document.getElementById('dogModal').classList.contains('active'))
+      return;
+    if (e.key === 'ArrowRight') {
+      const nextBtn = document.querySelector('.modal-carousel-btn-next');
+      if (nextBtn && !nextBtn.disabled) nextBtn.click();
+    }
+    if (e.key === 'ArrowLeft') {
+      const prevBtn = document.querySelector('.modal-carousel-btn-prev');
+      if (prevBtn && !prevBtn.disabled) prevBtn.click();
+    }
+  });
+
+  window.addEventListener('popstate', (e) => {
+    const dogId = e.state && e.state.dogId;
+    if (dogId) {
+      const dog = allDogs.find((d) => d.id === dogId);
+      if (dog) {
+        openDogModal(dog);
+        return;
+      }
+    }
+    const modal = document.getElementById('dogModal');
+    if (modal.classList.contains('active')) {
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+      document.body.classList.remove('dog-modal-open');
+    }
+  });
+
+  // ── Boot ───────────────────────────────────────────────────────────────────
+
+  // Move modal to document.body so it escapes any Squarespace stacking context
+  // that would allow page elements to render on top of it.
+  document.body.appendChild(document.getElementById('dogModal'));
+
+  fetchDogs();
+  setInterval(silentRefresh, POLL_INTERVAL_MS);
+</script>

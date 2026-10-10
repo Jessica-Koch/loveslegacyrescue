@@ -1,0 +1,345 @@
+// ─────────────────────────────────────────────────────────────
+// Pastel Rainbow Theme — Love's Legacy Rescue
+//
+// Pastel holographic palette rooted in the logo's own blues
+// (#4b548b navy, #6182b3 periwinkle, #abcffe sky-blue).
+// Rainbow pastels (lavender, pink, mint, gold, peach) orbit
+// those blues to give a modern-retro iridescent feel.
+// Rainbow text lives ONLY on the hero h1.
+// ─────────────────────────────────────────────────────────────
+
+[data-theme='pastel-rainbow'] {
+  // ── Palette ────────────────────────────────────────────────
+
+  // Barely-there periwinkle-white — lets the blobs breathe
+  --color-bg: #f5f7ff;
+
+  // Logo navy — the authoritative dark color from the brand mark
+  --color-fg: #4b548b;
+
+  // Pure white card surfaces
+  --color-surface: #ffffff;
+
+  // Accent: logo periwinkle — the primary action color
+  --color-accent: #6182b3;
+  --color-accent-hover: #4b548b;
+  --color-accent-fg: #ffffff;
+
+  // Secondary: logo sky-blue — softer actions and tags
+  --color-secondary: #abcffe;
+  --color-secondary-hover: #8bbdf5;
+  --color-secondary-fg: #4b548b;
+
+  // Muted: very pale periwinkle wash
+  --color-muted: #eef1ff;
+  --color-muted-fg: #4b548b;
+
+  // Brand: pastel pink — warm complement to the logo blues
+  --color-brand: #ffb3d1;
+
+  // Border: soft periwinkle — light enough to not feel heavy
+  --color-border: #b8c5e8;
+
+  // Muted text: medium periwinkle-grey
+  --color-text-muted: #7a88bb;
+
+  // ── Pastel holographic swatch palette ──────────────────────
+  // All pastels — soft enough to layer without clashing.
+  --holo-lavender: #c5b8ff;
+  --holo-pink:     #ffb3d1;
+  --holo-cyan:     #a8f0f4;
+  --holo-mint:     #b8f2d8;
+  --holo-gold:     #fef3a8;
+
+  // ── Shadows — soft diffused, periwinkle-tinted ─────────────
+  --shadow-xs:       0 1px 3px  rgba(75, 84, 139, 0.10);
+  --shadow-sm:       0 2px 6px  rgba(75, 84, 139, 0.13);
+  --shadow-md:       0 4px 14px rgba(75, 84, 139, 0.15);
+  --shadow-lg:       0 8px 24px rgba(75, 84, 139, 0.17);
+  --shadow-xl:       0 16px 48px rgba(75, 84, 139, 0.20);
+  --shadow-xs-hover: 0 2px 5px  rgba(75, 84, 139, 0.18);
+  --shadow-sm-hover: 0 4px 10px rgba(75, 84, 139, 0.20);
+  --shadow-md-hover: 0 8px 22px rgba(75, 84, 139, 0.24);
+
+  // ── Borders ────────────────────────────────────────────────
+  --border-width: 1px;
+  --border: 1px solid var(--color-border);
+
+  // ── Radius — round and approachable ───────────────────────
+  --radius: 14px;
+  --radius-pill: 999px;
+  --radius-lg: 22px;
+
+  // ── Typography ─────────────────────────────────────────────
+  // Body: DM Sans — clean, modern, legible at all sizes
+  --font-family: 'DM Sans', system-ui, sans-serif;
+  // Headings: Syne — quirky retro-geometric, fresh without being angular
+  --font-family-heading: 'Syne', system-ui, sans-serif;
+  // Display: Shrikhand — expressive hero personality
+  --font-family-display: 'Shrikhand', system-ui, sans-serif;
+  --font-family-accent: 'Shrikhand', system-ui, sans-serif;
+  --font-weight-body: 400;
+  --font-weight-heading: 700;
+
+  // ── Layout ─────────────────────────────────────────────────
+  --gutter: 4vw;
+  --max-width: 1200px;
+  --header-height: 68px;
+
+  // Header: frosted periwinkle-white glass
+  --header-bg: rgba(245, 247, 255, 0.92);
+  --header-backdrop: blur(16px);
+
+  // ── Animation ──────────────────────────────────────────────
+  --duration-fast: 100ms;
+  --duration-base: 180ms;
+  --duration-slow: 360ms;
+  --ease: cubic-bezier(0.34, 1.1, 0.64, 1);
+
+  // ── Component tokens ───────────────────────────────────────
+  --btn-press-offset: 0px;
+  --input-focus-shadow: 0 0 0 3px rgba(97, 130, 179, 0.28);
+
+  // ── Component overrides ────────────────────────────────────
+
+  html {
+    background-color: #f5f7ff;
+  }
+
+  // Pastel blobs — logo blues anchor the palette; soft rainbow
+  // pastels orbit them for the holographic iridescent feel
+  body {
+    background-color: transparent;
+    background-image:
+      radial-gradient(ellipse 58% 48% at 5%  18%,  rgba(97,  130, 179, 0.38) 0%, transparent 65%), // periwinkle (logo) NW
+      radial-gradient(ellipse 52% 44% at 95% 10%,  rgba(255, 179, 209, 0.42) 0%, transparent 60%), // pastel pink       NE
+      radial-gradient(ellipse 50% 42% at 100% 55%, rgba(171, 207, 254, 0.40) 0%, transparent 58%), // sky-blue  (logo)  E
+      radial-gradient(ellipse 48% 42% at 80% 95%,  rgba(184, 242, 216, 0.36) 0%, transparent 55%), // pastel mint       SE
+      radial-gradient(ellipse 52% 44% at 15% 90%,  rgba(197, 184, 255, 0.40) 0%, transparent 58%), // pastel lavender   SW
+      radial-gradient(ellipse 44% 38% at 45% 50%,  rgba(254, 243, 168, 0.32) 0%, transparent 60%); // pastel gold       centre
+    background-color: #f5f7ff;
+    min-height: 100vh;
+  }
+
+  // Buttons — pill-shaped
+  .btn {
+    border-radius: var(--radius-pill);
+    font-family: var(--font-family-heading);
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .btn--primary {
+    background: #6182b3;
+    color: #ffffff;
+    border: 1.5px solid #4b548b;
+    box-shadow: 3px 3px 0 #4b548b;
+
+    &:hover {
+      background: #4b548b;
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0 #4b548b;
+    }
+
+    &:active {
+      transform: translate(2px, 2px);
+      box-shadow: 1px 1px 0 #4b548b;
+    }
+  }
+
+  .btn--secondary {
+    background: #abcffe;
+    color: #4b548b;
+    border: 1.5px solid #6182b3;
+    box-shadow: 2px 2px 0 #6182b3;
+  }
+
+  .btn--ghost {
+    background: transparent;
+    border: 1.5px solid #b8c5e8;
+    color: var(--color-fg);
+    border-radius: var(--radius-pill);
+
+    &:hover {
+      background: rgba(97, 130, 179, 0.08);
+    }
+  }
+
+  // Cards
+  .card {
+    border-radius: var(--radius-lg);
+    border: 1.5px solid rgba(97, 130, 179, 0.30);
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(75, 84, 139, 0.10);
+    transition: transform var(--duration-base) var(--ease),
+                box-shadow var(--duration-base) var(--ease);
+
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(75, 84, 139, 0.18);
+    }
+  }
+
+  .card__photo {
+    border-radius: calc(var(--radius-lg) - 1px) calc(var(--radius-lg) - 1px) 0 0;
+  }
+
+  // Inputs
+  .text-input__input {
+    border-radius: var(--radius);
+    border: 1.5px solid rgba(97, 130, 179, 0.45);
+    background: #ffffff;
+    font-family: var(--font-family);
+
+    &:focus {
+      border-color: #6182b3;
+      box-shadow: var(--input-focus-shadow);
+    }
+  }
+
+  .dropdown__trigger {
+    border-radius: var(--radius);
+    border: 1.5px solid rgba(97, 130, 179, 0.45);
+  }
+
+  .dropdown__list {
+    border-radius: var(--radius);
+    border: 1.5px solid rgba(97, 130, 179, 0.30);
+    box-shadow: 0 8px 24px rgba(75, 84, 139, 0.14);
+  }
+
+  // Header — frosted glass top tier
+  .header {
+    backdrop-filter: var(--header-backdrop);
+    -webkit-backdrop-filter: var(--header-backdrop);
+    border-bottom: none;
+  }
+
+  .header-top {
+    border-bottom: 1px solid rgba(97, 130, 179, 0.18);
+  }
+
+  // Nav strip — sits below the logo, white with a rainbow gradient underline
+  .header-nav {
+    background: rgba(255, 255, 255, 0.70);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 3px solid transparent;
+    background-clip: padding-box;
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(
+        90deg,
+        #c5b8ff,  // lavender
+        #abcffe,  // sky-blue (logo)
+        #b8f2d8,  // mint
+        #fef3a8,  // gold
+        #ffb3d1,  // pink
+        #c5b8ff   // back to lavender
+      );
+    }
+
+    .nav-link {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      border-radius: 0;
+      padding: 10px 18px;
+
+      &:hover {
+        background: rgba(97, 130, 179, 0.08);
+      }
+
+      &.active {
+        color: #6182b3;
+      }
+    }
+  }
+
+  // Hero — transparent so the blobs show through
+  .hero {
+    background: transparent;
+  }
+
+  // Hero h1 — the ONLY place with rainbow text.
+  // Logo periwinkle on top; pastel rainbow shadows behind.
+  .hero h1 {
+    color: #ffffff;
+    -webkit-text-stroke: 2px #6182b3;
+    text-shadow:
+      3px  3px  0 #c5b8ff,   // pastel lavender
+      6px  6px  0 #ffb3d1,   // pastel pink
+      9px  9px  0 #fef3a8;   // pastel gold
+  }
+
+  // Section headings — clean, no rainbow
+  .section-heading {
+    font-family: var(--font-family-display);
+
+    &::after {
+      content: '';
+      display: block;
+      height: 3px;
+      margin: 10px auto 0;
+      max-width: 56px;
+      background: linear-gradient(90deg, #7b5cf5, #5ce6eb);
+      border-radius: 999px;
+    }
+  }
+
+  // Badges
+  .badge {
+    border-radius: var(--radius-pill);
+    border: 1.5px solid rgba(97, 130, 179, 0.30);
+    background: #eef1ff;
+    color: #4b548b;
+    font-family: var(--font-family-heading);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+
+  // Sections — transparent so blobs show through everything
+  section {
+    background: transparent !important;
+  }
+
+  // CTA sections — white buttons over any accent bg
+  .foster-cta,
+  .donate-cta,
+  .hero--accent {
+    .btn--primary,
+    .btn {
+      background: #ffffff;
+      color: #4b548b;
+      border-color: rgba(75, 84, 139, 0.35);
+      box-shadow: 3px 3px 0 rgba(75, 84, 139, 0.25);
+
+      &:hover {
+        background: #eef1ff;
+        transform: translate(-1px, -1px);
+        box-shadow: 4px 4px 0 rgba(75, 84, 139, 0.30);
+      }
+    }
+  }
+
+  // Footer — deep logo navy anchors the soft pastel page
+  .footer {
+    background: #2e3560;
+    color: #e4e8f8;
+    border-top: 1px solid rgba(97, 130, 179, 0.30);
+  }
+
+  .footer__heading {
+    color: var(--holo-cyan);
+    font-family: var(--font-family-display);
+  }
+}

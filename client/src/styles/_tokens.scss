@@ -1,21 +1,19 @@
 // ─────────────────────────────────────────────────────────────
 // Love's Legacy Rescue — Design Tokens
 //
-// Brand colors sourced from the organization's Squarespace site.
-// Semantic tokens provide a theme-agnostic API that component
-// SCSS files consume via var(--token-name).
+// Brand blues only: navy, periwinkle, sky-blue, yellow.
 // ─────────────────────────────────────────────────────────────
 
 :root {
   // ── Brand palette (constant across themes) ───────────────
   --color-navy: #4b548b;
   --color-periwinkle: #6182b3;
-  --color-yellow: #fff7ad;
   --color-sky-blue: #abcffe;
+  --color-yellow: #fff7ad;
   --color-white: #ffffff;
 
   // ── Semantic palette ─────────────────────────────────────
-  --color-bg: var(--color-white);
+  --color-bg: #f4f6ff;
   --color-fg: var(--color-navy);
   --color-surface: var(--color-white);
   --color-accent: var(--color-periwinkle);
@@ -24,10 +22,10 @@
   --color-secondary: var(--color-sky-blue);
   --color-secondary-hover: #8cbcf5;
   --color-secondary-fg: var(--color-navy);
-  --color-muted: #f0f0f4;
+  --color-muted: #eef2fb;
   --color-muted-fg: var(--color-navy);
   --color-brand: var(--color-yellow);
-  --color-border: var(--color-navy);
+  --color-border: #c8d4f0;
   --color-text-muted: #7a7fa8;
 
   // ── Shadows ──────────────────────────────────────────────
@@ -61,7 +59,7 @@
   --gutter: 4vw;
   --max-width: 1200px;
   --header-height: 64px;
-  --header-bg: rgba(255, 255, 255, 0.92);
+  --header-bg: rgba(244, 246, 255, 0.92);
   --header-backdrop: blur(10px);
 
   // ── Animation ────────────────────────────────────────────

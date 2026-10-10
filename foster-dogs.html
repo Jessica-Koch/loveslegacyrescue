@@ -1,0 +1,670 @@
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1/src/index.js"></script>
+
+<style>
+  :root {
+    --white: hsla(var(--safeInverseDarkAccent-hsl), 1);
+    --brand-yellow: #f8ef91;
+    --brand-lightest-blue: #e9f0fb;
+    --brand-blue: #7f9fe1
+  .results-count {
+    color: white;
+    font-weight: 600;
+    padding: 10px 0;
+    text-align: center;
+  }
+
+  .error {
+    background: #fee;
+    border: 2px solid var(--error, tomato);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 600px;
+    color: var(--error, tomato);
+    text-align: center;
+  }
+
+  .no-results {
+    background: white;
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+  }
+
+  .carousel-wrapper {
+    position: relative;
+    padding: 0 48px;
+  }
+
+  .carousel-inner {
+    container-type: inline-size;
+    overflow: clip;
+    overflow-clip-margin: 40px;
+    padding: 20px 0;
+    margin: -20px 0;
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 24px;
+    padding-bottom: 18px;
+    will-change: transform;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .carousel-item {
+    /* 3 full cards: use cqw so 100% refers to .carousel-inner, not the scrollable track */
+    flex: 0 0 calc((100cqw - 48px) / 3);
+    transition: opacity 0.35s ease;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: white;
+    border: 2px solid var(--brand-blue);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 1.3rem;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    color: var(--brand-blue);
+  }
+
+  .carousel-btn:hover {
+    background: var(--brand-blue);
+    color: white;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+  }
+
+  .carousel-btn-prev {
+    left: 0;
+  }
+  .carousel-btn-next {
+    right: 0;
+  }
+
+  .carousel-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  @media (max-width: 900px) {
+    .carousel-item {
+      flex: 0 0 calc((100cqw - 24px) / 2);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .carousel-wrapper {
+      padding: 0 36px;
+    }
+
+    .carousel-item {
+      flex: 0 0 100cqw;
+    }
+  }
+
+  /* Card Styles */
+  .foster-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  }
+
+  .foster-card-photo {
+    flex: 1;
+    min-height: 280px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .foster-card-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+
+  .foster-card-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+  }
+
+  .foster-card-footer {
+    background: white;
+    padding: 16px 20px 20px;
+    flex-shrink: 0;
+  }
+
+  .foster-card-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--brand-darkest-blue);
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .foster-card-meta {
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 14px;
+  }
+
+  .foster-card-sex {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+  }
+
+  .foster-card-sex-icon {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  .foster-card-sex--male .foster-card-sex-icon {
+    color: #4a90d9;
+  }
+  .foster-card-sex--female .foster-card-sex-icon {
+    color: #e05c8a;
+  }
+
+  .foster-card-actions {
+    display: flex;
+    gap: 8px;
+  }
+
+  .foster-card-btn {
+    flex: 1;
+    padding: 9px 10px;
+    border-radius: 9999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .foster-card-btn-adopt {
+    background: var(--brand-blue);
+    color: white;
+    border: 2px solid var(--brand-blue);
+  }
+
+  .foster-card-btn-adopt:hover,
+  .foster-card-btn-adopt:focus {
+    background: var(--brand-dark-blue);
+    border-color: var(--brand-dark-blue);
+  }
+
+  .foster-card-btn-foster {
+    background: transparent;
+    color: var(--brand-dark-blue);
+    border: 2px solid var(--brand-dark-blue);
+  }
+
+  .foster-card-btn-foster:hover,
+  .foster-card-btn-foster:focus {
+    background: var(--brand-lightest-blue);
+  }
+
+  .carousel-thumbnails {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding: 0 48px;
+  }
+
+  .carousel-thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    border: 3px solid transparent;
+    transition:
+      border-color 0.2s,
+      transform 0.2s,
+      opacity 0.2s;
+    opacity: 0.55;
+  }
+
+  .carousel-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    pointer-events: none;
+  }
+
+  .carousel-thumb-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: linear-gradient(135deg, #f0f0f0, #e0e0e0);
+  }
+
+  .carousel-thumb:hover {
+    opacity: 0.85;
+    transform: translateY(-2px);
+  }
+
+  .carousel-thumb.active {
+    border-color: var(--brand-blue);
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .foster-card-photo {
+      min-height: 220px;
+    }
+
+    .carousel-thumbnails {
+      padding: 0 36px;
+      gap: 8px;
+    }
+
+    .carousel-thumb {
+      width: 52px;
+      height: 52px;
+    }
+  }
+</style>
+
+<div class="foster-container">
+  <div id="resultsCount" class="results-count" style="display: none"></div>
+  <div id="error" class="error" style="display: none"></div>
+  <div id="noResults" class="no-results" style="display: none">
+    <p>No dogs currently need foster homes. Check back soon!</p>
+  </div>
+  <div class="carousel-wrapper">
+    <button
+      class="carousel-btn carousel-btn-prev"
+      id="carouselPrev"
+      aria-label="Previous"
+    >
+      <i class="ph-bold ph-caret-left"></i>
+    </button>
+    <div class="carousel-inner">
+      <div id="fosterCardsGrid" class="carousel-track"></div>
+    </div>
+    <button
+      class="carousel-btn carousel-btn-next"
+      id="carouselNext"
+      aria-label="Next"
+    >
+      <i class="ph-bold ph-caret-right"></i>
+    </button>
+  </div>
+  <div id="carouselThumbnails" class="carousel-thumbnails"></div>
+</div>
+
+<script>
+  const API_URL =
+    'https://willowy-toffee-908bc8.netlify.app/.netlify/functions/adoptable-dogs';
+  const POLL_INTERVAL_MS = 30 * 60 * 1000;
+
+  let fosterDogs = [];
+
+  // ── Utilities ──────────────────────────────────────────────────────────────
+
+  function calculateAge(ageInMonths) {
+    if (!ageInMonths) return 'Age unknown';
+    if (ageInMonths < 12)
+      return `${ageInMonths} month${ageInMonths !== 1 ? 's' : ''}`;
+    const years = Math.floor(ageInMonths / 12);
+    const months = ageInMonths % 12;
+    if (months === 0) return `${years} year${years !== 1 ? 's' : ''}`;
+    return `${years}y ${months}m`;
+  }
+
+  function formatWeight(weightPounds) {
+    if (!weightPounds) return null;
+    const weight = parseFloat(weightPounds);
+    return isNaN(weight) ? null : `${weight.toFixed(1)} lbs`;
+  }
+
+  function formatBreed(breedString) {
+    if (!breedString) return 'Mixed Breed';
+    return breedString
+      .split('/')
+      .map((breed) => {
+        const parts = breed
+          .trim()
+          .split(',')
+          .map((p) => p.trim());
+        return parts.length === 2 ? `${parts[1]} ${parts[0]}` : breed.trim();
+      })
+      .join(' • ');
+  }
+
+  const SHELTERLUV_EMBED_ID = 'shelterluv_wrap_1748401771';
+  const SHELTERLUV_ORG_PREFIX = 'LLRO';
+
+  function shelterLuvAdoptUrl(id, internalId) {
+    const animalId = `${SHELTERLUV_ORG_PREFIX}-A-${id}`;
+    const params = new URLSearchParams({
+      nid: internalId,
+      iframeId: SHELTERLUV_EMBED_ID,
+    });
+    return `https://new.shelterluv.com/matchme/adopt/${animalId}?${params}`;
+  }
+
+  function mapDog(animal) {
+    return {
+      id: animal.ID,
+      adoptUrl: shelterLuvAdoptUrl(animal.ID, animal['Internal-ID']),
+      name: animal.Name || 'Unknown',
+      breed: formatBreed(animal.Breed),
+      age: animal.Age,
+      ageDisplay: calculateAge(animal.Age),
+      sex: animal.Sex || 'Unknown',
+      weight: formatWeight(animal.CurrentWeightPounds),
+      description: animal.Description || 'No description available.',
+      coverPhoto: animal.CoverPhoto,
+      photos: animal.Photos || [],
+      inFoster: animal.InFoster || false,
+      needsFoster: !animal.InFoster,
+      altered: animal.Altered,
+      color: animal.Color,
+      size: animal.Size,
+      attributes: animal.Attributes || [],
+      adoptionFeeGroup: animal.AdoptionFeeGroup || [],
+      lastIntakeUnixTime: animal.LastIntakeUnixTime,
+    };
+  }
+
+  // ── Data fetching ──────────────────────────────────────────────────────────
+
+  async function fetchFosterDogs() {
+    const errorEl = document.getElementById('error');
+
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok)
+        throw new Error(`HTTP error! status: ${response.status}`);
+
+      const data = await response.json();
+      fosterDogs = data.dogs
+        .filter((a) => a.Type === 'Dog' && !a.InFoster)
+        .map(mapDog);
+
+      if (fosterDogs.length === 0) {
+        document.getElementById('noResults').style.display = 'block';
+      } else {
+        renderDogs();
+      }
+    } catch (error) {
+      console.error('Error fetching foster dogs:', error);
+      errorEl.textContent = `Failed to load dogs: ${error.message}`;
+      errorEl.style.display = 'block';
+    }
+  }
+
+  async function silentRefresh() {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) return;
+      const data = await response.json();
+      fosterDogs = data.dogs
+        .filter((a) => a.Type === 'Dog' && !a.InFoster)
+        .map(mapDog);
+      renderDogs();
+    } catch (e) {
+      // Swallow errors — don't disrupt the user on background refreshes.
+    }
+  }
+
+  // ── Rendering ──────────────────────────────────────────────────────────────
+
+  function renderDogs() {
+    const track = document.getElementById('fosterCardsGrid');
+    const countEl = document.getElementById('resultsCount');
+    const noResultsEl = document.getElementById('noResults');
+
+    track.innerHTML = '';
+    carouselOffset = 0;
+    track.style.transform = '';
+
+    if (fosterDogs.length === 0) {
+      countEl.style.display = 'none';
+      noResultsEl.style.display = 'block';
+      return;
+    }
+
+    countEl.textContent = `${fosterDogs.length} dog${fosterDogs.length !== 1 ? 's' : ''} need${fosterDogs.length === 1 ? 's' : ''} a foster home`;
+    countEl.style.display = 'block';
+    noResultsEl.style.display = 'none';
+
+    fosterDogs.forEach((dog) => {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+
+      const card = document.createElement('div');
+      card.className = 'foster-card';
+      card.setAttribute('role', 'article');
+      card.setAttribute('aria-label', `${dog.name}, ${dog.breed}`);
+
+      // Photo area
+      const photoWrap = document.createElement('div');
+      photoWrap.className = 'foster-card-photo';
+
+      if (dog.coverPhoto) {
+        const img = document.createElement('img');
+        img.src = dog.coverPhoto;
+        img.alt = `Photo of ${dog.name}`;
+        img.loading = 'lazy';
+        img.onerror = function () {
+          this.style.display = 'none';
+          const ph = document.createElement('div');
+          ph.className = 'foster-card-photo-placeholder';
+          ph.textContent = '🐕';
+          photoWrap.appendChild(ph);
+        };
+        photoWrap.appendChild(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'foster-card-photo-placeholder';
+        ph.textContent = '🐕';
+        photoWrap.appendChild(ph);
+      }
+
+      card.appendChild(photoWrap);
+
+      // Footer
+      const footer = document.createElement('div');
+      footer.className = 'foster-card-footer';
+
+      const nameEl = document.createElement('h3');
+      nameEl.className = 'foster-card-name';
+      nameEl.textContent = dog.name;
+
+      const isMale = dog.sex && dog.sex.toLowerCase() === 'male';
+      const sexClass = isMale
+        ? 'foster-card-sex--male'
+        : 'foster-card-sex--female';
+      const sexIcon = isMale ? '♂' : '♀';
+
+      const meta = document.createElement('div');
+      meta.className = 'foster-card-meta';
+      meta.innerHTML = `
+        <span>${dog.ageDisplay}</span>
+        <span class="foster-card-sex ${sexClass}">
+          <span class="foster-card-sex-icon">${sexIcon}</span>
+          ${dog.sex}
+        </span>
+      `;
+
+      const actions = document.createElement('div');
+      actions.className = 'foster-card-actions';
+
+      const adoptBtn = document.createElement('button');
+      adoptBtn.className = 'foster-card-btn foster-card-btn-adopt';
+      adoptBtn.textContent = 'Apply to Adopt';
+      adoptBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open(dog.adoptUrl, '_blank', 'noopener,noreferrer');
+      });
+
+      const fosterBtn = document.createElement('button');
+      fosterBtn.className = 'foster-card-btn foster-card-btn-foster';
+      fosterBtn.textContent = 'Apply to Foster';
+      fosterBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        window.open('https://new.shelterluv.com/matchme/foster/LLRO/Dog', '_blank', 'noopener,noreferrer');
+      });
+
+      actions.appendChild(adoptBtn);
+      actions.appendChild(fosterBtn);
+      footer.appendChild(nameEl);
+      footer.appendChild(meta);
+      footer.appendChild(actions);
+      card.appendChild(footer);
+
+      item.appendChild(card);
+      track.appendChild(item);
+    });
+
+    buildThumbnails();
+    updateCarouselButtons();
+  }
+
+  function buildThumbnails() {
+    const track = document.getElementById('fosterCardsGrid');
+    const strip = document.getElementById('carouselThumbnails');
+    strip.innerHTML = '';
+
+    const items = Array.from(track.children);
+
+    fosterDogs.forEach((dog, index) => {
+      const thumb = document.createElement('div');
+      thumb.className = 'carousel-thumb';
+      thumb.setAttribute('aria-label', `Go to ${dog.name}`);
+      thumb.setAttribute('role', 'button');
+      thumb.setAttribute('tabindex', '0');
+
+      if (dog.coverPhoto) {
+        const img = document.createElement('img');
+        img.src = dog.coverPhoto;
+        img.alt = dog.name;
+        img.loading = 'lazy';
+        thumb.appendChild(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'carousel-thumb-placeholder';
+        ph.textContent = '🐕';
+        thumb.appendChild(ph);
+      }
+
+      const goToCard = () => setCarouselOffset(items[index].offsetLeft);
+      thumb.addEventListener('click', goToCard);
+      thumb.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          goToCard();
+        }
+      });
+
+      strip.appendChild(thumb);
+    });
+
+    updateThumbnailHighlights();
+  }
+
+  // ── Carousel (transform-based scrolling) ──────────────────────────────────
+
+  let carouselOffset = 0;
+
+  function getCarouselInner() {
+    return document.getElementById('fosterCardsGrid').parentElement;
+  }
+
+  function getMaxOffset() {
+    const track = document.getElementById('fosterCardsGrid');
+    const inner = getCarouselInner();
+    return Math.max(0, track.scrollWidth - inner.clientWidth);
+  }
+
+  function setCarouselOffset(offset) {
+    const track = document.getElementById('fosterCardsGrid');
+    carouselOffset = Math.max(0, Math.min(offset, getMaxOffset()));
+    track.style.transform = `translateX(${-carouselOffset}px)`;
+    updateCarouselButtons();
+    updateThumbnailHighlights();
+  }
+
+  function updateCarouselButtons() {
+    document.getElementById('carouselPrev').disabled = carouselOffset <= 0;
+    document.getElementById('carouselNext').disabled =
+      carouselOffset >= getMaxOffset();
+  }
+
+  function updateThumbnailHighlights() {
+    const track = document.getElementById('fosterCardsGrid');
+    const inner = getCarouselInner();
+    const innerWidth = inner.clientWidth;
+    const items = Array.from(track.children);
+    const thumbs = Array.from(
+      document
+        .getElementById('carouselThumbnails')
+        .querySelectorAll('.carousel-thumb'),
+    );
+    items.forEach((item, i) => {
+      const center = item.offsetLeft + item.offsetWidth / 2;
+      const inView =
+        center >= carouselOffset && center <= carouselOffset + innerWidth;
+      item.style.opacity = inView ? '1' : '0';
+      item.style.pointerEvents = inView ? '' : 'none';
+      if (thumbs[i]) thumbs[i].classList.toggle('active', inView);
+    });
+  }
+
+  document.getElementById('carouselPrev').addEventListener('click', () => {
+    const inner = getCarouselInner();
+    setCarouselOffset(carouselOffset - inner.clientWidth);
+  });
+
+  document.getElementById('carouselNext').addEventListener('click', () => {
+    const inner = getCarouselInner();
+    setCarouselOffset(carouselOffset + inner.clientWidth);
+  });
+
+  // ── (removed modal — clicking a card navigates to ShelterLuv directly) ────
+
+  // ── Init ───────────────────────────────────────────────────────────────────
+
+  fetchFosterDogs();
+  setInterval(silentRefresh, POLL_INTERVAL_MS);
+</script>

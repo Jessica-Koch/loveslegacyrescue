@@ -5,7 +5,7 @@ const themes = [
   {
     id: 'default',
     label: 'Brand',
-    colors: ['#6182b3', '#abcffe', '#fff7ad', '#4b548b'],
+    colors: ['#4b548b', '#6182b3', '#abcffe', '#fff7ad'],
   },
   {
     id: 'golden-hour',
@@ -48,7 +48,7 @@ export const ThemeSwitcher = ({ variant = 'nav' }: ThemeSwitcherProps) => {
   const ref = useRef<HTMLDivElement>(null);
   const [current, setCurrent] = useState(() => {
     return (
-      document.documentElement.getAttribute('data-theme') || 'holographic'
+      document.documentElement.getAttribute('data-theme') || 'default'
     );
   });
 
