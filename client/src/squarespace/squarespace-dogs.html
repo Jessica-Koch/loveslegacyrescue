@@ -1415,6 +1415,7 @@
   }
   function calculateAge(ageInMonths) {
     if (!ageInMonths) return 'Age unknown';
+    if (ageInMonths <= 0) return 'Under 1 month old';
     if (ageInMonths < 12)
       return `${ageInMonths} month${ageInMonths !== 1 ? 's' : ''}`;
     const years = Math.floor(ageInMonths / 12);
